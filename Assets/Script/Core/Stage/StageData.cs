@@ -79,7 +79,6 @@ public class StageData : ScriptableObject
     public List<MiniStageListItem>      _miniStageData = new List<MiniStageListItem>();
     public List<MarkerItem>             _markerData = new List<MarkerItem>();
     public List<MovementTrackData>      _trackData = new List<MovementTrackData>();
-    public TilemapConfig                _collisionTilemapData;
 
     public MarkerItem findMarker(string markerName)
     {

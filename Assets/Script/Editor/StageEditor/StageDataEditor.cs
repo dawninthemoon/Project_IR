@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Tilemaps;
 using System;
 using NUnit.Framework.Internal;
 using System.Net;
@@ -508,6 +509,7 @@ public class StageDataEditor : EditorWindow
     private List<MarkerDataEditObject>      _editingMarkerDataList = new List<MarkerDataEditObject>();
     private List<MovementTrackDataEditObject> _editingTrackDataList = new List<MovementTrackDataEditObject>();
 
+    private GameObject _tilemapSettingPrefabObject = null;
     private GameObject _backgroundPrefabObject = null;
     
     private Vector2 _pointItemScroll = Vector2.zero;
@@ -660,6 +662,10 @@ public class StageDataEditor : EditorWindow
 
         GUILayout.BeginVertical("box");
             _editStageData._stageName = EditorGUILayout.TextField("Stage Name",_editStageData._stageName);
+
+            _editStageData._tilemapConfigPath = EditorGUILayout.ObjectField("Tilemap Config",_editStageData._tilemapConfigPath, typeof(TilemapConfig), true) as TilemapConfig;
+            if (_editStageData._tilemapConfigPath == null && _tilemapSettingPrefabObject != null) 
+                DestroyImmediate(_tilemapSettingPrefabObject);
 
             GUILayout.BeginHorizontal();
             _editStageData._backgroundPrefabPath = EditorGUILayout.ObjectField("Background Prefab",_editStageData._backgroundPrefabPath, typeof(GameObject), true) as GameObject;
@@ -2402,6 +2408,18 @@ public class StageDataEditor : EditorWindow
 
         if(_editStageData == null)
             return;
+
+        if (_tilemapSettingPrefabObject != null)
+            DestroyImmediate(_tilemapSettingPrefabObject);
+
+        if (_editStageData._tilemapConfigPath != null) {
+            GameObject tileSettingPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TilemapSettings.prefab", typeof(GameObject)) as GameObject;
+            _tilemapSettingPrefabObject = Instantiate(tileSettingPrefab, _editItemParent.transform);
+
+            Tilemap tilemap = _tilemapSettingPrefabObject.GetComponentInChildren<Tilemap>();
+            TilemapConfig tilemapConfig = _editStageData._tilemapConfigPath;
+            tilemap.SetTiles(tilemapConfig._positions, tilemapConfig._tileBases);
+        }
 
         if(_backgroundPrefabObject != null)
             DestroyImmediate(_backgroundPrefabObject);
