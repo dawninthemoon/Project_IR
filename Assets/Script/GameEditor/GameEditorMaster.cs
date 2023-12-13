@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using YamlDotNet.Serialization;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -121,6 +123,8 @@ public class GameEditorMaster : MonoBehaviour
     void fillStageSelectorItem()
     {
         StageData[] stageData = ResourceContainerEx.Instance().GetStageDataAll("StageData/");
+        if(stageData == null)
+            return;
 
         Vector2 sizeDelta = _stageSelectorContent.sizeDelta;
         sizeDelta.y = 50f + 45f * (float)stageData.Length;

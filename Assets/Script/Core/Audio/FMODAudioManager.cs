@@ -30,14 +30,15 @@ public class FMODAudioManager : Singleton<FMODAudioManager>
             _listener.AddComponent<FMODUnity.StudioListener>();
         }
 
-        _infoItem = ResourceContainerEx.Instance().GetScriptableObject("Audio/AudioInfo/AudioInfo") as AudioInfoItem;
-
-        CreateAudioMap();
-
         _cacheMap = new Dictionary<int, Queue<FMODUnity.StudioEventEmitter>>();
         _activeMap = new Dictionary<int, List<FMODUnity.StudioEventEmitter>>();
         _globalCache = new Dictionary<int, FMOD.Studio.PARAMETER_DESCRIPTION>();
 
+        _infoItem = ResourceContainerEx.Instance().GetScriptableObject("Audio/AudioInfo/AudioInfo") as AudioInfoItem;
+        if(_infoItem == null)
+            return;
+
+        CreateAudioMap();
         CreateCachedGlobalParams();
     }
 

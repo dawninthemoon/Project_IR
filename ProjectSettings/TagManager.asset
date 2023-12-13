@@ -17,21 +17,21 @@ TagManager:
   - 
   - Water
   - UI
+  - Background
+  - ShadowMap
+  - Character
+  - ShadowScreen
+  - EffectEtc
+  - PostProcessin
   - 
   - 
   - 
+  - AllTogether
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - TopLayer
+  - Interface
+  - Perspective
   - 
   - 
   - 

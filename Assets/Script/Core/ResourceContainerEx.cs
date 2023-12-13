@@ -18,7 +18,8 @@ public class ManagedResourceItem<Value> where Value : class
 		Value obj = Load(path,GetResourceType()) as Value;
 		if(obj == null)
 		{
-            DebugUtil.assert(false, "file does not exist : {0}",path);
+			Debug.Log($"file does not exist : {path}");
+            //DebugUtil.assert(false, "file does not exist : {0}",path);
 			return null;
 		}
 
@@ -34,7 +35,8 @@ public class ManagedResourceItem<Value> where Value : class
 		UnityEngine.Object[] obj = LoadAll(path, GetResourceType());
 		if(obj.Length == 0)
 		{
-			DebugUtil.assert(false, additionalMessage + "file does not exist : {0}",path);
+			Debug.Log($"{additionalMessage}file does not exist : {path}");
+			//DebugUtil.assert(false, additionalMessage + "file does not exist : {0}",path);
 			return null;
 		}
 

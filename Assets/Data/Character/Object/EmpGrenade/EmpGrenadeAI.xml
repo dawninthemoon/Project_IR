@@ -1,9 +1,0 @@
-<AIGraph Name="EmpGrenadeAI" DefaultState="Entry">
-
-    <Include Path="Assets/Data/Character/Object/EmpGrenade/EmpGrenadePackage.xml"/>
-    
-    <Entry Package="EmpGrenadePackage">
-    </Entry>
-
-
-</AIGraph>

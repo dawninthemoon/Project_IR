@@ -1,5 +1,0 @@
-<DanmakuGraph Name="MagicalBullet">
-
-    <Projectile Name="BaseBall" DirectionType="AITarget"/>
-
-</DanmakuGraph>

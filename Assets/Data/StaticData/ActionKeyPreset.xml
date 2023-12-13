@@ -1,7 +1,7 @@
 
 <ActionKeyPreset>
 
-    <Dash
+    <Apply
         PressType="KeyDown"
         MultiInputType="Single"
         Threshold="0.0"
@@ -11,83 +11,6 @@
         Key_PS="X"
     />
 
-    <AttackCharge
-        PressType="KeyPressed"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Mouse0"
-        Key_XBOX="RB"
-        Key_PS="X"
-    />
-
-    <DashMove
-        PressType="KeyDown"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Mouse0"
-        Key_XBOX="RB"
-        Key_PS="X"
-    />
-
-    <NormalMove
-        PressType="KeyPressed"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Mouse1"
-    />
-
-    <StunShot
-        PressType="KeyPressed"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Q"
-    />
-
-    <GuardBreak2
-        PressType="KeyPressed"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="W"
-    />
-
-    <Guard
-        PressType="KeyPressed"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="E"
-    />
-
-    <GuardBreak
-        PressType="KeyDown"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Mouse1"
-        Key_XBOX="LB"
-        Key_PS="X"
-    />
-
-    <Escape_1
-        PressType="KeyDown"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="Q"
-    />
-    
-    <Escape_2
-        PressType="KeyDown"
-        MultiInputType="Single"
-        Threshold="0.0"
-        
-        Key_KM="E"
-    />
 
     <EditorHotKey_EditorOnOff
         PressType="KeyDown"

@@ -1,7 +1,0 @@
-<SequencerGraph Name="SetCameraTargetToPlayer">
-
-    <InitializePhase>
-        <SetCameraTarget UniqueKey="Player" CameraMode="TargetCenterMode"/>
-    </InitializePhase>
-
-</SequencerGraph>

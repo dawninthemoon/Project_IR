@@ -1,7 +1,7 @@
 <EffectInfo>
     <!-- BasePath: Assets/Resources/ -->
     <!-- Path에 확장자 쓰기 금지 -->
-    <ParticleEffect Key="Slash" 
+    <!-- <ParticleEffect Key="Slash" 
         AttackMaterial=""
         DefenceMaterial=""
         Path="Prefab/Effect/Slash"
@@ -13,92 +13,7 @@
         LifeTime="0.0"
         FollowDirection="False"
         CastShadow="False"
-    />
+    /> -->
 
-    <ParticleEffect Key="SlashNoTarget" 
-        AttackMaterial=""
-        DefenceMaterial=""
-        Path="Prefab/Effect/Slash"
-        Offset="0.0 0.0 0.0"
-        ToTarget="False"
-        UpdateType="ScaledDeltaTime"
-        Attach="False"
-        AngleType="Direction"
-        LifeTime="0.0"
-        FollowDirection="False"
-        CastShadow="False"
-    />
-
-    <ParticleEffect Key="SlashSuper" 
-        AttackMaterial="" 
-        DefenceMaterial=""
-        Path="Prefab/Effect/SlashSuper"
-        Offset="0.0 0.0 0.0"
-        ToTarget="True"
-        UpdateType="ScaledDeltaTime"
-        Attach="False"
-        AngleType="Direction"
-        LifeTime="0.0"
-        FollowDirection="False"
-        CastShadow="False"
-    />
-
-    <ParticleEffect Key="Blood" 
-        AttackMaterial="" 
-        DefenceMaterial=""
-        Path="Prefab/Effect/Blood"
-        Offset="0.0 0.0 0.0"
-        ToTarget="True"
-        UpdateType="ScaledDeltaTime"
-        Attach="False"
-        AngleType="Direction"
-        LifeTime="0.0"
-        FollowDirection="False"
-        CastShadow="False"
-    />
-
-    <ParticleEffect Key="LightningTrail" 
-        AttackMaterial="" 
-        DefenceMaterial=""
-        Path="Prefab/Effect/fx_chainlightning"
-        Offset="0.0 0.0 0.0"
-        ToTarget="False"
-        UpdateType="ScaledDeltaTime"
-        Attach="True"
-        AngleType="Direction"
-        LifeTime="0.5"
-        FollowDirection="False"
-        CastShadow="False"
-    />
-
-    <ParticleEffect Key="Laser" 
-        AttackMaterial="" 
-        DefenceMaterial=""
-        Path="Prefab/Effect/fx_lasor"
-        AngleOffset="-90.0"
-        Offset="0.3 0.0 0.0"
-        ToTarget="False"
-        UpdateType="ScaledDeltaTime"
-        Attach="False"
-        AngleType="Direction"
-        LifeTime="0.5"
-        FollowDirection="False"
-        CastShadow="False"
-    />
-
-    <ParticleEffect Key="DashTrail" 
-        AttackMaterial="" 
-        DefenceMaterial=""
-        Path="Prefab/Effect/fx_dashTrail"
-        AngleOffset="0.0"
-        Offset="-0.1 0.0 0.0"
-        ToTarget="False"
-        UpdateType="ScaledDeltaTime"
-        Attach="True"
-        AngleType="Direction"
-        LifeTime="0.0"
-        FollowDirection="False"
-        CastShadow="False"
-    />
 
 </EffectInfo>

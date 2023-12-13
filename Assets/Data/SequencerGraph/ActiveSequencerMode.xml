@@ -1,8 +1,0 @@
-<SequencerGraph Name="ActiveSequencerMode">
-
-    <InitializePhase>
-        <SetHideUI Hide="True"/>
-        <BlockInput Enable="True"/>
-    </InitializePhase>
-
-</SequencerGraph>
