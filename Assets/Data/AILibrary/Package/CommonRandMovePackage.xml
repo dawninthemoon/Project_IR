@@ -1,0 +1,73 @@
+<AIPackage Name="CommonRandMovePackage" DefaultState="AI_Entry">
+
+    <GlobalVariable Name="gv_randMoveCycleTime" Value="3.0"/>
+    <GlobalVariable Name="gv_randMoveTargetSearchRange" Value="5.0"/>
+    <BranchSet Name="RandMoveWeightBranchSet">
+            <Branch Weight="RandDirection^UP" Execute="AI_MoveUp"/>
+            <Branch Weight="RandDirection^Down" Execute="AI_MoveDown"/>
+            <Branch Weight="RandDirection^Left" Execute="AI_MoveLeft"/>
+            <Branch Weight="RandDirection^Right" Execute="AI_MoveRight"/>
+    </BranchSet>
+    <AIState>
+        <AI_Entry UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="RandMove Entry"/>
+            </Event_OnExecute>
+            <UseBranchSet Name="RandMoveWeightBranchSet"/>
+        </AI_Entry>
+
+        <AI_Idle UpdateTime="gv_randMoveCycleTime" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="RandMove Idle"/>
+            </Event_OnExecute>
+
+            <UseBranchSet Name="RandMoveWeightBranchSet"/>
+
+        </AI_Idle>
+
+        <AI_MoveUp UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAngleDirection" Angle="135.0"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+                <AIEvent Type="Test" Log="RandMove MoveUp"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="true" Execute="AI_Idle"/>
+            
+        </AI_MoveUp>
+        <AI_MoveDown UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAngleDirection" Angle="315.0"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+                <AIEvent Type="Test" Log="RandMove MoveDown"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="true" Execute="AI_Idle"/>
+            
+        </AI_MoveDown>
+        <AI_MoveLeft UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAngleDirection" Angle="225.0"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+                <AIEvent Type="Test" Log="RandMove MoveLeft"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="true" Execute="AI_Idle"/>
+            
+        </AI_MoveLeft>
+        <AI_MoveRight UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="gv_randMoveTargetSearchRange" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAngleDirection" Angle="45.0"/>   
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+                <AIEvent Type="Test" Log="RandMove MoveRight"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="true" Execute="AI_Idle"/>
+            
+        </AI_MoveRight>
+
+    </AIState>
+
+</AIPackage>

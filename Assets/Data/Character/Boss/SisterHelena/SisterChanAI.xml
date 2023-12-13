@@ -1,0 +1,121 @@
+<AIGraph Name="SisterChanAI" DefaultState="Entry">
+
+    <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonHitPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonChasePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonSystemChasePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonIdlePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonGuardBrokenPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonGroggyPackage.xml"/>
+
+    <Include Path="Assets/Data/Character/Boss/SisterHelena/SisterThunderStrokePackage.xml"/>
+    <Include Path="Assets/Data/Character/Boss/SisterHelena/SisterLightningBoltPackage.xml"/>
+
+    <!-- 보스전 대기 시간 (나중에 보스전 시작 트리거를 받아야 함)-->
+    <GlobalVariable Name="gv_sisterReadyTime" Value="3.0"/>
+    <!-- 시스터 발차기 사거리 -->
+    <GlobalVariable Name="gv_sisterKickRange" Value="2.0"/>
+    <!-- 시스터 행동 전환 시간 -->
+    <GlobalVariable Name="gv_sisterTrasitionTime" Value="0.3"/>
+
+    <!-- Std Values -->
+    <GlobalVariable Name="gv_SystemChaseRange" Value="9.75"/>     <!-- 카메라 범위 값. 카메라 바깥으로 사라지지 않게 추격 -->
+    <GlobalVariable Name="gv_AobaStdDistance" Value="3.5"/>     <!-- 아오바 거리 판단 기준 (구 2.0) -->
+
+    <!-- Groggy Pattern -->
+    <GlobalVariable Name="gv_sisterStdBattle" Value="20.0"/>
+
+
+    <BranchSet Name="IsPlayerDead">
+            <Branch Condition="Dead" Execute="Dead"/>
+            <Branch Condition="getTargetFrameTag_Dead" Execute="EnemyWin"/>
+    </BranchSet>
+    <BranchSet Name="WarpChaseSet">
+            <Branch Condition="TargetDistance >= gv_SystemChaseRange" Execute="WarpChase"/>
+    </BranchSet>
+    <BranchSet Name="HitReactionSet">
+        <Branch Condition="Dead" Execute="Dead"/>
+        <Branch Condition="(getStat_Battle >= gv_sisterStdBattle)" Execute="Groggy"/>
+        <Branch Condition="Hit" Execute="Hit"/>
+        <Branch Condition="GuardBreakFail || GuardBroken" Execute="GuardBroken"/>
+    </BranchSet>
+
+
+    <Entry Package="CommonIdlePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <UseBranchSet Name="WarpChaseSet"/>
+
+        <Branch Condition="true" Execute="JudgeDist"/>
+    </Entry>
+
+    <!-- 거리 판단 -->
+    <JudgeDist Package="CommonIdlePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="WarpChaseSet"/>
+
+        <Branch Condition="TargetDistance > gv_AobaStdDistance" Execute="JudgeApproachAttack"/>
+        <Branch Condition="TargetDistance <= gv_AobaStdDistance" Execute="JudgeShortAttack"/>
+    </JudgeDist>
+
+    <!-- 원거리 판단 -->
+    <JudgeApproachAttack Package="CommonIdlePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <!-- 라이트닝 볼트 -->
+        <Branch Condition="true" Execute="LightningBolt"/>
+
+    </JudgeApproachAttack>
+
+    <LightningBolt Package="SisterLightningBoltPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </LightningBolt>
+
+    <!-- 근거리 판단-->
+    <JudgeShortAttack Package="CommonIdlePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <!-- 낙뢰 -->
+        <Branch Condition="true" Execute="ThunderStroke"/>
+
+    </JudgeShortAttack>
+
+    <ThunderStroke Package="SisterThunderStrokePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </ThunderStroke>
+
+    <WarpChase Package="CommonSystemChasePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        
+        <Branch Condition="CurrentPackageEnd" Execute="JudgeDist"/>
+    </WarpChase>   
+
+    <GuardBroken Package="CommonGuardBrokenPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </GuardBroken>
+
+    <Hit Package="CommonHitPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Hit>
+
+    <Groggy Package="CommonGroggyPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Groggy>
+
+    <Dead Package="CommonDeadPackage">
+    </Dead>
+
+    <EnemyWin Package="CommonIdlePackage">
+    </EnemyWin>
+
+</AIGraph>

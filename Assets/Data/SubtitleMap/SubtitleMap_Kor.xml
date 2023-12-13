@@ -1,0 +1,17 @@
+<SubtitleMap>
+    <SimpleTalk>
+        <Talk_SleepEffect Time="4.0" Text="ZZZZZZZ"/>
+
+        <Talk_TutorialTeacher_0 Time="2.0" Text="뭐지? 자기과시?"/>
+        <Talk_TutorialTeacher_1 Time="2.0" Text="죽고 싶은 것인가?"/>
+        <Talk_TutorialTeacher_2 Time="2.0" Text="수업중에 무슨 짓이지?"/>
+        <Talk_Stage01_1 Time="3.0" Text="줄이 길어지기 전에 빨리 가야겠어"/>
+        <Talk_Stage01_2 Time="3.0" Text="아앙? 너는 뭐야!"/>
+        <Talk_Stage01_3 Time="3.0" Text="젠장, 이러다 늦겠어"/>
+        <Talk_Stage01_4 Time="3.0" Text="다 비켜!"/>
+        <Talk_Stage01_5 Time="3.0" Text="건방지게 어딜!"/>
+        <Talk_Stage01_6 Time="3.0" Text="후우...늦지 않아야 할텐데"/>
+    
+    </SimpleTalk>
+
+</SubtitleMap>

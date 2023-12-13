@@ -1,0 +1,16 @@
+
+
+<AIGraph Name="TutorialStudentAI" DefaultState="Entry">
+
+    <Include Path="Assets/Data/AILibrary/Package/EmptyPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
+    <Include Path="Assets/Data/Character/TutorialStudent/TutorialStudentPackage.xml"/>
+
+    <Entry Package="TutorialStudentPackage">
+        <Branch Condition="Dead" Execute="Dead"/>
+    </Entry>
+
+    <Dead Package="CommonDeadPackage">
+    </Dead>
+
+</AIGraph>

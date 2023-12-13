@@ -1,0 +1,33 @@
+<AIPackage Name="ReitoCremationBeamPackage" DefaultState="AI_CremationBeamReady">
+
+    <AIState>
+        <AI_CremationBeamReady UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_CremationBeamReady"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnFrame>
+
+            <Branch Condition="End" Execute="AI_CremationBeamShot"/>
+        </AI_CremationBeamReady>
+
+        <AI_CremationBeamShot UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_CremationBeamShot"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>            
+        </AI_CremationBeamShot>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

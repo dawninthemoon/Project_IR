@@ -1,0 +1,31 @@
+<DanmakuGraph Name="TestDanmaku">
+
+    <Angle Set="0"/>
+    <Loop Count="36" Term="0.05">
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Angle Add="10"/>
+    </Loop>
+
+    <Wait Time="1"/>
+
+    <Angle Set="0"/>
+    <Velocity Set="1"/>
+    <Loop Count="10" Term="0.05">
+        <Velocity Mul="1.3"/>
+        <Acceleration Add="0.3"/>
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add" DirectionType="AITarget"/>
+    </Loop>
+
+</DanmakuGraph>

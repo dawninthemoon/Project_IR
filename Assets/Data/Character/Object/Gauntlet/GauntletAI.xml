@@ -1,0 +1,90 @@
+<AIGraph Name="GauntletAI" DefaultState="Entry">
+
+    <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonHitPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonIdlePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonGuardBrokenPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonChasePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonSystemChasePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonAlertMovePackage.xml"/>
+    <Include Path="Assets/Data/Character/Object/Gauntlet/GauntletRushPackage.xml"/>
+    
+    
+    <GlobalVariable Name="gv_najimiSystemChaseRange" Value="9.75"/>     <!-- 카메라 범위 값. 카메라 바깥으로 사라지지 않게 추격 -->
+    <!-- Rush Pattern -->
+    <GlobalVariable Name="gv_najimiRushRange" Value="2.0"/>             <!-- 나지미 돌진 사거리 -->
+    <GlobalVariable Name="gv_najimiRushTrasitionTime" Value="0.8"/>     <!-- 나지미 돌진 최소 텀 -->    
+
+    <BranchSet Name="IsPlayerDead">
+        <Branch Condition="Dead" Execute="Dead"/>
+        <Branch Condition="getTargetFrameTag_Dead" Execute="EnemyWin"/>
+    </BranchSet>
+
+    <BranchSet Name="HitReactionSet">
+        <Branch Condition="Dead" Execute="Dead"/>
+        <Branch Condition="Hit" Execute="Hit"/> 
+        <Branch Condition="GuardBreakFail || GuardBroken" Execute="GuardBroken"/>
+    </BranchSet>
+
+    <BranchSet Name="WaitForRush">
+        <Branch Condition="getTargetFrameTag_Catched && (IsCatcher == false) && (getFrameTag_CatchProcess == false)" Execute="Alert"/>
+    </BranchSet>
+
+    <Entry Package="CommonIdlePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="TargetDistance >= gv_najimiSystemChaseRange" Execute="SystemChase"/>
+        <UseBranchSet Name="WaitForRush"/>
+        <Branch Condition="GraphExecutedTime >= 0.3" Execute="Chase"/>
+    </Entry>
+
+    <Chase Package="CommonChasePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <UseBranchSet Name="WaitForRush"/>
+        
+        <Branch Condition="TargetDistance >= gv_najimiSystemChaseRange" Execute="SystemChase"/>
+
+        <!-- 추격 러시 -->
+        <Branch Condition="TargetExists && 
+                           (gv_najimiRushRange >= TargetDistance) && 
+                           (GraphExecutedTime > gv_najimiRushTrasitionTime)" Execute="Rush"/>
+    </Chase>
+
+    <Alert Package="CommonAlertMovePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="WaitForRush"/>
+        <Branch Condition="getTargetFrameTag_Catched == false" Execute="Entry"/>
+    </Alert>
+
+    <SystemChase Package="CommonSystemChasePackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </SystemChase>
+
+    <Hit Package="CommonHitPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Hit>
+
+    <GuardBroken Package="CommonGuardBrokenPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </GuardBroken>
+
+    <Rush Package="GauntletRushPackage">
+        <UseBranchSet Name="IsPlayerDead"/>
+        <UseBranchSet Name="HitReactionSet"/>
+        <UseBranchSet Name="WaitForRush"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Rush>
+
+    <Dead Package="CommonDeadPackage">
+    </Dead>
+
+    <EnemyWin Package="CommonIdlePackage">
+        
+    </EnemyWin>
+</AIGraph>

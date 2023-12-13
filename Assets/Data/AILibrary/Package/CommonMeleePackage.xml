@@ -1,0 +1,32 @@
+
+<AIPackage Name="CommonMeleePackage" DefaultState="Entry">
+
+    <Event_OnExecute>
+        <AIEvent Type="Test" Log="OnExecute Package"/>
+    </Event_OnExecute>
+
+    <Event_OnExit>
+        <AIEvent Type="Test" Log="OnExit"/>
+    </Event_OnExit>
+
+
+    <BranchSet Name="TestBranchSet">
+        <Branch Condition="true" Execute="Entry"/>
+    </BranchSet>
+
+    <Event_OnAttacked>
+        <AIEvent Type="Test" Log="Attacked_Package"/>
+    </Event_OnAttacked>
+
+    <AIState>
+        <Entry UpdateTime="1.0" TargetSearchType="Near" TargetSearchRange="1.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="Idle"/>
+            </Event_OnExecute>
+
+            <Branch Condition="TargetExists" Execute="Attack"/>
+        </Entry>
+
+    </AIState>
+
+</AIPackage>

@@ -1,0 +1,51 @@
+<AIPackage Name="CommonBumpAttackPackage" DefaultState="AI_Entry">
+
+    <AIState>
+        <AI_Entry UpdateTime="0.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+            </Event_OnExecute>
+            <Branch Condition="true" Execute="AI_AttackReady"/>
+        </AI_Entry>
+
+        <AI_AttackReady UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="50.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_AttackReady"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="End" Execute="AI_AttackMain"/>
+        </AI_AttackReady>
+        <AI_AttackMain UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="50.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_AttackMain"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="AttackSuccess" Execute="AI_AttackSuccess"/>
+            <Branch Condition="End" Execute="AI_AttackRecover"/>
+        </AI_AttackMain>
+        <AI_AttackSuccess UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="50.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_AttackSuccess"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="End" Execute="AI_AttackRecover"/>            
+        </AI_AttackSuccess>
+        <AI_AttackRecover UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="50.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_AttackRecover>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

@@ -1,0 +1,32 @@
+<SequencerGraph Name="SchoolCorridor_Start">
+
+    <InitializePhase>
+        <ApplyPostProcessProfile Path="PostProcessProfile/PostProcessProfile_Default"/>
+
+        <SetAudioListner UniqueKey="Player"/>
+        <SetCrossHair UniqueKey="Player"/>
+
+        <SetHideUI Hide="True"/>
+        <BlockInput Enable="True"/>
+
+        <FadeIn Lambda="4.0"/>
+    </InitializePhase>
+
+    <UpdatePhase>
+        <WaitSecond Time="1.0"/>
+        <SetCameraPosition TargetPosition="2.8 0.0 0.0"/>
+        <SetAction UniqueKey="Player" Action="SQ_KickDash"/>
+
+        <WaitSecond Time="1.0"/>
+
+        <SetHideUI Hide="False"/>
+        <BlockInput Enable="False"/>
+        <SetCameraTarget UniqueKey="Player" CameraMode="TargetCenterMode"/>
+
+        <WaitSignal Signal="NeverEnd"/>
+    </UpdatePhase>
+
+    <EndPhase>
+    </EndPhase>
+
+</SequencerGraph>

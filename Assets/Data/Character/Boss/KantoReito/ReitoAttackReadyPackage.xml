@@ -1,0 +1,25 @@
+<AIPackage Name="ReitoAttackReadyPackage" DefaultState="AI_PunchReady">
+
+    <AIState>
+        <AI_PunchReady UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>    
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_PunchReady"/>
+            </Event_OnExecute>
+
+            <Event_OnUpdate>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnUpdate>
+            
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_PunchReady>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

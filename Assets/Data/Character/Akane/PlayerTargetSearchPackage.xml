@@ -1,0 +1,24 @@
+
+<AIPackage Name="PlayerTargetSearchPackage" DefaultState="Entry">
+    <AIState>
+        <Entry UpdateTime="1.0" TargetSearchType="NearMousePointDirection" TargetSearchRange="2.0" TargetSearchStartRange="0.5" TargetSearchSphereRadius="0.3" SearchIdentifier="Enemy">
+            <Branch Condition="getFrameTag_Catched || getFrameTag_CatchReleased" Execute="Catched"/>
+        </Entry>
+
+        <Catched UpdateTime="0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Enemy">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="Player Catched Pack"/>
+            </Event_OnExecute>
+            <Branch Condition="(getFrameTag_Catched == false) && (getFrameTag_CatchReleased == false)" Execute="Entry"/>
+        </Catched>
+    </AIState>
+
+    <Event_OnAttacked>
+        <AIEvent Type="SetAction" Action="Hit"/>
+    </Event_OnAttacked>
+
+    <Event_OnCatched>
+        <AIEvent Type="SetDirectionToTarget"/>
+        <AIEvent Type="SetAction" Action="Catched"/>
+    </Event_OnCatched>
+</AIPackage>

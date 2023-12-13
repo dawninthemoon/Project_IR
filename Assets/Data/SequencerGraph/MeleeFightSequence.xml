@@ -1,0 +1,21 @@
+<SequencerGraph Name="MeleeFightSequence">
+
+    <InitializePhase>
+        <CallAIEvent EventName="MeleeFightStart" UniqueKey="Owner"/>
+
+        <SetCameraZoom Size="2.6"/>
+        <ApplyPostProcessProfile Path="PostProcessProfile/AdditionalTest" BlendTime="0.5" ApplyType="Additional"/>
+    </InitializePhase>
+
+    <UpdatePhase>
+        
+        <WaitSignal Signal="EndMelee"/>
+    </UpdatePhase>
+
+    <EndPhase>
+        <CallAIEvent EventName="MeleeFightEnd" UniqueKey="Owner"/>
+
+        <SetCameraZoom Size="0.0"/>
+    </EndPhase>
+
+</SequencerGraph>

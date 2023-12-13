@@ -1,0 +1,20 @@
+<DanmakuGraph Name="SHT_N_DefenseShot">
+    <Angle Set="0"/>
+    <Loop Count="36" Term="0.05">
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+        <Angle Add="90"/>
+
+        <Angle Add="10"/>
+    </Loop>
+
+</DanmakuGraph>

@@ -1,0 +1,22 @@
+
+<AIPackage Name="PlayerStunPackage" DefaultState="Stun">
+    <AIState>
+        <Stun UpdateTime="0.0" TargetSearchType="NearMousePointDirection" TargetSearchRange="2.0" TargetSearchStartRange="0.5" TargetSearchSphereRadius="0.3" SearchIdentifier="Enemy">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="Stun"/>
+            </Event_OnExecute>
+
+            <Event_OnCatched>
+                <AIEvent Type="SetAction" Action="Catched"/>
+            </Event_OnCatched>
+
+            <Branch Condition="getStat_IsStun == 0.0" Execute="TerminatePackage"/>
+        </Stun>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+    </AIState>
+</AIPackage>

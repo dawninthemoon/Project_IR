@@ -1,0 +1,25 @@
+<AIPackage Name="CommonRunawayPackage" DefaultState="AI_Entry">
+
+    <AIState>
+        <AI_Entry UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="Runaway Entry"/>
+            </Event_OnExecute>
+
+            <Branch Condition="true" Execute="AI_Runaway"/>
+        </AI_Entry>
+
+        <AI_Runaway UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="180.0"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="true" Execute="AI_Runaway"/>
+        </AI_Runaway>
+
+
+    </AIState>
+
+</AIPackage>

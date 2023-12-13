@@ -1,0 +1,18 @@
+<AIPackage Name="CommonAlertPackage" DefaultState="AI_Alert">
+
+    <AIState>
+        <AI_Alert UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="90"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget" Angle="90"/>
+            </Event_OnFrame>    
+            
+            <Branch Condition="End == true" Execute="AI_Alert"/>
+        </AI_Alert>
+    </AIState>
+
+</AIPackage>

@@ -1,0 +1,29 @@
+<AIPackage Name="SisterLightningBoltPackage" DefaultState="AI_LightningBoltReady">
+
+    <AIState>
+        <AI_LightningBoltReady UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_LightningBoltReady"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="AI_LightningBoltShot"/>
+        </AI_LightningBoltReady>
+        
+        <AI_LightningBoltShot UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_LightningBoltShot"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_LightningBoltShot>
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

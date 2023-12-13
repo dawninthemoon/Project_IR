@@ -1,0 +1,21 @@
+<AIPackage Name="SisterThunderStrokePackage" DefaultState="AI_ThunderStroke">
+
+    <AIState>
+        <AI_ThunderStroke UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_ThunderStroke"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_ThunderStroke>
+        
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

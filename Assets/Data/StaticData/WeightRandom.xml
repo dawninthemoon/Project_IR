@@ -1,0 +1,105 @@
+<WeightRandom>
+
+    <Test>
+        <One Value="1"/>
+        <Two Value="2"/>
+        <Three Value="3"/>
+        <Four Value="4"/>
+    </Test>
+
+    <TutorialBossJudgeAttackSTD>
+        <ByDistance Value="1"/>
+        <ByRandom Value="1"/>
+    </TutorialBossJudgeAttackSTD>
+
+    <TutorialBossJudgeNearAttack>
+        <H_SHT_N_DefenseShot Value="1"/>
+    </TutorialBossJudgeNearAttack>
+
+    <TutorialBossJudgeCommonAttack>
+        <H_MIX_C_RushNCaseShot Value="1"/>
+        <H_MIX_C_SwingComboNCaseShot Value="1"/>
+        <H_MIX_C_ThrustComboNCaseShot Value="1"/>
+        <H_SHT_C_Gatling3NSpear Value="1"/>
+    </TutorialBossJudgeCommonAttack>
+
+    <TutorialBossJudgeFarAttack>
+        <H_ATK_F_ChargeThrust Value="1"/>
+        <H_SHT_F_ChargeSpear Value="1"/>
+    </TutorialBossJudgeFarAttack>
+
+    <RandBoolean>
+        <True Value = "1"/>
+        <False Value = "1"/>
+    </RandBoolean>
+
+    <RandDirection>
+        <UP Value = "1"/>
+        <Down Value = "1"/>
+        <Left Value = "1"/>
+        <Right Value = "1"/>
+    </RandDirection>
+
+    <NajimiJudgeFarAttack>
+        <Baton Value = "8"/>
+        <Beam Value = "2"/>
+    </NajimiJudgeFarAttack>
+
+    <NajimiJudgeDodge>
+        <Fast Value = "1"/>
+        <Normal Value = "1"/>
+        <Slow Value = "1"/>
+    </NajimiJudgeDodge>
+
+    <NajimiHitReaction>
+        <Attack Value ="10"/>
+        <Dodge Value ="40"/>
+    </NajimiHitReaction>
+
+    <NajimiDodgeAtk>
+        <DashAttack Value ="10"/>
+        <DistAttack Value ="20"/>
+    </NajimiDodgeAtk>
+
+    <Najimi2PhaseDistAtk>
+        <ChaseRush Value ="10"/>
+        <PitchingMachine Value ="10"/>
+        <Pitching Value ="10"/>
+        <DashRush Value ="10"/>
+    </Najimi2PhaseDistAtk>
+    
+    <RandVector3>
+        <x Value ="1"/>
+        <y Value ="1"/>
+        <z Value ="1"/>
+    </RandVector3>
+
+    <RandVector4>
+        <x Value ="1"/>
+        <y Value ="1"/>
+        <z Value ="1"/>
+        <r Value ="1"/>
+    </RandVector4>
+
+    <AobaDodge>
+        <True Value ="3"/>
+        <False Value ="7"/>
+    </AobaDodge>
+    
+    <AobaApproachAtk>
+        <StormRaisen Value ="1"/>
+        <ChargeRaisen Value ="1"/>
+        <Tsuba Value ="1"/>
+    </AobaApproachAtk>
+
+    <AobaShortAtk>
+        <ChargeRaisen Value ="1"/>
+        <Dodge Value ="1"/>
+    </AobaShortAtk>
+    
+    <AobaHitReaction>
+        <Dodge Value ="1"/>
+        <Tsuba Value ="1"/>
+    </AobaHitReaction>
+
+</WeightRandom>

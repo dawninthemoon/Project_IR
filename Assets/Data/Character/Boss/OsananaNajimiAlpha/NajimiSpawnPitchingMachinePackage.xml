@@ -1,0 +1,49 @@
+<AIPackage Name="NajimiSpawnPitchingMachinePackage" DefaultState="AI_SpawnMachine">
+
+    <AIState>
+        <AI_SpawnMachine UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="AI Pitching Entry"/>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_SpawnPitchingMachine"/>
+            </Event_OnExecute>        
+            
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_SpawnMachine>
+
+<!--
+        <AI_SideStep UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="45"/>
+                <AIEvent Type="SetAction" Action="AC_Dash"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="End" Execute="AI_PitcherReady"/>
+        </AI_SideStep>
+        <AI_PitcherReady UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_PitcherReady"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="AI_Pitch"/>
+        </AI_PitcherReady>
+
+        <AI_Pitch UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="AI Pitch"/>
+                <AIEvent Type="SetAction" Action="AC_Pitch"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>            
+        </AI_Pitch>
+-->
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

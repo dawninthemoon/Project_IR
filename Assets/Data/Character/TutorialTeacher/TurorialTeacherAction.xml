@@ -1,0 +1,38 @@
+<ActionGraph Name="TurorialTeacherAction" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <Idle MovementType="Empty" DirectionType="MoveInput">
+        <AnimationHeader MasterPath="Sprites/Enemy/TutorialTeacher/"/>
+        <Animation Preset="idle_0" XFlip="true" Duration="3">
+            <FrameEvent Type="TalkBalloon" Condition="getWeight_RandVector4^x" StartTime="0" SimpleTalkKey="Talk_TutorialTeacher_0"/>
+            <FrameEvent Type="TalkBalloon" Condition="getWeight_RandVector4^y" StartTime="0" SimpleTalkKey="Talk_TutorialTeacher_1"/>
+            <FrameEvent Type="TalkBalloon" Condition="getWeight_RandVector4^z" StartTime="0" SimpleTalkKey="Talk_TutorialTeacher_2"/>
+
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Idle"/>
+    </Idle>
+
+    <Dead MovementType="Empty" DirectionType="MoveInput">
+        <AnimationHeader MasterPath="Sprites/Enemy/TutorialTeacher/"/>
+        <Animation Preset="idle_0" XFlip="true" Duration="1">
+
+            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Enemy/TutorialTeacher/head_2" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_3.5^4.5" Friction="1" Torque="Random_-50^50" AngularFriction="10.0"/>
+            </FrameEvent>
+
+            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Enemy/TutorialTeacher/body_1" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="0.0 0.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+            </FrameEvent>
+
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.9"/>
+            <FrameEvent Type="SetTimeScale" Scale="0.1" Time="1.0" BlendTime="1.0"/>
+            -->
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead"/>
+    </Dead>
+
+</ActionGraph>

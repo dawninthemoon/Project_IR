@@ -1,0 +1,144 @@
+
+<ActionGraph Name="TateChan" DefaultAction="AC_Idle" DefaultFramePerSecond="12" DefaultBuff="23 25">
+
+    <AC_Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/"/>
+        <Animation Preset="1_idle" XFlip="true" Duration="0.5">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Idle>
+
+    <AC_Move MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/"/>
+        <Animation Preset="2_move" XFlip="true" Duration="0.5">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="2" Speed="15"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Move"/>
+    </AC_Move>
+
+    <AC_Dodge MovementType="GraphPreset" MovementGraphPreset="Tate_Dodge" DirectionType="AI" FlipType="Direction" DefenceType="Evade" DefenceAngle="360">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/"/>
+        <Animation Preset="7_dodge" XFlip="true" Duration="0.7">
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Dodge>
+
+    <AC_GuardForward MovementType="FrameEvent" DirectionType="AI" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/5_guard/"/>
+        <Animation Preset="1_forward" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="0.2" Speed="1"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_GuardForward"/>
+    </AC_GuardForward>
+
+    <AC_GuardBack MovementType="FrameEvent" DirectionType="AI" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/5_guard/"/>
+        <Animation Preset="2_backward" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="0.2" Speed="-1"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_GuardBack"/>
+    </AC_GuardBack>
+
+    <AC_GuardSuccess MovementType="FrameEvent" DirectionType="AttackedPoint" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/5_guard/"/>
+        <Animation Preset="3_guardSuccess" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GuardSuccess>
+
+    <!-- 가드 브레이크 공격 피격 후 뒤로 밀림-->
+    <AC_GuardBreakHit MovementType="FrameEvent" DirectionType="AttackedPoint" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/6_guardBreak/"/>
+        <Animation Preset="1_guardBreakHit" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0" Velocity="-3.0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GuardBreakHit>
+
+    <!-- 가드 완전 해제 상태 -->
+    <AC_GuardBroken MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/6_guardBreak/"/>
+        <Animation Preset="2_guardBroken" XFlip="true" Duration="1.25">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="3"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GuardBroken>
+
+    <AC_AttackReady MovementType="FrameEvent" DirectionType="AI" FlipType="Direction" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/1_attack/"/>
+        <Animation Preset="1_attackReady" XFlip="true" Duration="0.4">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_AttackReady>
+
+    <AC_AttackMain MovementType="FrameEvent" DirectionType="AI" FlipType="Direction" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction" ApplyBuff="24">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/1_attack/"/>
+        <Animation Preset="2_attackMain" XFlip="true" Duration="0.6">
+            <FrameEvent Type="Attack" StartTime="0" EndTime="0.3" AttackPreset="Tate_Normal">
+                <OnHit>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="1"/>
+                    <!-- <FrameEvent Type="Effect" Path="Resources/Sprites/Effect/ProjectileHit" FramePerSecond="18.0" Offset="0.0 0.0 0.0" ToTarget="true"/>-->
+                    
+                    <FrameEvent Type="ZoomEffect" StartTime="0" Scale="-0.4"/>
+                    <FrameEvent Type="StopUpdate" StartTime="0" Time="0.15"/>
+
+                    <FrameEvent Type="Test" StartTime="0" Log="Attack"/>
+                </OnHit>
+            
+                <OnGuard>
+                    <!-- <FrameEvent Type="Effect" Path="Resources/Sprites/Effect/ProjectileHit" FramePerSecond="18.0" Offset="0.0 0.0 0.0" ToTarget="true"/>-->
+                    
+                    <FrameEvent Type="ZoomEffect" StartTime="0" Scale="-0.1"/>
+                    <FrameEvent Type="StopUpdate" StartTime="0" Time="0.05"/>
+                </OnGuard>
+            </FrameEvent>
+
+            <FrameEvent Type="Movement" StartTime="0" Friction="24" MaxVelocity="13" Velocity="13" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_AttackMain>
+
+    <AC_AttackSuccess MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction" DefenceType="Guard" DefenceAngle="270.0" DefenceDirectionType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/1_attack/"/>
+        <Animation Preset="3_attackSuccess" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0" Velocity="-3.0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_AttackSuccess>
+
+    <AC_Hit MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction" DefenceType="Guard" DefenceAngle="360.0" DefenceDirectionType="Direction" ApplyBuff="22">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/"/>
+        <Animation Preset="3_hit" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Hit>
+
+    <Dead DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/TateChan/0_default/"/>
+        <Animation Preset="4_dead" XFlip="true" Duration="1">
+            <FrameEvent Type="Effect" StartTime="0" Path="Sprites/Enemy/TateChan/0_default/4_dead" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+            </FrameEvent>
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead"/>
+    </Dead>
+
+</ActionGraph>

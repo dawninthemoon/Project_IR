@@ -1,0 +1,13 @@
+<AIPackage Name="CommonGuardPackage" DefaultState="AI_Guard">
+
+    <AIState>
+        <AI_Guard UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Guard"/>
+            </Event_OnExecute>
+            <Branch Condition="End == true" Execute="AI_Guard"/>
+        </AI_Guard>
+    </AIState>
+
+</AIPackage>

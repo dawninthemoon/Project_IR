@@ -1,0 +1,6 @@
+<DanmakuGraph Name="MagicalBulletReverse">
+
+    <Angle Set="0"/>
+    <Projectile Name="MagicalBulletReverse" ShotInfoUseType="Overlap" DirectionType="AITarget"/>
+
+</DanmakuGraph>

@@ -1,0 +1,21 @@
+<AIPackage Name="CommonDashPackage" DefaultState="AI_Dash">
+
+    <AIState>
+        <AI_Dash UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Dash"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_Dash>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

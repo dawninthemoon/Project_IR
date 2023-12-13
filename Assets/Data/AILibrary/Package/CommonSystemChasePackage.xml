@@ -1,0 +1,30 @@
+<AIPackage Name="CommonSystemChasePackage" DefaultState="AI_Entry">
+    <GlobalVariable Name="gv_najimiSystemChaseRange" Value="9.75"/>     <!-- 카메라 범위 값. 카메라 바깥으로 사라지지 않게 추격 -->
+    <AIState>
+        <AI_Entry UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="AI System Chase Entry"/>
+            </Event_OnExecute>
+
+            <Branch Condition="true" Execute="AI_Chase"/>
+        </AI_Entry>
+
+        <AI_Chase UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_SystemChase"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="TargetDistance < gv_najimiSystemChaseRange" Execute="TerminatePackage"/>
+            <Branch Condition="End" Execute="AI_Chase"/>
+        </AI_Chase>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+    </AIState>
+
+</AIPackage>

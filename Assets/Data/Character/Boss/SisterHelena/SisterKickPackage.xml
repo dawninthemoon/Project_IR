@@ -1,0 +1,37 @@
+<AIPackage Name="SisterKickPackage" DefaultState="AI_Kick">
+
+    <AIState>
+        <AI_Kick UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="AI Kick Entry"/>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Kick"/>
+            </Event_OnExecute>
+            <!-- 추후 발차기 종류 추가 (일반 발차기, 후공 발차기, 3연속 발차기)-->
+            <Branch Condition="AttackSuccess" Execute="AI_KickSuccess"/>
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_Kick>
+
+        <AI_KickSuccess UpdateTime="2.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="AI Kick Success"/>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Kicked"/>
+            </Event_OnExecute>
+        
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnFrame>
+
+            <Branch Condition="true" Execute="TerminatePackage"/>
+        </AI_KickSuccess>
+        
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

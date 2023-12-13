@@ -1,0 +1,75 @@
+<AIPackage Name="AobaUnwaverRaisenPackage" DefaultState="AI_HitToDodge">
+
+    <AIState>
+        <AI_HitToDodge UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_HitToDodge"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="getTargetFrameTag_Attack && (TargetDistance <= 1.5)" Execute="AI_HorizontalDodge"/>
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_HitToDodge>
+
+        <AI_HorizontalDodge UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="0"/>
+                <AIEvent Type="SetAction" Action="AC_ShortDodge"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="End" Execute="AI_UnwaverRaisen"/>
+        </AI_HorizontalDodge>
+
+        <AI_UnwaverRaisen UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_UnwaverRaisen"/>
+            </Event_OnExecute>
+
+            <Branch Condition="AttackSuccess" Execute="AI_UnwaverRaisenSuccess"/>
+            <Branch Condition="End" Execute="AI_ChoraisenPre"/>
+        </AI_UnwaverRaisen>
+
+        <AI_UnwaverRaisenSuccess UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_UnwaverRaisenSuccess"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>    
+        </AI_UnwaverRaisenSuccess>
+
+        <!-- 초뢰섬 -->
+        <AI_ChoraisenPre UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_ChoraisenPre"/>
+            </Event_OnExecute>        
+            
+            <Branch Condition="End" Execute="AI_RaisenSlash"/>
+        </AI_ChoraisenPre>
+
+        <AI_RaisenSlash UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_ChoraisenSlash"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="AttackSuccess" Execute="AI_RaisenSuccess"/>
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_RaisenSlash>
+
+        <AI_RaisenSuccess UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_ChoraisenSuccess"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End" Execute="TerminatePackage"/>    
+        </AI_RaisenSuccess>
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>

@@ -1,0 +1,41 @@
+<ActionGraph Name="ChairObject" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <Idle MovementType="Empty" DirectionType="Keep" IgnoreAttackType="Default Catch">
+        <AnimationHeader MasterPath="Sprites/Effect/"/>
+        <Animation Preset="ChairDummy" XFlip="true" Duration="2">
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Idle"/>
+        <Branch Condition="GuardBreakFail" Execute="Dead_Kicked"/>
+    </Idle>
+
+    <Dead_Kicked MovementType="Empty" DirectionType="Keep">
+        <AnimationHeader MasterPath="Sprites/Effect/"/>
+        <Animation Preset="ChairDummy" XFlip="true" Duration="2">
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.9"/>
+            -->
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+
+            <FrameEvent Type="Projectile" StartTime="0" GraphName="ChairProjectile" DirectionType="AttackedPoint" SpawnTargetType="Self" SearchIdentifier="Projectile" DirectionAngle="180.0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead_Kicked"/>
+    </Dead_Kicked>
+
+    <Dead MovementType="Empty" DirectionType="Keep">
+        <AnimationHeader MasterPath="Sprites/Effect/"/>
+        <Animation Preset="ChairDummy" XFlip="true" Duration="2">
+            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Effect/ChairDummy" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+            </FrameEvent>
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.9"/>
+            -->
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead"/>
+    </Dead>
+
+</ActionGraph>

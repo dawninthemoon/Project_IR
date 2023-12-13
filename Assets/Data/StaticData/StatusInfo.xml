@@ -1,0 +1,187 @@
+
+<StatusInfo>
+    <CommonPlayerStatus>
+        <Stat Type="HP" Max="5" Min="0" Init="5"/>
+        <Stat Type="Stamina" Max="1000" Min="0" Init="1000"/>
+        <Stat Type="Blood" Max="5" Min="0" Init="0"/>
+        <Stat Type="Battle" Max="100" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="DashPoint" Max="4" Min="0" Init="4"/>
+        <Stat Type="Custom" Name="Charging" Max="100" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="IsStun" Max="1" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="IsCatched" Max="1" Min="0" Init="0"/>
+    </CommonPlayerStatus>
+
+    <CommonEnemyStatus>
+        <Stat Type="HP" Max="3" Min="0" Init="1"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+    </CommonEnemyStatus>
+
+    <CommonEnemyStatusNoUI>
+        <Stat Type="HP" Max="3" Min="0" Init="1"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+    </CommonEnemyStatusNoUI>
+
+    <CommonEnemyStatusNoUITest>
+        <Stat Type="HP" Max="99999" Min="0" Init="99999"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+    </CommonEnemyStatusNoUITest>
+
+    <CommonHpOneEnemyStatus>
+        <Stat Type="HP" Max="1" Min="0" Init="1"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+    </CommonHpOneEnemyStatus>
+
+    <CommonHpOneEnemyStatusNoUI>
+      <Stat Type="HP" Max="1" Min="0" Init="1"/>
+      <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+      <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+      <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+    </CommonHpOneEnemyStatusNoUI>
+  
+    <CommonHpTwoEnemyStatus>
+        <Stat Type="HP" Max="2" Min="0" Init="2"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+    </CommonHpTwoEnemyStatus>
+    <CommonHpThreeEnemyStatus>
+        <Stat Type="HP" Max="3" Min="0" Init="3"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+    </CommonHpThreeEnemyStatus>
+
+    <TutorialBossStatus>
+        <Stat Type="HP" Max="100" Min="0" Init="20"/>
+        <Stat Type="Stamina" Max="100" Min="0" Init="100"/>
+        <Stat Type="Battle" Max="100" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="HitPoint" Max="5" Min="0" Init="2"/>
+        <Stat Type="Custom" Name="Posture" Max="100" Min="0" Init="100"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.5"/>
+    </TutorialBossStatus>
+
+    <TateChanStatus>
+        <Stat Type="HP" Max="7" Min="0" Init="7"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+        <Stat Type="Custom" Name="AttackDelay" Max="1" Min="0" Init="1"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.5"/>
+    </TateChanStatus>
+
+    <TestEnemyStatus>
+        <Stat Type="HP" Max="3" Min="0" Init="3"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="GuardPoint" Max="3" Min="0" Init="3"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.5"/>
+    </TestEnemyStatus>
+
+    <OsananaNajimiStatus>
+        <Stat Type="HP" Max="50" Min="0" Init="50"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="20" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="Phase" Max="3" Min="0" Init="1"/>
+        
+        <Stat Type="Custom" Name="RushCount" Max="11" Min="0" Init="0"/>
+        <Stat Type="Custom" Name="PistolCount" Max="3" Min="0" Init="0"/>
+
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+        <DeclareGraphicInterface Target="Battle" Color="1 0.749 0 1" HorizontalGap="0.1"/>
+        
+    </OsananaNajimiStatus>
+
+    <KantoReitoStatus>
+        <Stat Type="HP" Max="70" Min="0" Init="50"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="20" Min="0" Init="0"/>
+        
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+    
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+        <DeclareGraphicInterface Target="Battle" Color="1 0.749 0 1" HorizontalGap="0.1"/>
+        
+    </KantoReitoStatus>
+
+    <NozawaAobaStatus>
+        <Stat Type="HP" Max="50" Min="0" Init="50"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="20" Min="0" Init="0"/>
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+        <DeclareGraphicInterface Target="Battle" Color="1 0.749 0 1" HorizontalGap="0.1"/>
+    </NozawaAobaStatus>
+
+    <GauntletStatus>
+        <Stat Type="HP" Max="3" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="20" Min="0" Init="0"/>
+    </GauntletStatus>
+
+    <SisterHelenaStatus>
+        <Stat Type="HP" Max="50" Min="0" Init="50"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="20" Min="0" Init="0"/>
+        
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+
+        <DeclareGraphicInterface Target="HP" Color="1 0 0 1" HorizontalGap="0.1"/>
+        <DeclareGraphicInterface Target="Battle" Color="1 0.749 0 1" HorizontalGap="0.1"/>
+    </SisterHelenaStatus>
+    
+    <ActionProjectileStatus>
+        <Stat Type="HP" Max="1" Min="0" Init="1"/>
+        <Stat Type="Blood" Max="100" Min="0" Init="3"/>
+        <Stat Type="Battle" Max="0" Min="0" Init="0"/>
+        
+        <Stat Type="HitCount" Max="999" Min="0" Init="0"/>
+        <Stat Type="GuardCount" Max="999" Min="0" Init="0"/>
+    </ActionProjectileStatus>
+</StatusInfo>

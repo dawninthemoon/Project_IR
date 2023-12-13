@@ -1,0 +1,3 @@
+<DanmakuGraph Name="SHT_F_ChargeSpear">
+    <Projectile Name="tutorial_spear" DirectionType="AITarget"/>
+</DanmakuGraph>

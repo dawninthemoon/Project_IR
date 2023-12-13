@@ -1,0 +1,105 @@
+<AIGraph Name="EmptyAIGraph" DefaultState="Entry">
+
+    <Include Path="Assets/Data/Character/Boss/TateChan/TateChanPackage.xml"/>
+    <Include Path="Assets/Data/Character/Boss/TateChan/TateRepressPackage.xml"/>
+    <Include Path="Assets/Data/Character/Boss/TateChan/TateDefensePackage.xml"/>
+    <Include Path="Assets/Data/Character/Boss/TateChan/TateGuardBreakHitPackage.xml"/>
+    <Include Path="Assets/Data/Character/Boss/TateChan/TateDodgePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonChasePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonBumpAttackPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonIdlePackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonHitPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/Package/CommonGuardBrokenPackage.xml"/>
+    
+    <!-- 타겟 인지 거리 -->
+    <GlobalVariable Name="gv_TargetSearchRange" Value="10.0"/>
+    
+    <!-- 방패 드는 거리 -->
+    <GlobalVariable Name="gv_guardOnDistance" Value="2.5"/>
+    <!-- 방패 내리는 거리 -->
+    <GlobalVariable Name="gv_guardOffDistance" Value="4.0"/>
+    <!-- 공격 발동 기준 거리 -->
+    <GlobalVariable Name="gv_guardAttackDistance" Value="1.6"/>
+
+    <!-- 전투 시작 대기 시간 -->
+    <GlobalVariable Name="gv_standTime" Value="0.5"/>
+    <!-- 추격 지속 시간 -->
+    <GlobalVariable Name="gv_movingTime" Value="0.5"/>
+
+    <!-- Branch Set -->
+    <BranchSet Name="HitReactionSet">
+        <Branch Condition="Dead" Execute="Dead"/>
+        <Branch Condition="Hit" Execute="Hit"/>
+        <Branch Condition="GuardBroken && (getStat_GuardPoint <= 0.0)" Execute="GuardBroken"/>
+        <Branch Condition="GuardBroken" Execute="GuardBreakHit"/>
+    </BranchSet>
+    <!-- Branch Set -->
+    
+    <Test Package="TateChanPackage">
+        <Branch Condition="Dead" Execute="Dead"/>
+    </Test>
+
+    <Entry Package="CommonIdlePackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="TargetExists && (TargetDistance <= gv_guardOnDistance)" Execute="DefenseMode"/>
+        <Branch Condition="TargetExists && (GraphExecutedTime >= gv_standTime)" Execute="Chase"/>
+    </Entry>
+
+    <Chase Package="CommonChasePackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="(TargetDistance <= gv_guardAttackDistance) && (getStat_AttackDelay >= 1.0)" Execute="Attack"/>
+        <Branch Condition="(TargetDistance <= gv_guardOnDistance)" Execute="RepressMode"/>
+        <!-- <Branch Condition="GraphExecutedTime >= gv_movingTime" Execute="Entry"/> -->
+    </Chase>
+
+    <DefenseMode Package="TateDefensePackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="TargetExists == false" Execute="Entry"/>
+        <Branch Condition="(TargetDistance >= gv_guardOffDistance)" Execute="Entry"/>
+        <Branch Condition="(TargetDistance <= gv_guardAttackDistance) && (GraphExecutedTime >= 0.2)&& (getStat_AttackDelay >= 1.0)" Execute="Attack"/>
+    </DefenseMode>
+
+    <RepressMode Package="TateRepressPackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="TargetExists == false" Execute="Entry"/>
+        <Branch Condition="TargetDistance >= gv_guardOffDistance" Execute="Entry"/>
+        <Branch Condition="(TargetDistance <= gv_guardAttackDistance) && (getStat_AttackDelay >= 1.0)" Execute="Attack"/>
+        <Branch Condition="CurrentPackageEnd" Execute="DefenseMode"/>
+    </RepressMode>
+
+    <Attack Package="CommonBumpAttackPackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Attack>
+
+    <GuardBreakHit Package="TateGuardBreakHitPackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="TargetExists == false" Execute="Entry"/>
+        <Branch Condition="CurrentPackageEnd" Execute="DefenseMode"/>
+    </GuardBreakHit>
+
+    <GuardBroken Package="CommonGuardBrokenPackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </GuardBroken>
+
+    <Hit Package="CommonHitPackage">
+        <Branch Condition="Dead" Execute="Dead"/>
+        <Branch Condition="Hit" Execute="Hit"/>
+        <Branch Condition="GuardBroken && (getStat_GuardPoint <= 0.0)" Execute="GuardBroken"/>
+        <Branch Weight="RandBoolean^True" Condition="DefenceSuccess || GuardBroken" Execute="DefenseMode"/>
+        <Branch Weight="RandBoolean^False" Condition="DefenceSuccess || GuardBroken" Execute="Dodge"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Entry"/>
+    </Hit>
+
+    <!-- TODO 연속 피격 후 회피 패턴 검토-->
+    <Dodge Package="TateDodgePackage">
+        <UseBranchSet Name="HitReactionSet"/>
+        <Branch Condition="CurrentPackageEnd" Execute="Attack"/>
+    </Dodge>
+    
+    <Dead Package="CommonDeadPackage">
+    </Dead>
+
+</AIGraph>

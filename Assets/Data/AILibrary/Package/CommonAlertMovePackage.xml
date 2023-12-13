@@ -1,0 +1,60 @@
+<AIPackage Name="CommonAlertMovePackage" DefaultState="AI_Entry">
+
+    <BranchSet Name="AlertMoveBranchSet">
+        <Branch Condition="TargetDistance > 3.0" Execute="AI_Chase"/>
+        <Branch Condition="TargetDistance <= 3.0" Execute="AI_Alert"/>
+        <Branch Condition="TargetDistance <= 1.5" Execute="AI_Away"/>
+    </BranchSet>
+
+    <AIState>
+        <AI_Entry UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="AI Chase Entry"/>
+            </Event_OnExecute>
+
+            <UseBranchSet Name="AlertMoveBranchSet"/>
+        </AI_Entry>
+
+        <AI_Alert UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="90"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget" Angle="90"/>
+            </Event_OnFrame>    
+            
+            <UseBranchSet Name="AlertMoveBranchSet"/>
+        </AI_Alert>
+
+        <AI_Chase UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnFrame>
+            
+            <UseBranchSet Name="AlertMoveBranchSet"/>
+        </AI_Chase>
+
+        <AI_Away UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="180"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget" Angle="180"/>
+            </Event_OnFrame>
+            
+            <UseBranchSet Name="AlertMoveBranchSet"/>
+        </AI_Away>
+
+    </AIState>
+
+</AIPackage>

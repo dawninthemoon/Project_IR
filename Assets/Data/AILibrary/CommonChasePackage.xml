@@ -1,0 +1,105 @@
+
+<AIPackage Name="CommonChasePackage" DefaultState="Entry">
+    <Event_OnAttacked>
+        <AIEvent Type="ExecuteState" Execute="Hit"/>
+    </Event_OnAttacked>
+
+    <Event_OnEvade Consume="true">
+        <AIEvent Type="ExecuteState" Execute="HitCounter"/>
+    </Event_OnEvade>
+
+    <Event_OnGuarded Consume="true">
+        <AIEvent Type="ExecuteState" Execute="AttackGuarded"/>
+    </Event_OnGuarded>
+
+    <Event_OnParried Consume="true">
+        <AIEvent Type="ExecuteState" Execute="AttackParried"/>
+    </Event_OnParried>
+
+    <AIState>
+        <Entry UpdateTime="1.0" TargetSearchType="Near" TargetSearchRange="1.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="Idle"/>
+            </Event_OnExecute>
+
+            <Branch Condition="(TargetDistance > 0.7) && TargetExists" Execute="Chase"/>
+            
+        </Entry>
+
+        <Chase UpdateTime="0.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="MoveAll"/>
+            </Event_OnExecute>
+
+            <Branch Condition="(TargetDistance < 0.7)" Execute="AttackTarget"/>
+
+            <Event_OnUpdate>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnUpdate>
+        </Chase>
+
+        <Hit UpdateTime="0.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="Hit"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End == true" Execute="SideDash"/>
+
+        </Hit>
+
+        <AttackParried UpdateTime="0.0">
+            <Branch Condition="End == true" Execute="Entry"/>
+        </AttackParried>
+
+        <HitCounter UpdateTime="0.0">
+            <Branch Condition="true" Execute="SideDashAttack"/>
+        </HitCounter>
+
+        <SideDash UpdateTime="0.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="180.0"/>
+                <AIEvent Type="SetAction" Action="SideDash"/>
+            </Event_OnExecute>
+
+            <Branch Condition="End == true" Execute="Chase"/>
+        </SideDash>
+
+
+        <SideDashAttack UpdateTime="0.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="SideDash"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnFrame>
+
+            <Branch Condition="End == true" Execute="AttackTarget"/>
+        </SideDashAttack>
+
+        <AttackTarget UpdateTime="1.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AttackCharge"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget"/>
+            </Event_OnFrame>
+
+            <Branch Condition="true" Execute="Chase"/>
+
+        </AttackTarget>
+
+        <AttackGuarded UpdateTime="0.0">
+
+            <Branch Condition="(TargetDistance < 1.0) && End" Execute="AttackTarget"/>
+            <Branch Condition="End" Execute="Chase"/>
+
+        </AttackGuarded>
+
+
+    </AIState>
+</AIPackage>

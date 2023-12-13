@@ -1,0 +1,209 @@
+<ActionGraph Name="SisterChanAction" DefaultAction="AC_Idle" DefaultFramePerSecond="12">
+    
+    <AC_Entry MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="1_idle" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Entry"/>
+    </AC_Entry>
+
+    <AC_Idle MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="1_idle" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Idle>
+
+    <AC_Move MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="2_move" XFlip="true" Duration="0.5">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="5" Speed="15"/>
+
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Move"/>
+    </AC_Move>
+
+    <AC_SystemChase MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="2_move" XFlip="true" Duration="0.1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="20" Speed="40"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_SystemChase"/>
+    </AC_SystemChase>
+
+    <!-- Dash -->
+    <!-- Dadge -->
+
+    <AC_Hit MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2202" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountIncrease"/>
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Hit>
+
+    <AC_GuardBroken MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2202" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountIncrease"/>
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+            
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GuardBroken>
+
+    <AC_Groggy MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2402" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BattleClear"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndTime="999" Tag="Groggy"/>
+
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Groggy>
+    
+    <Dead DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/0_default/"/>
+        <Animation Preset="5_dead" XFlip="true" Duration="1">
+            <!--
+            <FrameEvent Type="SetTimeScale" Scale="0.1" Time="1.0" BlendTime="1.0"/>
+            <FrameEvent Type="ZoomEffect" Scale="-0.9"/>
+            -->
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead_Loop"/>
+    </Dead>
+
+    <Dead_Loop DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/NozawaAoba/0_default/"/>
+        <Animation Preset="5_dead" XFlip="true" Duration="1">
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead_Loop"/>
+    </Dead_Loop>
+
+    <!-- 보류 -->
+    <!--
+    <AC_SelfHeal MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/1_punch/"/>
+        <Animation Preset="4_punchRecovery" XFlip="true" Duration="0.85">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_SelfHeal"/>
+    </AC_SelfHeal>
+    -->
+    <AC_SpawnHolyNail MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/SisterHelena/3_spawnHolyNail" XFlip="true" Duration="1.0">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2208" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+            <FrameEvent Type="Danmaku" StartTime="0.5" Path="Enemy\ReitoGauntlet.xml"/> <!-- TODO: 성정 캐릭터 추가 -->
+            
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_SpawnHolyNail>
+
+    <!-- 빠른 낙뢰 -->
+    <AC_ThunderStroke MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/1_thunderStroke/"/>
+        <Animation Preset="1_thunderReady" XFlip="true" Duration="0.7">
+            <FrameEvent Type="Projectile" StartTime="0.2" GraphName="ThunderStroke" DirectionType="AI" SpawnTargetType="AITarget"/>
+        </Animation>
+        <Animation Preset="2_thunderMain" XFlip="true" Duration="0.5">
+            
+        </Animation>
+
+    </AC_ThunderStroke>
+
+    <!-- 보류 -->
+    <AC_LightningBoltReady MovementType="FrameEvent" DirectionType="AI" FlipType="Direction" Flags="LaserEffect">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/2_cremationBeam/"/>
+        <Animation Preset="1_cremationBeamReady" XFlip="true" Duration="0.85">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2206" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+            <FrameEvent Type="TimelineEffect" StartTime="0" Path="Prefab/Effect/ReitoCremationBeam_TimeLine" Attach="true" AngleType="Direction" LifeTime="1.05" FollowDirection="True"/>
+
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_LightningBoltReady>
+
+    <AC_LightningBoltShot MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction" Flags="LaserEffect">
+        <AnimationHeader MasterPath="Sprites/Enemy/SisterHelena/2_cremationBeam/"/>
+        <Animation Preset="2_cremationBeamShot" XFlip="true" Duration="1.0">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+            <!-- TODO: 화장포 이펙트 추가해야함. 해당 이펙트 지속시간에 따라 Main 모션 시간과 Attack 지속 시간 조정 -->
+            <FrameEvent Type="AudioPlay" StartTime="0.2" ID="2207" Attach="true"/>
+            <FrameEvent Type="Attack" StartTime="0.2" AttackPreset="Reito_Beam">
+                <OnHit>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="1"/>
+                    <!-- <FrameEvent Type="ApplyBuffTarget" ApplyBuff="StunSet"/> -->
+
+                    <FrameEvent Type="StopUpdate" Time="0.07"/>
+                    <FrameEvent Type="SetTimeScale" Scale="0.2" Time="0.2" BlendTime="0.2"/>
+                    <FrameEvent Type="ShakeEffect" Scale="0.15" Speed="35.0" Time="0.2"/>
+
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Slash" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Blood" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="StopUpdate" Time="0.07"/>
+                </OnHit>
+            
+                <OnGuard>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="1"/>
+                    <!-- <FrameEvent Type="ApplyBuffTarget" ApplyBuff="StunSet"/> -->
+
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Slash" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Blood" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="StopUpdate" Time="0.07"/>
+                </OnGuard>
+            </FrameEvent>
+        </Animation>
+        <Animation Preset="3_cremationBeamRecovery" XFlip="true" Duration="0.3">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_LightningBoltShot>
+
+
+
+</ActionGraph>

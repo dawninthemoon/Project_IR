@@ -1,0 +1,8 @@
+<DanmakuGraph Name="ReitoGauntlet">
+
+    <Angle Set="0"/>
+    <Projectile Name="Gauntlet" ShotInfoUseType="Add" DirectionType="Keep"/>
+    <Angle Set="180"/>
+    <Projectile Name="Gauntlet" ShotInfoUseType="Add" DirectionType="Keep"/>
+
+</DanmakuGraph>

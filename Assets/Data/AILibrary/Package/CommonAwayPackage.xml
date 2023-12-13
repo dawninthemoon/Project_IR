@@ -1,0 +1,18 @@
+<AIPackage Name="CommonAwayPackage" DefaultState="AI_Away">
+
+    <AIState>
+        <AI_Away UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget" Angle="180"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+
+            <Event_OnFrame>
+                <AIEvent Type="SetDirectionToTarget" Angle="180"/>
+            </Event_OnFrame>
+            
+            <Branch Condition="End == true" Execute="AI_Away"/>
+        </AI_Away>
+    </AIState>
+
+</AIPackage>

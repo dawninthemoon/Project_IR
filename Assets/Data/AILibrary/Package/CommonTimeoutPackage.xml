@@ -1,0 +1,13 @@
+
+<AIPackage Name="CommonTimeoutPackage" DefaultState="Entry">
+    <AIState>
+        <Entry UpdateTime="999.0">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="Timeout"/>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+
+        </Entry>
+
+    </AIState>
+</AIPackage>

@@ -1,0 +1,294 @@
+<ActionGraph Name="NajimiChanAlphaAction" DefaultAction="AC_Idle" DefaultFramePerSecond="12" DefaultBuff="NajimiBattleDecrementKeep">
+
+    <AC_Entry MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="1_idle" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Entry"/>
+    </AC_Entry>
+
+    <AC_Idle MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="1_idle" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+            <!-- 바톤 슬래시 카운트 리셋 (pistol 이름 바꿔야함.)-->
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="NajimiResetPistolCount"/>
+            <!-- <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountClear"/> -->
+            <FrameEvent Type="ReleaseCatch" StartTime="0" Push="0 0 0" Condition="getTargetFrameTag_Dead"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Idle>
+
+    <AC_Move MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="2_move" XFlip="true" Duration="0.5">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="5" Speed="15"/>
+
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Move"/>
+    </AC_Move>
+
+    <AC_SystemChase MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="2_move" XFlip="true" Duration="0.1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="20" Speed="40"/>
+
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_SystemChase"/>
+    </AC_SystemChase>
+    
+    <AC_Dash MovementType="GraphPreset" MovementGraphPreset="Najimi_Dash" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="3_dash" XFlip="true" Duration="0.7">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2100" Attach="true"/>
+
+            <FrameEvent Type="Test" Log="HitCount 2" Condition="getStat_HitCount == 2.0"/>
+            <FrameEvent Type="Test" Log="HitCount 3" Condition="getStat_HitCount == 3.0"/>
+            <FrameEvent Type="Test" Log="HitCount 4" Condition="getStat_HitCount == 4.0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountClear"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Dash"/>
+    </AC_Dash>
+
+    <AC_Hit MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2108" Attach="true"/>
+
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountIncrease"/>
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Hit>
+
+    <AC_GuardBroken MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2108" Attach="true"/>
+
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountIncrease"/>
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+            
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GuardBroken>
+
+    <AC_Groggy MovementType="FrameEvent" DirectionType="AttackedPoint" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="4_hit" XFlip="true" Duration="1.25">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" Speed="0" Velocity="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BattleClear"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndTime="999" Tag="Groggy"/>
+
+            <!--
+            <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+            -->
+            <FrameEvent Type="StopUpdate" Time="0.15"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Groggy>
+    
+    <Dead_Loop DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="5_dead" XFlip="true" Duration="1">
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead_Loop"/>
+    </Dead_Loop>
+
+    <Dead DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/0_default/"/>
+        <Animation Preset="5_dead" XFlip="true" Duration="1">
+            <!--
+            <FrameEvent Type="SetTimeScale" Scale="0.1" Time="1.0" BlendTime="1.0"/>
+            <FrameEvent Type="ZoomEffect" Scale="-0.9"/>
+            -->
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead_Loop"/>
+    </Dead>
+
+    <!-- 피격 리액션으로 러시 공격 시 준비 모션 -->
+    <AC_RushReady MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/1_rushPattern/1_rush/"/>
+        <Animation Preset="4_rushReady" XFlip="true" Duration="0.7">  <!-- TODO: 임시 모션이므로 바꿔줘야함. -->
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2101" Attach="true"/>
+
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="BossHitCountClear"/>
+        </Animation>
+    
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_RushReady>
+
+    <!-- 아카네를 잡기위해 돌진하는 모션, 충돌 시 데미지 적용, 잡기 처리 -->
+    <AC_Rush MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <!-- 나지미 돌진, 헛다리 애니메이션. 공격 성공 시 성공 액션으로 전이. -->
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/1_rushPattern/1_rush/"/>
+        <Animation Preset="1_rushMain" XFlip="true" Duration="0.35">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2100" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="24" MaxVelocity="12" Velocity="12" Speed="0"/>
+            <FrameEvent Type="ApplyBuff" StartTime="0" ApplyBuff="NajimiAddRushCount"/>
+            <FrameEvent Type="Attack" StartTime="0" EndTime="0.2" AttackPreset="Najimi_Rush" AttackType="Catch" CatchOffset="0.1 0 0">
+                <OnCatch>
+                    <FrameEvent Type="AudioPlay" StartTime="0" ID="2102" Attach="true"/>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonHalfAttack"/>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="CatchedSet"/>
+                    <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+                    <FrameEvent Type="StopUpdate" Time="0.15"/>
+                    
+                    <!-- visual -->
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Impact" Offset="0.0 0.0 0.0" Attach="true" ToTarget="true" AngleType="AttackPoint"/>
+                </OnCatch>
+            </FrameEvent>
+        </Animation>
+        <Animation Preset="2_rushRoll" XFlip="true" Duration="0.25">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+        <Animation Preset="3_rushRecover" XFlip="true" Duration="1.47">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Rush>
+
+    <!-- 아카네 잡기에 성공하여 꽉 끌어안는 모션 -->
+    <AC_RushSuccess_Entry MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/OsananaNajimi/1_rushPattern/2_grab/1_grabPre" XFlip="true" Duration="1.0">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12"/>
+            <FrameEvent Type="ReleaseCatch" StartTime="1" Push="1 0 0" Condition="getTargetFrameTag_Recatchable == false"/>
+        </Animation>
+
+        <Branch Condition="getKey_Escape_1 || getKey_Escape_2" Execute="AC_RushSuccess_Struggle"/>
+    </AC_RushSuccess_Entry>
+    <AC_RushSuccess_Struggle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/OsananaNajimi/1_rushPattern/3_struggle" XFlip="true" Duration="1.0">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2103" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="12"/>
+            <FrameEvent Type="ReleaseCatch" StartTime="1" Push="1 0 0" Condition="getTargetFrameTag_Recatchable == false"/>
+        </Animation>
+
+        <Branch Condition="getKey_Escape_1 || getKey_Escape_2" Execute="AC_RushSuccess_Entry"/>
+    </AC_RushSuccess_Struggle>
+
+    <AC_RushSuccess_Attack MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/OsananaNajimi/1_rushPattern/2_grab/2_grabMain" XFlip="true" Duration="1.0">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12"/>
+            
+            <FrameEvent Type="Attack" StartTime="0" AttackPreset="Najimi_Catch">
+                <OnHit>
+                    <FrameEvent Type="AudioPlay" StartTime="0" ID="2104" Attach="true"/>
+
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="ZoomEffect" Scale="-0.4"/>
+                    <FrameEvent Type="StopUpdate" Time="0.15"/>
+
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Impact" Offset="0.0 0.0 0.0" Attach="true" ToTarget="true" AngleType="AttackPoint"/>
+                </OnHit>
+            </FrameEvent>
+
+            <FrameEvent Type="ReleaseCatch" StartTime="1" Push="1 0 0" Condition="getTargetFrameTag_Recatchable == false"/>
+        </Animation>
+
+        <Branch Condition="getKey_Escape_1 || getKey_Escape_2" Execute="AC_RushSuccess_Struggle"/>
+    </AC_RushSuccess_Attack>
+
+    <AC_Away MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/1_rushPattern/4_away/"/>
+        <Animation Preset="1_awaySpin" XFlip="true" RotationPreset="NajimiAway" Duration="1.0">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2108" Attach="true"/>
+
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="-6" Speed="0"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+        <Animation Preset="2_awayStand" XFlip="true" Duration="1.0">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Away>
+
+    <AC_PitcherReady MovementType="FrameEvent" DirectionType="AI" FlipType="Direction" Flags="LaserEffect">
+        <!-- 투구 준비 모션, 탄막 경로 활성화 -->
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/2_pitchingPattern/"/>
+        <Animation Preset="2_pitcherReady" XFlip="true" Duration="0.65">
+            <FrameEvent Type="AudioPlay" StartTime="0" ID="2105" Attach="true"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+            <FrameEvent Type="TimelineEffect" StartTime="0" Path="Prefab/Effect/NajimiPitchingBeam_TimeLine" Attach="true" AngleType="Direction" LifeTime="0.82" FollowDirection="True"/>
+
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_PitcherReady>
+
+    <AC_Pitch MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction" Flags="LaserEffect">
+        <!-- 투구 모션, 장판 활성화 -->
+        <AnimationHeader MasterPath="Sprites/Enemy/OsananaNajimi/2_pitchingPattern/3_pitching/"/>
+        <Animation Preset="1_pitchingMain" XFlip="true" Duration="1.0">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" MaxVelocity="0" Speed="0"/>
+            <!-- TODO: 투구 이펙트 추가해야함. 해당 이펙트 지속시간에 따라 Main 모션 시간과 Attack 지속 시간 조정 -->
+            
+            <FrameEvent Type="AudioPlay" StartTime="0.17" ID="2106" Attach="true"/>
+            <FrameEvent Type="Attack" StartTime="0.17" AttackPreset="Najimi_Pitching">
+                <OnHit>
+                    <FrameEvent Type="AudioPlay" StartTime="0.1" ID="2107"/>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="CommonDoubleAttack"/>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="StunSet"/>
+
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Slash" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Blood" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="Effect" Path="Sprites/Projectile/BaseBall" FramePerSecond="0.2" CastShadow="True" Offset="0.0 0.1 0.0" Attach="true" ToTarget="true" AngleType="AttackPoint">
+                        <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+                    </FrameEvent>
+                
+                    <FrameEvent Type="StopUpdate" Time="0.07"/>
+                </OnHit>
+            
+                <OnGuard>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="1"/>
+                    <FrameEvent Type="ApplyBuffTarget" ApplyBuff="StunSet"/>
+
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Slash" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="ParticleEffect" Path="Prefab/Effect/Blood" Offset="0.0 0.0 0.0" ToTarget="true" AngleType="AttackPoint"/>
+                    <FrameEvent Type="StopUpdate" Time="0.07"/>
+                </OnGuard>
+            </FrameEvent>
+        </Animation>
+        <Animation Preset="2_pitchingRecovery" XFlip="true" Duration="0.3">
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="HitAvail"/>
+            <FrameEvent Type="FrameTag" StartTime="0" EndFrame="999" Tag="GbAvail"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Pitch>
+</ActionGraph>

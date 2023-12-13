@@ -1,0 +1,22 @@
+<SequencerGraph Name="Stage_0_1_03">
+
+    <InitializePhase>
+    </InitializePhase>
+
+    <UpdatePhase>
+        <TalkBalloon UniqueKey="Player" SimpleTalkKey="Talk_Stage01_4"/>
+        <WaitSecond Time="1.5"/>
+        <TalkBalloon UniqueKey="Mob04" SimpleTalkKey="Talk_Stage01_5"/>
+        <DeadFence UniqueKey="" UniqueGroupKey="MobGroup02"/>
+        <WaitSecond Time="1.0"/>
+        <TalkBalloon UniqueKey="Player" SimpleTalkKey="Talk_Stage01_6"/>
+        <WaitSecond Time="3.0"/>
+        <ToastMessage Text="이후 매점 스테이지로 화면 전환"/>
+        <WaitSecond Time="5.0"/>
+
+    </UpdatePhase>
+
+    <EndPhase>
+    </EndPhase>
+
+</SequencerGraph>

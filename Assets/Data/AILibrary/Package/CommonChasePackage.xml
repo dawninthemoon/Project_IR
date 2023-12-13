@@ -1,0 +1,24 @@
+<AIPackage Name="CommonChasePackage" DefaultState="AI_Entry">
+
+    <AIState>
+        <AI_Entry UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+                <AIEvent Type="Test" Log="AI Chase Entry"/>
+            </Event_OnExecute>
+
+            <Branch Condition="true" Execute="AI_Chase"/>
+        </AI_Entry>
+
+        <AI_Chase UpdateTime="0.2" TargetSearchType="Near" TargetSearchRange="999.9" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Move"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="true" Execute="AI_Chase"/>
+        </AI_Chase>
+
+    </AIState>
+
+</AIPackage>

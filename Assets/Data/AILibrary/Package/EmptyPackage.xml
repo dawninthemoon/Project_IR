@@ -1,0 +1,8 @@
+
+<AIPackage Name="EmptyPackage" DefaultState="Entry">
+    <AIState>
+        <Entry UpdateTime="999.0">
+        </Entry>
+
+    </AIState>
+</AIPackage>

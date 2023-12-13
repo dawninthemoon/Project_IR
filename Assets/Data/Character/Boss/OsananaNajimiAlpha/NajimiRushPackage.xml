@@ -1,0 +1,80 @@
+<AIPackage Name="NajimiRushPackage" DefaultState="AI_Rush">
+
+    <AIState>
+        <AI_Rush UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>    
+                <AIEvent Type="SetDirectionToTarget"/>
+                <AIEvent Type="SetAction" Action="AC_Rush"/>
+            </Event_OnExecute>
+            <!-- 추후 발차기 종류 추가 (일반 발차기, 후공 발차기, 3연속 발차기)-->
+            <Branch Condition="AttackCatchTarget" Execute="AI_RushSuccess"/>
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_Rush>
+
+        <!-- Rush 공격 실패 후 대기 상태, 1.47 sec (0.53 sec 은 Rush에서 사용)-->
+        <!--
+        <AI_RushFailed UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+            </Event_OnExecute>
+
+            <Branch Condition="(PackageExecutedTime >= 1.47)" Execute="TerminatePackage"/>
+        </AI_RushFailed>
+        -->
+        <AI_RushSuccess UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="Test" Log="AI Rush Success"/>
+                <AIEvent Type="SetAction" Action="AC_RushSuccess_Entry"/>
+            </Event_OnExecute>
+
+            <Branch Condition="(PackageExecutedTime >= 0.8)" Execute="AI_RushSuccess_Attack"/>
+            <Branch Condition="End && getTargetFrameTag_Recatchable && (PackageExecutedTime >= 1.0)" Execute="AI_RushSuccess"/>
+            <Branch Condition="IsCatcher == false" Execute="AI_Away"/>
+        </AI_RushSuccess>
+
+        <AI_RushSuccess_Attack UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_RushSuccess_Attack"/>
+            </Event_OnExecute>
+            
+            <Branch Condition="getTargetFrameTag_Dead" Execute="AI_Idle"/>
+            <Branch Condition="End && getTargetFrameTag_Recatchable" Execute="AI_RushSuccess"/>
+            <Branch Condition="IsCatcher == false" Execute="AI_Away"/>
+            <Branch Condition="End" Execute="AI_Away"/>
+        </AI_RushSuccess_Attack>
+
+        <AI_Away UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Away"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_Away>
+
+        <AI_Idle UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+            </Event_OnExecute>
+        
+            <Branch Condition="End" Execute="TerminatePackage"/>
+        </AI_Idle>
+
+        <!--
+        <AI_AwayStand UpdateTime="0.0" TargetSearchType="Near" TargetSearchRange="999.0" SearchIdentifier="Player">
+            <Event_OnExecute>
+                <AIEvent Type="SetAction" Action="AC_Idle"/>
+            </Event_OnExecute>
+
+            <Branch Condition="(PackageExecutedTime >= 1.0)" Execute="TerminatePackage"/>
+        </AI_AwayStand>
+        -->
+
+        <TerminatePackage>
+            <Event_OnExecute>
+                <AIEvent Type="TerminatePackage"/>
+            </Event_OnExecute>
+        </TerminatePackage>
+
+    </AIState>
+
+</AIPackage>
