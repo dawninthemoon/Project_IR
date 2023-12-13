@@ -1,10 +1,10 @@
 
 
 <CharacterInfo>
-    <!-- <Akane
-        DisplayName="아카네"
-        ActionGraph="Assets/Data/Character/Akane/MainPlayerAction.xml"
-        AIGraph="Assets/Data/Character/Akane/PlayerAI.xml"
+    <Player
+        DisplayName="플레이어"
+        ActionGraph="Assets/Data/Character/Player/PlayerAction.xml"
+        AIGraph="Assets/Data/Character/Player/PlayerAI.xml"
         StatusInfoName="CommonPlayerStatus"
         
         CollisionRadius="0.2"
@@ -12,6 +12,6 @@
         ProjectileCollisionRadius=""
 
         SearchIdentifier="Player"
-    /> -->
+    />
 
 </CharacterInfo>

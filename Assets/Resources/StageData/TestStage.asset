@@ -27,7 +27,16 @@ MonoBehaviour:
     _cameraBoundToTrigger: 0
     _onEnterSequencerPath: []
     _onExitSequencerPath: []
-    _characterSpawnData: []
+    _characterSpawnData:
+    - _characterKey: Player
+      _uniqueKey: Player
+      _uniqueGroupKey: 
+      _startAction: Idle
+      _flip: 0
+      _hideWhenDeactive: 0
+      _searchIdentifier: 0
+      _activeType: 0
+      _localPosition: {x: -1.61, y: -0.97, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1

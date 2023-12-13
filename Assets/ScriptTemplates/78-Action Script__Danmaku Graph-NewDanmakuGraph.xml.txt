@@ -1,0 +1,5 @@
+<DanmakuGraph Name="#SCRIPTNAME#">
+
+    <Projectile Name="TestProjectile" ShotInfoUseType="Add"/>
+
+</DanmakuGraph>

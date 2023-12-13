@@ -961,10 +961,6 @@ public class GameEntityBase : SequencerObjectBase
                     direction = input;
                     direction.Normalize();
                 }
-                else
-                {
-                    direction = Vector3.zero;
-                }
                 break;
             case DirectionType.MousePoint:
                 direction = ControllerEx.Instance().getJoystickAxisR(transform.position);

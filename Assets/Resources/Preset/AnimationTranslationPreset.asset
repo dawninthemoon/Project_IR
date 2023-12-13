@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9e78a45cf2e174ab47e4a0791d00d9, type: 3}
+  m_Name: AnimationTranslationPreset
+  m_EditorClassIdentifier: 
+  _presetData:
+  - _name: Shake
+    _xCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.24166666
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.23333335
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    _yCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.46622494
+        outSlope: 0.46622494
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.2449959
+      - serializedVersion: 3
+        time: 0.25
+        value: 0.05
+        inSlope: 0.015311144
+        outSlope: 0.015311144
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7878197
+        value: -0.041094672
+        inSlope: 0.07288035
+        outSlope: 0.07288035
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.9956621
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0.3810877
+        outSlope: 0.3810877
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.317811
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0

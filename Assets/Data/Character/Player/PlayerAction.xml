@@ -1,0 +1,35 @@
+<ActionGraph Name="PlayerAction" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <Idle MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Preset="Idle" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="getKey_Move" Execute="Move"/>
+        <Branch Condition="End == true" Execute="Idle"/>
+    </Idle>
+
+    <Move MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Path="Move" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+        </Animation>
+
+        <Branch Condition="getKey_Move == false" Execute="Idle"/>
+        <Branch Condition="End" Execute="Move"/>
+    </Move>
+
+    <Dead MovementType="Empty" DirectionType="MoveInput">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Preset="Idle" XFlip="true">
+            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Player/Idle" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+            </FrameEvent>
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead"/>
+    </Dead>
+
+</ActionGraph>
