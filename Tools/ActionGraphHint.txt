@@ -1,0 +1,125 @@
+HintType,Symbol,TextList
+FrameEvent,Test,Log=~~
+FrameEvent,Attack,"Radius=~~,Angle=~~,StartDistance=~~,AttackPreset=~~,Push=~~,IgnoreDefenceType=~~,CatchOffset=~~,AttackType=~~,AttackCount=~~,NotifyAttackSuccess=~~"
+FrameEvent,ApplyBuff,ApplyBuff=~~
+FrameEvent,ApplyBuffTarget,ApplyBuff=~~
+FrameEvent,DeleteBuff,BuffList=~~
+FrameEvent,SetDefenceType,DefenceType=~/${1|Empty Guard Parry Evade}~
+FrameEvent,Effect,"Path=~~,FramePerSecond=~~,Offset=~~,Angle=~~,ToTarget=~~,UseFlip=~~,Attach=~~,UpdateType=~~"
+FrameEvent,SetFrameTag,"EndTime=~~,Tag=~~,Tag=~~"
+FrameEvent,Projectile,"GraphName=~~,DirectionType=~~,ShotInfoUseType=~~,SpawnTargetType=~~,StartTerm=~~,PredictionAccuracy=~~,Offset=~~,UseFlip=~~,SearchIdentifier=~~,DirectionAngle=~~"
+FrameEvent,Danmaku,"Path=~~,Offset=~~,UseFlip=~~"
+FrameEvent,SetAnimationSpeed,Speed=~~
+FrameEvent,Movement,"Friction=~~,MaxVelocity=~~,Speed=~~,Velocity=~~"
+FrameEvent,ZoomEffect,Scale=~~
+FrameEvent,StopUpdate,Time=~~
+FrameEvent,TimelineEffect,"Path=~~,Offset=~~,ToTarget=~~,Attach=~~,UpdateType=~~,AngleType=~~,AttackPreset=~~"
+FrameEvent,ParticleEffect,"Path=~~,Offset=~~,ToTarget=~~,Attach=~~,UpdateType=~~,AngleType=~~"
+FrameEvent,SpawnCharacter,"CharacterKey=~~,Offset=~0 0 0~,SearchIdentifier=~~,Inherit=~~,InheritDirection=~~,UseFlip=~~"
+FrameEventAndInQuote,Attack IgnoreDefenceType=,"Guard,Parry,Evade"
+FrameEventAndInQuote,SetDefenceType DefenceType=,"Empty,Guard,Parry,Evade"
+FrameEventAndInQuote,Projectile ShotInfoUseType=,"UseDefault,Overlap,Add"
+FrameEventAndInQuote,Projectile SpawnTargetType=,"Self,Target,AITarget"
+InQuote,MovementType=,"Empty,RootMotion,GraphPreset,FrameEvent"
+InQuote,DirectionType=,"AlwaysRight,AlwaysLeft,AlwaysUp,AlwaysDown,Keep,MoveInput,MousePoint,AttackedPoint,MoveDirection,AI,AITarget"
+InQuote,DefenceDirectionType=,"Direction,MousePoint"
+InQuote,FlipType=,"AlwaysTurnOff,Direction,MousePoint,Keep"
+InQuote,RotationType=,"AlwaysRight,Direction,MousePoint,MoveDirection,Keep,Torque"
+InQuote,DefenceType=,"Empty,Guard,Parry,Evade"
+InQuote,IsActionSelection=,"true,false"
+InQuote,NormalizedSpeed=,"true,false"
+InQuote,Attach=,"true,false"
+InQuote,DirectionUpdateOnce=,"true,false"
+InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_"
+InQuote,UpdateType=,"ScaledDeltaTime,NoneScaledDeltaTime"
+InQuote,ToTarget=,"true,false"
+InQuote,AngleType=,"Normal,AttackPoint,Direction"
+InQuote,SearchIdentifier=,"Player,Enemy,Projectile"
+InScope,,"MovementType=~~,MovementGraphPreset=~~,DirectionType=~~,DefenceDirectionType=~~,FlipType=~~,RotationType=~~,MoveScale=~~,IsActionSelection=~~,ApplyBuff=~~,NormalizedSpeed=~~,DefenceType=~~,DefenceAngle=~~,DirectionUpdateOnce=~~,IsActionSelection=~~,FlipTypeUpdateOnce=~~,RotateBySpeed=~~,RotateSpeed=~~,DirectionAngle=~~,Flags=~~,HeadUpOffset=~~,IgnoreAttackType=~~"
+LineStart,<Branch,"Key=~~,Condition=~~,Execute=~~,Weight=~~"
+LineStart,<Animation,"Preset=~~,Duration=~~,Path=~~,StartTime=~~,EndTime=~~,FramePerSecond=~~,Loop=~~,XFlip=~~,YFlip=~~,RotationPreset=~~,ScalePreset=~~,AngleBaseAnimation=~~,MultiSelectUpdateOnce=~~"
+LineStart,<MultiSelectAnimation,"Path=~~,Condition=~~"
+LineStart,<Physics,"UseGravity=~~,Velocity=~~,Friction=~~,Torque=~~,AngularFriction=~~"
+LineStart,<BranchSet,Name=~~
+LineStart,<GlobalVariable,"Name=~~,Value=~~"
+LineStart,<ActionGraph,"Name=~~,DefaultAction=~~,DefaultFramePerSecond=~~,DefaultBuff=~~"
+LineStartAndInQuote,<Animation XFlip=,"true,false"
+LineStartAndInQuote,<Animation YFlip=,"true,false"
+LineStartAndInQuote,<Animation Loop=,"true,false"
+LineStartAndInQuote,<FrameEvent Type=,"Test,Attack,ApplyBuff,ApplyBuffTarget,DeleteBuff,TeleportToTarget,TeleportToTargetBack,SetDefenceType,Effect,SetFrameTag,Projectile,Danmaku,SetAnimationSpeed,KillEntity,Movement,ZoomEffect,StopUpdate"
+ShortCut,__Action,<${1}>#n#t<Animation Path=~~>#n#t</Animation>#n</${1}>
+ShortCut,__UseBranchSet,<UseBranchSet Name=~~/>
+ShortCut,__FrameEvent,<FrameEvent Type=~~ StartTime=~0~/>
+ShortCut,__Branch,<Branch Condition=~~ Execute=~~/>
+ShortCut,__BranchSet,<BranchSet Name=~~>#n#t#n</BranchSet>
+ShortCut,__GlobalVariable,<GlobalVariable Name=~~ Value=~~/>
+ShortCut,__FrameEvent_Attack,<FrameEvent Type=~Attack~ StartTime=~0~ AttackPreset=~~>#n#t<OnHit>#n#t</OnHit>#n#n#t<OnGuard>#n#t</OnGuard>#n#n#t<OnParry>#n#t</OnParry>#n#n#t<OnGuardBreakFail>#n#t</OnGuardBreakFail>#n#n#t<OnCatch>#n#t</OnCatch>#n</FrameEvent>
+ShortCut,__FrameEvent_ApplyBuff,<FrameEvent Type=~ApplyBuff~ StartTime=~0~ ApplyBuff=~~/>
+ShortCut,__FrameEvent_ApplyBuffTarget,<FrameEvent Type=~ApplyBuffTarget~ StartTime=~0~ ApplyBuff=~~/>
+ShortCut,__FrameEvent_DeleteBuff,<FrameEvent Type=~DeleteBuff~ StartTime=~0~ BuffList=~~/>
+ShortCut,__FrameEvent_TeleportToTarget,<FrameEvent Type=~TeleportToTarget~ StartTime=~0~/>
+ShortCut,__FrameEvent_TeleportToTargetBack,<FrameEvent Type=~TeleportToTargetBack~ StartTime=~0~/>
+ShortCut,__FrameEvent_SetDefenceType,<FrameEvent Type=~SetDefenceType~ StartTime=~0~ DefenceType=~~/>
+ShortCut,__EffectPhysics,<Physics UseGravity=~True~ Velocity=~0.0^10.0~ Friction=~1~ Torque=~360~ AngularFriction=~360~/>
+ShortCut,__FrameEvent_Effect,<FrameEvent Type=~Effect~ StartTime=~0~ Path=~~ FramePerSecond=~~/>
+ShortCut,__FrameEvent_SetFrameTag,<FrameEvent Type=~FrameTag~ StartTime=~0~ EndTime=~999~ Tag=~~/>
+ShortCut,__FrameEvent_Projectile,<FrameEvent Type=~Projectile~ StartTime=~0~ GraphName=~~ DirectionType=~~ SpawnTargetType=~~/>
+ShortCut,__FrameEvent_Danmaku,<FrameEvent Type=~Danmaku~ StartTime=~0~ Path=~~/>
+ShortCut,__FrameEvent_SetAnimationSpeed,<FrameEvent Type=~SetAnimationSpeed~ StartTime=~0~ Speed=~~/>
+ShortCut,__FrameEvent_KillEntity,<FrameEvent Type=~KillEntity~ StartTime=~0~/>
+ShortCut,__FrameEvent_Movement,<FrameEvent Type=~Movement~ StartTime=~0~ Friction=~~ Velocity=~~ MaxVelocity=~~ Speed=~~/>
+ShortCut,__MultiSelectAnimation,<MultiSelectAnimation Path=~~ Condition=~~/>
+ShortCut,__FrameEvent_ZoomEffect,<FrameEvent Type=~ZoomEffect~ StartTime=~0~ Scale=~~/>
+ShortCut,__FrameEvent_StopUpdate,<FrameEvent Type=~StopUpdate~ StartTime=~0~ Time=~~/>
+ShortCut,__FrameEvent_SpawnCharacter,<FrameEvent Type=~SpawnCharacter~ StartTime=~0~ CharacterKey=~~ Offset=~0 0 0~ SearchIdentifier=~~ InheritDirection=~~/>
+InQuote,AttackType=,"Default,GuardBreak,Catch"
+ShortCut,__FrameEvent_ReleaseCatch,<FrameEvent Type=~ReleaseCatch~ StartTime=~0~ Push=~~/>
+FrameEvent,ReleaseCatch,Push=~~
+InQuote,FollowDirection,"true,false"
+ShortCut,__FrameEvent_TalkBalloon,<FrameEvent Type=~TalkBalloon~ StartTime=~0~ SimpleTalkKey=~~/>
+FrameEvent,TalkBalloon,SimpleTalkKey=~~
+ShortCut,__FrameEvent_SetTimeScale,<FrameEvent Type=~SetTimeScale~ StartTime=~0~ Scale=~~ Time=~~ BlendTime=~~/>
+FrameEvent,SetTimeScale,"Scale=~~,Time=~~,BlendTime=~~"
+ShortCut,__FrameEvent_ShakeEffect,<FrameEvent Type=~ShakeEffect~ StartTime=~0~ Scale=~~ Speed=~~ Time=~~/>
+FrameEvent,ShakeEffect,"Scale=~~,Time=~~,Speed=~~"
+ShortCut,__AnimationPreset,<Animation Preset=~~ Duration=~~>#n</Animation>
+ShortCut,__AnimationHeader,<AnimationHeader MasterPath=~~/>
+LineStart,<AnimationHeader,MasterPath=~~
+ShortCut,__FrameEvent_ParticleEffect,<FrameEvent Type=~ParticleEffect~ StartTime=~0~ Path=~~/>
+InQuote,UseFlip=,"true,false"
+ShortCut,__FrameEvent_CallAIEvent,<FrameEvent Type=~CallAIEvent~ StartTime=~0~ EventName=~~ EventTargetType=~~/>
+FrameEvent,CallAIEvent,"EventName=~~,EventTargetType=~~,Range=~~,SearchIdentifier=~~"
+InQuote,EventTargetType=,"Range,Self,FrameEventTarget,Summoner"
+ShortCut,__FrameEvent_AudioPlay,<FrameEvent Type=~AudioPlay~ StartTime=~0~ ID=~~/>
+FrameEvent,AudioPlay,"ID=~~,ToTarget=~~,Attach=~~,UseFlip=~~,ParamterID=~~,ParameterValue=~~"
+InQuote,Flags=,"ClearPush,LaserEffect"
+ShortCut,__FrameEvent_Test,<FrameEvent Type=~Test~ StartTime=~0~ Log=~~/>
+FrameEvent,SetCameraZoom,Size=~~
+ShortCut,__FrameEvent_SetCameraZoom,<FrameEvent Type=~SetCameraZoom~ StartTime=~0~ Size=~~/>
+ShortCut,__FrameEvent_PlaySequencer,<FrameEvent Type=~PlaySequencer~ StartTime=~0~ Path=~~/>
+FrameEvent,PlaySequencer,Path=~~
+ShortCut,__FrameEvent_SequencerSignal,<FrameEvent Type=~SequencerSignal~ StartTime=~0~ Signal=~~/>
+FrameEvent,SequencerSignal,Signal=~~
+ShortCut,__FrameEvent_ApplyPostProcessProfile,<FrameEvent Type=~ApplyPostProcessProfile~ StartTime=~0~ Path=~~ BlendTime=~~/>
+FrameEvent,ApplyPostProcessProfile,"Path=~~,BlendTime=~~,ApplyType=~~"
+InQuote,ApplyType=,"BaseBlend,Additional"
+FrameEvent,SetDirectionType,DirectionType=~~
+ShortCut,__FrameEvent_SetDirectionType,<FrameEvent Type=~SetDirectionType~ StartTime=~0~ DirectionType=~~/>
+FrameEvent,Torque,"Set=~~,Add=~~"
+ShortCut,__FrameEvent_Torque,<FrameEvent Type=~Torque~ StartTime=~0~ Add=~~/>
+ShortCut,__FrameEvent_DeactiveTalkBalloon,<FrameEvent Type=~DeactiveTalkBalloon~ StartTime=~0~/>
+InQuote,IgnoreAttackType=,"Default,GuardBreak,Catch"
+InQuote,MultiSelectUpdateOnce=,"True,False"
+FrameEvent,EffectPreset,Key=~~
+ShortCut,__FrameEvent_EffectPreset,<FrameEvent Type=~EffectPreset~ StartTime=~0~ Key=~~/>
+InQuote,NotifyAttackSuccess=,"True,False"
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,

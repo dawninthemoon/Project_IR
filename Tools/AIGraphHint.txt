@@ -1,0 +1,73 @@
+HintType,Symbol,TextList
+InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_"
+InScope,,"Package=~~,CoolTime=~~"
+LineStart,<Include,Path=~~
+ShortCut,__Include,<Include Path=~~/>
+ShortCut,__State,<${1} Package=~~>#n#t#n</${1}>
+ShortCut,__Branch,<Branch Condition=~~ Execute=~~/>
+ShortCut,__BranchSet,<BranchSet Name=~~>#n#t#n</BranchSet>
+ShortCut,__GlobalVariable,<GlobalVariable Name=~~ Value=~~/>
+ShortCut,__UseBranchSet,<UseBranchSet Name=~~/>
+LineStart,<AIGraph,"Name=~~,DefaultState=~~"
+ShortCut,__Event_OnAttack,<Event_OnAttack>#n#n</Event_OnAttack>
+ShortCut,__Event_OnAttacked,<Event_OnAttacked>#n#n</Event_OnAttacked>
+ShortCut,__Event_OnEvade,<Event_OnEvade>#n#n</Event_OnEvade>
+ShortCut,__Event_OnEvaded,<Event_OnEvaded>#n#n</Event_OnEvaded>
+ShortCut,__Event_OnExecute,<Event_OnExecute>#n#n</Event_OnExecute>
+ShortCut,__Event_OnExit,<Event_OnExit>#n#n</Event_OnExit>
+ShortCut,__Event_OnFrame,<Event_OnFrame>#n#n</Event_OnFrame>
+ShortCut,__Event_OnGuard,<Event_OnGuard>#n#n</Event_OnGuard>
+ShortCut,__Event_OnGuarded,<Event_OnGuarded>#n#n</Event_OnGuarded>
+ShortCut,__Event_OnParried,<Event_OnParried>#n#n</Event_OnParried>
+ShortCut,__Event_OnParry,<Event_OnParry>#n#n</Event_OnParry>
+ShortCut,__Event_OnUpdate,<Event_OnUpdate>#n#n</Event_OnUpdate>
+LineStart,<Event_OnAttack,Consume=~~
+LineStart,<Event_OnAttacked,Consume=~~
+LineStart,<Event_OnEvade,Consume=~~
+LineStart,<Event_OnEvaded,Consume=~~
+LineStart,<Event_OnExecute,Consume=~~
+LineStart,<Event_OnExit,Consume=~~
+LineStart,<Event_OnFrame,Consume=~~
+LineStart,<Event_OnGuard,Consume=~~
+LineStart,<Event_OnGuarded,Consume=~~
+LineStart,<Event_OnParried,Consume=~~
+LineStart,<Event_OnParry,Consume=~~
+LineStart,<Event_OnUpdate,Consume=~~
+InQuote,Consume=,"true,false"
+ShortCut,__CustomEvent,<CustomEvent_>#n#n</CustomEvent_>
+ShortCut,__AIEvent_ClearTarget,<AIEvent Type=~ClearTarget~/>
+ShortCut,__AIEvent_ExecuteState,<AIEvent Type=~ExecuteState~ Execute=~~/>
+ShortCut,__AIEvent_KillEntity,<AIEvent Type=~KillEntity~/>
+ShortCut,__AIEvent_RotateDirection,<AIEvent Type=~RotateDirection~ Time=~~ RotateAngle=~~/>
+ShortCut,__AIEvent_SetAction,<AIEvent Type=~SetAction~ Action=~~/>
+ShortCut,__AIEvent_SetAngleDirection,<AIEvent Type=~SetAngleDirection~ Angle=~~/>
+ShortCut,__AIEvent_SetDirectionToTarget,<AIEvent Type=~SetDirectionToTarget~/>
+ShortCut,__AIEvent_TerminatePackage,<AIEvent Type=~TerminatePackage~/>
+ShortCut,__AIEvent_Test,<AIEvent Type=~Test~ Log=~~/>
+ShortCut,__AIStateSection,<AIState>#n#n</AIState>
+InQuote,SearchIdentifier,"Player,Enemy"
+InQuote,TargetSearchType,"Near,NearDirection,NearMousePointDirection"
+InQuote,Type=,"Test,SetAngleDirection,SetDirectionToTarget,SetAction,ClearTarget,ExecuteState,TerminatePackage,KillEntity"
+ShortCut,__AIEvent_CallAIEvent,<AIEvent Type=~CallAIEvent~ EventName=~~ TargetType=~~/>
+LineStart,<CustomEvent_,Consume=~~
+InQuote,EventTargetType=,"Range,Self,FrameEventTarget,Summoner"
+ShortCut,__AIEvent_AddCustomValue,<AIEvent Type=~AddCustomValue~ Name=~~ Value=~~/>
+ShortCut,__AIEvent_SetCustomValue,<AIEvent Type=~SetCustomValue~ Name=~~ Value=~~/>
+AIEvent,SetCustomValue,"Name=~~,Value=~~"
+AIEvent,AddCustomValue,"Name=~~,Value=~~"
+AIEvent,CallAIEvent,"EventName=~~,TargetType=~~"
+ShortCut,__CustomValue,<CustomValue Name=~~ Value=~~/>
+AIEvent,SequencerSignal,Signal=~~
+ShortCut,__AIEvent_SequencerSignal,<AIEvent Type=~SequencerSignal~ Signal=~~/>
+AIEvent,SetDirectionToTarget,"Angle=~~,Speed=~~"
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,

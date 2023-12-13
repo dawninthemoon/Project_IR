@@ -1,0 +1,101 @@
+HintType,Symbol,TextList
+LineStart,<SpawnCharacter,"CharacterKey=~~,Position=~~,SearchIdentifier=~~,UniqueKey=~~,PositionMarker=~~"
+LineStart,<WaitSecond,Time=~~
+LineStart,<SetCameraTarget,"UniqueKey=~~,CameraMode=~~"
+LineStart,<SetAudioListner,UniqueKey=~~
+LineStart,<SetCrossHair,UniqueKey=~~
+LineStart,<SetHPSphere,UniqueKey=~~
+LineStart,<WaitTargetDead,UniqueKey=~~
+LineStart,<TeleportTargetTo,"UniqueKey=~~,Position=~~,PositionMarker=~~"
+LineStart,<ApplyPostProcessProfile,"Path=~~,BlendTime=~~,ApplyType=~~"
+LineStart,<CallAIEvent,"EventName=~~,UniqueKey=~~,Range=~~,SearchIdentifier=~~,EventTargetType=~~"
+LineStart,<WaitSignal,Signal=~~
+LineStart,<SetCameraZoom,"Size=~~,Speed=~~,Force=~~"
+InQuote,SearchIdentifier=,"Player,Enemy,Projectile"
+InQuote,ApplyType=,"BaseBlend,Additional"
+InQuote,CameraMode=,"TargetCenterMode,TwoTargetMode"
+ShortCut,_SpawnCharacter,<SpawnCharacter CharacterKey=~~ Position=~0 0 0~ SearchIdentifier=~~/>
+ShortCut,__WaitSecond,<WaitSecond Time=~1.0~/>
+ShortCut,__SetCameraTarget,<SetCameraTarget UniqueKey=~~ CameraMode=~TargetCenterMode~/>
+ShortCut,__SetAudioListner,<SetAudioListner UniqueKey=~~/>
+ShortCut,__SetCrossHair,<SetCrossHair UniqueKey=~~/>
+ShortCut,__SetHPSphere,<SetHPSphere UniqueKey=~~/>
+ShortCut,__WaitTargetDead,<WaitTargetDead UniqueKey=~~/>
+ShortCut,__TeleportTargetTo,<TeleportTargetTo UniqueKey=~~ Position=~0 0 0~/>
+ShortCut,__ApplyPostProcessProfile,<ApplyPostProcessProfile Path=~PostProcessProfile/~/>
+ShortCut,__CallAIEvent,<CallAIEvent EventName=~~ UniqueKey=~~/>
+ShortCut,__WaitSignal,<WaitSignal Signal=~~/>
+ShortCut,__SetCameraZoom,<SetCameraZoom Size=~~ Speed=~~/>
+ShortCut,__InitializePhase,<InitializePhase>#n#n</InitializePhase>
+ShortCut,__UpdatePhase,<UpdatePhase>#n#n</UpdatePhase>
+ShortCut,__EndPhase,<EndPhase>#n#n</EndPhase>
+LineStart,<FadeIn,Lambda=~~
+ShortCut,__FadeIn,<FadeIn Lambda=~0.0~/>
+LineStart,<FadeOut,Lambda=~~
+ShortCut,__FadeOut,<FadeOut Lambda=~0.0~/>
+InQuote,EventTargetType=,"UniqueTarget,Range"
+ShortCut,__ForceQuit,<ForceQuit/>
+LineStart,<BlockInput,Enable=~~
+ShortCut,__BlockInput,<BlockInput Enable=~~/>
+InQuote,Enable=,"True,False"
+LineStart,<BlockAI,"Enable=~~,UniqueKey=~~,UniqueGroupKey=~~"
+ShortCut,__BlockAI,<BlockAI UniqueKey=~~ UniqueGroupKey=~~ Enable=~~/>
+LineStart,<SetAction,"UniqueKey=~~,UniqueGroupKey=~~,Action=~~"
+ShortCut,__SetAction,<SetAction UniqueKey=~~ UniqueGroupKey=~~ Action=~~/>
+LineStart,<PlayAnimation,"UniqueKey=~~,PlayAnimation=~~"
+ShortCut,__PlayAnimation,<PlayAnimation UniqueKey=~~ Path=~~/>
+LineStart,<AIMove,"UniqueKey=~~,StartAction=~~,LoopAction=~~,EndAction=~~,EndPosition=~~,EndPositionMarker=~~"
+ShortCut,__AIMove,<AIMove UniqueKey=~~ StartAction=~~ LoopAction=~~ EndAction=~~ EndPosition=~~/>
+LineStart,<QTEFence,KeyName=~~
+ShortCut,__QTEFence,<QTEFence KeyName=~~/>
+InQuote,Force=,"True,False"
+LineStart,<SetCameraPosition,"TargetPosition=~~,TargetPositionMarker=~~"
+ShortCut,__SetCameraPosition,<SetCameraPosition TargetPosition=~~/>
+LineStart,<SetHideUI,Hide=~~
+ShortCut,__SetHideUI,<SetHideUI Hide=~~/>
+InQuote,Hide=,"True,False"
+ShortCut,__ShakeEffect,<ShakeEffect Scale=~~ Speed=~~ Time=~~/>
+LineStart,<ShakeEffect,"Scale=~~,Time=~~,Speed=~~"
+ShortCut,__SetTimeScale,<SetTimeScale Scale=~~ Time=~~ BlendTime=~~/>
+LineStart,<SetTimeScale,"Scale=~~,Time=~~,BlendTime=~~"
+ShortCut,__ZoomEffect,<ZoomEffect Factor=~~/>
+LineStart,<ZoomEffect,Factor=~~
+ShortCut,__DeadFence,<DeadFence UniqueKey=~~ UniqueGroupKey=~~/>
+LineStart,<DeadFence,"UniqueKey=~~,UniqueGroupKey=~~"
+ShortCut,__NextStage,<NextStage Path=~~/>
+LineStart,<NextStage,Path=~~
+ShortCut,__ToastMessage,<ToastMessage Text=~~/>
+LineStart,<ToastMessage,"Text=~~,Time=~~,Color=~~"
+ShortCut,__Task,<Task ProcessType=~~>#n</Task>
+LineStart,<Task,ProcessType=~~
+InQuote,ProcessType=,"StepByStep,AllAtOnce"
+ShortCut,__LetterBoxShow,<LetterBoxShow/>
+ShortCut,__LetterBoxHide,<LetterBoxHide/>
+ShortCut,__TalkBalloon,<TalkBalloon UniqueKey=~~ SimpleTalkKey=~~/>
+LineStart,<TalkBalloon,"UniqueKey=~~,UniqueGroupKey=~~,SimpleTalkKey=~~"
+ShortCut,__CameraTrack,<CameraTrack TrackName=~~/>
+LineStart,<CameraTrack,TrackName=~~
+ShortCut,__TaskFence,<TaskFence TaskName=~~/>
+LineStart,<TaskFence,TaskName=~~
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
