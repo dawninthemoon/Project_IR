@@ -1759,6 +1759,7 @@ public class StageDataEditor : EditorWindow
         }
 
         EditorUtility.SetDirty(_editStageData);
+
         if(_backgroundPrefabObject != null)
         {
             string filePath = "";
@@ -2447,6 +2448,8 @@ public class StageDataEditor : EditorWindow
 
         if(_editStageData == null)
         {
+            if (_tilemapSettingPrefabObject != null)
+                DestroyImmediate(_tilemapSettingPrefabObject);
             if(_backgroundPrefabObject != null)
                 DestroyImmediate(_backgroundPrefabObject);
             return;
