@@ -12,7 +12,7 @@ public class SceneMaster : Singleton<SceneMaster>
     {
         return _characterManager.GetCharacter(targetName);
     }
-    public Tilemap GetWallTilemap()
+    public UnityEngine.Tilemaps.Tilemap GetWallTilemap()
     {
         return _gridManager.mainWall;
     }
@@ -20,7 +20,7 @@ public class SceneMaster : Singleton<SceneMaster>
     {
         return _gridManager.mainGrid;
     }
-    public void SetGridAndWall(Grid grid, Tilemap wall)
+    public void SetGridAndWall(Grid grid, UnityEngine.Tilemaps.Tilemap wall)
     {
         _gridManager.mainGrid = grid;
         _gridManager.mainWall = wall;

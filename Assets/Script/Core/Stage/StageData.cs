@@ -71,6 +71,7 @@ public class MarkerItem
 public class StageData : ScriptableObject
 {
     public string           _stageName;
+    public TilemapConfig    _tilemapConfigPath = null;
     public GameObject       _backgroundPrefabPath = null;
     public bool             _isMiniStage = false;
 
@@ -78,6 +79,7 @@ public class StageData : ScriptableObject
     public List<MiniStageListItem>      _miniStageData = new List<MiniStageListItem>();
     public List<MarkerItem>             _markerData = new List<MarkerItem>();
     public List<MovementTrackData>      _trackData = new List<MovementTrackData>();
+    public TilemapConfig                _collisionTilemapData;
 
     public MarkerItem findMarker(string markerName)
     {

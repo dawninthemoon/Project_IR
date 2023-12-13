@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class SceneGridManager : MonoBehaviour
 {
     public Grid mainGrid;
-    public Tilemap mainWall;
+    public UnityEngine.Tilemaps.Tilemap mainWall;
     private void Awake()
     {
         SceneMaster.Instance().SetCharacterManager(this);

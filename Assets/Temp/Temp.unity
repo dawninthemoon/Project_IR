@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 642512785}
   - component: {fileID: 642512784}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Collisionable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1209,8 +1209,9 @@ GameObject:
   - component: {fileID: 1647443333}
   - component: {fileID: 1647443332}
   - component: {fileID: 1647443334}
+  - component: {fileID: 1647443335}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: TilemapEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1282,6 +1283,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1647443335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647443331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b136698b5a33574419319308ad0fa661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
