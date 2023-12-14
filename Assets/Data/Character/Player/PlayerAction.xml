@@ -25,7 +25,7 @@
     </Move>
 
     <JumpStart MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
-        <Animation Preset="Sprites/Player/" XFlip="True">
+        <Animation Preset="Sprites/Player/JumpStart/" XFlip="True">
             <FrameEvent Type="Jump" StartFrame="1" JumpPower="gv_normalJumpPower"/>
             <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
         </Animation>
@@ -34,7 +34,7 @@
     </JumpStart>
 
     <JumpLoop MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
-        <Animation Preset="Sprites/Player/" XFlip="True">
+        <Animation Preset="Sprites/Player/JumpLoop/" XFlip="True">
             <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
         </Animation>
 
