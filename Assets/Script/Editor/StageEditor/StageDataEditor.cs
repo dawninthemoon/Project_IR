@@ -2414,7 +2414,7 @@ public class StageDataEditor : EditorWindow
             DestroyImmediate(_tilemapSettingPrefabObject);
 
         if (_editStageData._tilemapConfigPath != null) {
-            GameObject tileSettingPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TilemapSettings.prefab", typeof(GameObject)) as GameObject;
+            GameObject tileSettingPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
             _tilemapSettingPrefabObject = Instantiate(tileSettingPrefab, _editItemParent.transform);
 
             Tilemap tilemap = _tilemapSettingPrefabObject.GetComponentInChildren<Tilemap>();

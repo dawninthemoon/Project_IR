@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class StageProcessor : Singleton<StageProcessor>
 {
@@ -26,7 +27,8 @@ public class StageProcessor : Singleton<StageProcessor>
     private float _cameraPositionBlendTimeLeft = 0f;
 
     private GameEntityBase _playerEntity = null;
-    private GameObject _stageBackgroundOjbect = null;
+    private GameObject _stageTilemapParent = null;
+    private GameObject _stageBackgroundObject = null;
 
     private MiniStageListItem   _miniStageInfo = null;
     private BoundBox            _miniStageTrigger = new BoundBox(0f,0f,Vector3.zero);
@@ -202,12 +204,22 @@ public class StageProcessor : Singleton<StageProcessor>
             }
         }
 
+        if (_stageData._tilemapConfigPath != null) 
+        {
+            GameObject tilemapParentPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
+            _stageTilemapParent = GameObject.Instantiate(tilemapParentPrefab);
+
+            Tilemap tilemap = _stageTilemapParent.GetComponentInChildren<Tilemap>();
+            tilemap.SetTiles(_stageData._tilemapConfigPath._positions, _stageData._tilemapConfigPath._tileBases);
+            _stageTilemapParent.transform.position = startPosition;
+        }
+
         if(_stageData._backgroundPrefabPath != null)
         {
-            _stageBackgroundOjbect = GameObject.Instantiate(_stageData._backgroundPrefabPath);
+            _stageBackgroundObject = GameObject.Instantiate(_stageData._backgroundPrefabPath);
 
-            _stageBackgroundOjbect.SetActive(true);
-            _stageBackgroundOjbect.transform.position = startPosition;
+            _stageBackgroundObject.SetActive(true);
+            _stageBackgroundObject.transform.position = startPosition;
         }
     }
 
@@ -238,8 +250,10 @@ public class StageProcessor : Singleton<StageProcessor>
         _currentPoint = 0;
         _isEnd = false;
         _offsetPosition = Vector3.zero;
-        if(_stageBackgroundOjbect != null)
-            GameObject.Destroy(_stageBackgroundOjbect);
+        if(_stageTilemapParent != null)
+            GameObject.Destroy(_stageTilemapParent);
+        if(_stageBackgroundObject != null)
+            GameObject.Destroy(_stageBackgroundObject);
 
         foreach(var item in _spawnedCharacterEntityDictionary.Values)
         {
