@@ -15,8 +15,12 @@ MonoBehaviour:
   _animationCustomPresetData:
     _duration:
     - 0.125
+    - 0.125
+    - 0.125
+    - 0.125
+    - 0.125
     _effectFrameEvent: []
-    _playCount: 0
+    _playCount: 1
   _translationPresetName: 
   _rotationPresetName: 
   _scalePresetName: 

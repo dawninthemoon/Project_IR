@@ -1,6 +1,6 @@
 <ActionGraph Name="PlayerAction" DefaultAction="Idle" DefaultFramePerSecond="12">
 
-    <GlobalVariable Name="gv_normalJumpPower" Value="1.0"/>
+    <GlobalVariable Name="gv_normalJumpPower" Value="0.2"/>
 
     <Idle MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
@@ -26,8 +26,8 @@
 
     <JumpStart MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <Animation Preset="Sprites/Player/JumpStart/" XFlip="True">
-            <FrameEvent Type="Jump" StartFrame="1" JumpPower="gv_normalJumpPower"/>
-            <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
+            <FrameEvent Type="Jump" StartTime="0" JumpPower="gv_normalJumpPower"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
         </Animation>
 
         <Branch Condition="End" Execute="JumpLoop"/>

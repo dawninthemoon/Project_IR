@@ -20,7 +20,7 @@ public class GroundController : MonoBehaviour {
     {
         get;
         set;
-    } = 1f;
+    } = 0.1f;
     #endregion
 
     #region Ground Check
