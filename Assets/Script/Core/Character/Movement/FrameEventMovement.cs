@@ -97,7 +97,6 @@ public class FrameEventMovement : MovementBase
     }
 
     public void StartJump(float jumpPower) {
-        Debug.Log($"StartJump({jumpPower})");
         _controller.VerticalVelocity = jumpPower;
     }
 }
