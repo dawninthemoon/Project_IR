@@ -53,6 +53,8 @@ public class FrameEventMovement : MovementBase
             return false;
         }
 
+        _controller.Progress();
+
         float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
         _currentVelocity += (direction * _movementValues[0]) * deltaTime;
 
@@ -65,9 +67,9 @@ public class FrameEventMovement : MovementBase
             _currentVelocity = _currentVelocity.normalized * _movementValues[2];
 
         movementOfFrame += _currentVelocity * deltaTime;
-        _currentDirection = _currentVelocity.normalized;
+        movementOfFrame.y = _controller.VerticalVelocity;
 
-        _controller.SetDirectionalInput(new Vector2(movementOfFrame.x, 0f));
+        _currentDirection = _currentVelocity.normalized;
 
         return true;
     }

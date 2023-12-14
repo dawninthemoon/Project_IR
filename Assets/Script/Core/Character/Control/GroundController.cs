@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundController : MonoBehaviour {
-    private Vector2 _directionalInput;
     #region Move Variables
     private static readonly float Gravity = -9.81f;
     public float VerticalVelocity 
@@ -32,15 +31,10 @@ public class GroundController : MonoBehaviour {
     #endregion
     Collider2D[] _adjustGrounds = new Collider2D[1];
 
-    private void Update()
+    public void Progress()
     {
         GroundCheckProgress();
-        JumpProgress();
-    }
-
-    public void SetDirectionalInput(Vector2 direction) 
-    {
-        _directionalInput = direction;
+        CalculateVelocity();
     }
 
     private void GroundCheckProgress()
@@ -51,26 +45,22 @@ public class GroundController : MonoBehaviour {
         {
             _isGrounded = true;
             _surfacePosition = Physics2D.ClosestPoint(transform.position, _adjustGrounds[0]);
-
-            if (VerticalVelocity < 0f) {
-                float floorHeight = 0.7f;
-                VerticalVelocity = 0f;
-                transform.position = new Vector3(transform.position.x, _surfacePosition.y + floorHeight, transform.position.z);
-            }
         }
         else {
             _isGrounded = false;
         }
     }
     
-    private void JumpProgress() {
+    private void CalculateVelocity() {
         VerticalVelocity += Gravity * GravityScale * Time.deltaTime;
         if (_isGrounded && VerticalVelocity < 0f)
         {
+            float floorHeight = 0.7f;
             VerticalVelocity = 0f;
+            transform.position = new Vector3(transform.position.x, _surfacePosition.y + floorHeight, transform.position.z);
         }
 
-        Vector3 moveAmount = new Vector3(_directionalInput.x * MoveSpeed, VerticalVelocity, 0f);
+        Vector3 moveAmount = new Vector3(0f, VerticalVelocity, 0f);
         transform.Translate(moveAmount * Time.deltaTime);
     }
 }
