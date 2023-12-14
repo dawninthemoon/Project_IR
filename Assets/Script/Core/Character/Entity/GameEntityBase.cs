@@ -1198,8 +1198,8 @@ public class GameEntityBase : SequencerObjectBase
     public MovementBase getCurrentMovement() {return _movementControl.getCurrentMovement();}
     public MovementControl getMovementControl(){return _movementControl;}
 
+    public ActionGraph getActionGraph() {return _actionGraph;}
 #if UNITY_EDITOR
-    public ActionGraph getActionGraph_Debug() {return _actionGraph;}
     public AIGraph getAIGraph_Debug() {return _aiGraph;}
 #endif
 }
@@ -1234,7 +1234,7 @@ public class GameEntityBaseEditor : Editor
         }
 
         
-        ActionGraphBaseData actionBaseData = control.getActionGraph_Debug().getActionGraphBaseData_Debug();
+        ActionGraphBaseData actionBaseData = control.getActionGraph().getActionGraphBaseData_Debug();
         if(actionBaseData == null)
             return;
         
@@ -1303,7 +1303,7 @@ public class GameEntityBaseEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                ActionGraph actionGraph = control.getActionGraph_Debug();
+                ActionGraph actionGraph = control.getActionGraph();
 
                 if(GUILayout.Button(control._actionGraphChangeLog[index]._nodeName,buttonStyle,GUILayout.Width(EditorGUIUtility.currentViewWidth * 0.5f)))
                     FileDebugger.OpenFileWithCursor(actionGraph.getActionGraphBaseData_Debug()._fullPath,control._actionGraphChangeLog[index]._lineNumber);
@@ -1312,7 +1312,7 @@ public class GameEntityBaseEditor : Editor
                 if (control._actionGraphChangeLog[index]._isDummyAction == false)
                 {
                     int targetAnimationIndex = control._actionGraphChangeLog[index]._animationInfoIndex;
-                    AnimationPlayDataInfo[] playDataInfoArray = control.getActionGraph_Debug().getActionGraphBaseData_Debug()._animationPlayData[targetAnimationIndex];
+                    AnimationPlayDataInfo[] playDataInfoArray = control.getActionGraph().getActionGraphBaseData_Debug()._animationPlayData[targetAnimationIndex];
 
                     if (playDataInfoArray != null)
                     {

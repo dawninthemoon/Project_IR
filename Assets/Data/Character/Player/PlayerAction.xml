@@ -1,6 +1,6 @@
 <ActionGraph Name="PlayerAction" DefaultAction="Idle" DefaultFramePerSecond="12">
 
-    <GlobalVariable Name="gv_normalJumpPower" Value="20.0"/>
+    <GlobalVariable Name="gv_normalJumpPower" Value="1.0"/>
 
     <Idle MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
@@ -9,7 +9,7 @@
         </Animation>
 
         <Branch Condition="getKey_Move" Execute="Move"/>
-        <Branch Condition="getKey_Jump == true" Execute="JumpStart"/>
+        <Branch Key="getKey_Jump == true" Condition="OnGround" Execute="JumpStart"/>
         <Branch Condition="End == true" Execute="Idle"/>
     </Idle>
 
@@ -20,14 +20,14 @@
         </Animation>
 
         <Branch Condition="getKey_Move == false" Execute="Idle"/>
-        <Branch Condition="getKey_Jump == true" Execute="JumpStart"/>
+        <Branch Key="getKey_Jump == true" Condition="OnGround" Execute="JumpStart"/>
         <Branch Condition="End" Execute="Move"/>
     </Move>
 
     <JumpStart MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <Animation Preset="Sprites/Player/" XFlip="True">
             <FrameEvent Type="Jump" StartFrame="1" JumpPower="gv_normalJumpPower"/>
-            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+            <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
         </Animation>
 
         <Branch Condition="End" Execute="JumpLoop"/>
@@ -35,10 +35,11 @@
 
     <JumpLoop MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <Animation Preset="Sprites/Player/" XFlip="True">
-            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+            <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
         </Animation>
 
         <Branch Condition="End" Execute="JumpLoop"/>
+        <Branch Condition="OnGround" Execute="Idle"/>
     </JumpLoop>
 
     <Dead MovementType="Empty" DirectionType="MoveInput">

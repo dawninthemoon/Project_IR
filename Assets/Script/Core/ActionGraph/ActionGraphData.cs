@@ -197,6 +197,7 @@ public enum ConditionNodeUpdateType
     Action_AngleFlipDirectionToStick,
     Action_IsXFlip,
     Action_IsYFlip,
+    Action_OnGround,
     Action_CurrentFrame,
     Action_IsCatcher,
     Action_IsCatchTarget,
@@ -292,6 +293,7 @@ public static class ConditionNodeInfoPreset
 
         {"IsXFlip",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsXFlip, ConditionNodeType.Bool)},
         {"IsYFlip",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsYFlip, ConditionNodeType.Bool)},
+        {"OnGround", new ConditionNodeInfo(ConditionNodeUpdateType.Action_OnGround, ConditionNodeType.Bool)},
         {"CurrentFrame",new ConditionNodeInfo(ConditionNodeUpdateType.Action_CurrentFrame, ConditionNodeType.Float)},
         {"IsCatcher",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsCatcher, ConditionNodeType.Bool)},
         {"IsCatchTarget",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsCatchTarget, ConditionNodeType.Bool)},

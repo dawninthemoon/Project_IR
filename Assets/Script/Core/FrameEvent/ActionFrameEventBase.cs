@@ -1789,7 +1789,7 @@ public class ActionFrameEvent_Jump : ActionFrameEventBase {
             string attrName = attributes[i].Name;
             string attrValue = attributes[i].Value;
 
-            if(attrName == "Jump")
+            if(attrName == "JumpPower")
             {
                 float jumpPower;
                 if(float.TryParse(attrValue, out jumpPower) == false)

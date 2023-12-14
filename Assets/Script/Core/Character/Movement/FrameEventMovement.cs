@@ -70,6 +70,8 @@ public class FrameEventMovement : MovementBase
         movementOfFrame.y = _controller.VerticalVelocity;
 
         _currentDirection = _currentVelocity.normalized;
+        
+        _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, _controller.IsGrounded);
 
         return true;
     }
@@ -95,6 +97,7 @@ public class FrameEventMovement : MovementBase
     }
 
     public void StartJump(float jumpPower) {
+        Debug.Log($"StartJump({jumpPower})");
         _controller.VerticalVelocity = jumpPower;
     }
 }

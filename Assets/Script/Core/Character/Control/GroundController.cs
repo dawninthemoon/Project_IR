@@ -20,12 +20,15 @@ public class GroundController : MonoBehaviour {
     {
         get;
         set;
-    } = 5f;
+    } = 1f;
     #endregion
 
     #region Ground Check
-    private bool _isGrounded;
-    public float _groundOffset = 0.1f;
+    public bool IsGrounded {
+        get;
+        private set;
+    }
+    public float _characterRadius = 0.15f;
     private Vector2 _surfacePosition;
     private ContactFilter2D _filter;
     #endregion
@@ -39,28 +42,25 @@ public class GroundController : MonoBehaviour {
 
     private void GroundCheckProgress()
     {
-        Vector2 point = transform.position + Vector3.down * _groundOffset;
-        Vector2 size = new Vector2(transform.localScale.x, transform.localScale.y);
+        Vector2 point = transform.position + Vector3.down * _characterRadius;
+        Vector2 size = new Vector2(_characterRadius, _characterRadius);
         if (Physics2D.OverlapBox(point, size, 0f, _filter.NoFilter(), _adjustGrounds) > 0f)
         {
-            _isGrounded = true;
+            IsGrounded = true;
             _surfacePosition = Physics2D.ClosestPoint(transform.position, _adjustGrounds[0]);
         }
         else {
-            _isGrounded = false;
+            IsGrounded = false;
         }
     }
     
     private void CalculateVelocity() {
         VerticalVelocity += Gravity * GravityScale * Time.deltaTime;
-        if (_isGrounded && VerticalVelocity < 0f)
+        if (IsGrounded && VerticalVelocity < 0f)
         {
-            float floorHeight = 0.7f;
+            //float floorHeight = 1f;
             VerticalVelocity = 0f;
-            transform.position = new Vector3(transform.position.x, _surfacePosition.y + floorHeight, transform.position.z);
+            transform.position = new Vector3(transform.position.x, _surfacePosition.y + _characterRadius, transform.position.z);
         }
-
-        Vector3 moveAmount = new Vector3(0f, VerticalVelocity, 0f);
-        transform.Translate(moveAmount * Time.deltaTime);
     }
 }

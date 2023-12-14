@@ -36,7 +36,7 @@ MonoBehaviour:
       _hideWhenDeactive: 0
       _searchIdentifier: 0
       _activeType: 0
-      _localPosition: {x: -1.61, y: -0.97, z: 0}
+      _localPosition: {x: -1.61, y: -0.78, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1
