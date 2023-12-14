@@ -67,7 +67,7 @@ public class FrameEventMovement : MovementBase
         movementOfFrame += _currentVelocity * deltaTime;
         _currentDirection = _currentVelocity.normalized;
 
-        _controller.DirectionalInput = new Vector2(movementOfFrame.x, movementOfFrame.y);
+        _controller.SetDirectionalInput(new Vector2(movementOfFrame.x, 0f));
 
         return true;
     }

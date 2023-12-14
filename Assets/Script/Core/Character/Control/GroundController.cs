@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundController : MonoBehaviour {
-    public Vector2 DirectionalInput 
-    {
-        get;
-        set;
-    }
+    private Vector2 _directionalInput;
     #region Move Variables
     private static readonly float Gravity = -9.81f;
     public float VerticalVelocity 
@@ -42,6 +38,11 @@ public class GroundController : MonoBehaviour {
         JumpProgress();
     }
 
+    public void SetDirectionalInput(Vector2 direction) 
+    {
+        _directionalInput = direction;
+    }
+
     private void GroundCheckProgress()
     {
         Vector2 point = transform.position + Vector3.down * _groundOffset;
@@ -69,7 +70,7 @@ public class GroundController : MonoBehaviour {
             VerticalVelocity = 0f;
         }
 
-        Vector3 moveAmount = new Vector3(DirectionalInput.x * MoveSpeed, VerticalVelocity, 0f);
+        Vector3 moveAmount = new Vector3(_directionalInput.x * MoveSpeed, VerticalVelocity, 0f);
         transform.Translate(moveAmount * Time.deltaTime);
     }
 }
