@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89c4079abb23d874a882227bf7cb4b83, type: 3}
-  m_Name: JumpStart
+  m_Name: AttackGround
   m_EditorClassIdentifier: 
   _animationCustomPresetData:
     _duration:
+    - 0.1
+    - 0.1
     - 0.1
     _effectFrameEvent: []
     _playCount: 1
