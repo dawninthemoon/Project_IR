@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5534836125030860109}
   - component: {fileID: 6435431520687815936}
-  - component: {fileID: 287253130202542257}
   m_Layer: 0
   m_Name: TilemapSettings
   m_TagString: Untagged
@@ -46,18 +45,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &287253130202542257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902807493408586348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b136698b5a33574419319308ad0fa661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5611404369948111914
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,8 +59,8 @@ GameObject:
   - component: {fileID: 181836652398913137}
   - component: {fileID: 1275382895314887051}
   - component: {fileID: 6446113741936576186}
-  m_Layer: 0
-  m_Name: Collisionable
+  m_Layer: 22
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

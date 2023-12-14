@@ -21,6 +21,16 @@
         Key_PS="X"
     />
 
+    <Jump
+        PressType="KeyPressed"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Z"
+        Key_XBOX="A"
+        Key_PS="X"
+    />
+
     <EditorHotKey_EditorOnOff
         PressType="KeyDown"
         MultiInputType="Single"

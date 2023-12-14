@@ -17,6 +17,7 @@ public class FrameEventMovement : MovementBase
 
     private float[] _movementValues = new float[(int)FrameEventMovementValueType.Count];
     private Vector3 _currentVelocity = Vector3.zero;
+    private GroundController _controller;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -24,6 +25,11 @@ public class FrameEventMovement : MovementBase
     {
         _targetEntity = targetEntity;
         _currentDirection = Vector3.zero;
+
+        if(_controller == null)
+        {
+            _controller = targetEntity.GetComponent<GroundController>();
+        }
         
         int numMovementValue = (int)FrameEventMovementValueType.Count;
         for(int i = 0; i < numMovementValue; ++i)
@@ -61,6 +67,8 @@ public class FrameEventMovement : MovementBase
         movementOfFrame += _currentVelocity * deltaTime;
         _currentDirection = _currentVelocity.normalized;
 
+        _controller.DirectionalInput = new Vector2(movementOfFrame.x, movementOfFrame.y);
+
         return true;
     }
 
@@ -84,4 +92,7 @@ public class FrameEventMovement : MovementBase
         _movementValues[valueType] = value;
     }
 
+    public void StartJump(float jumpPower) {
+        _controller.VerticalVelocity = jumpPower;
+    }
 }

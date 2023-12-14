@@ -12,13 +12,13 @@ namespace TilemapEditor {
         }
 
         public void ClearAllTilemaps() {
-            Tilemap collisionTilemap = transform.Find("Collisionable").GetComponent<Tilemap>();
+            Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
 
             collisionTilemap.ClearAllTiles();
         }
 
         public TilemapConfig RequestExport(string tilemapName) {
-            Tilemap collisionableTilemap = transform.Find("Collisionable").GetComponent<Tilemap>();
+            Tilemap collisionableTilemap = transform.Find("Wall").GetComponent<Tilemap>();
 
             TilemapConfig asset = ScriptableObject.CreateInstance<TilemapConfig>();
             LoadTileInfo(tilemapName, collisionableTilemap, asset);
@@ -42,7 +42,7 @@ namespace TilemapEditor {
         public void Import(TilemapConfig tilemap) {
             ClearAll();
 
-            Tilemap collisionTilemap = transform.Find("Collisionable").GetComponent<Tilemap>();
+            Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
 
             collisionTilemap.SetTiles(tilemap._positions, tilemap._tileBases);
         }

@@ -41,6 +41,7 @@ public enum FrameEventType
     FrameEvent_SetDirectionType,
     FrameEvent_Torque,
     FrameEvent_EffectPreset,
+    FrameEvent_Jump,
 
     Count,
 }
@@ -1759,6 +1760,48 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
         _collisionInfo = new CollisionInfo(data);
 
         
+    }
+}
+
+public class ActionFrameEvent_Jump : ActionFrameEventBase {
+    private float _jumpPower;
+
+    public override FrameEventType getFrameEventType(){return FrameEventType.FrameEvent_Jump;}
+
+    public override bool onExecute(ObjectBase executeEntity, ObjectBase targetEntity = null)
+    {
+        GameEntityBase executer = executeEntity as GameEntityBase;
+        MovementBase currentMovement = executer?.getCurrentMovement();
+
+        if(currentMovement == null)
+            return false;
+
+        ((FrameEventMovement)currentMovement).StartJump(_jumpPower);
+
+        return true;
+    }
+
+    public override void loadFromXML(XmlNode node)
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        for(int i = 0; i < attributes.Count; ++i)
+        {
+            string attrName = attributes[i].Name;
+            string attrValue = attributes[i].Value;
+
+            if(attrName == "Jump")
+            {
+                float jumpPower;
+                if(float.TryParse(attrValue, out jumpPower) == false)
+                {
+                    DebugUtil.assert(false,"invalid jump frameeevent value string: {0}",attrValue);
+                    continue;
+                }
+
+                _jumpPower = jumpPower;
+            }
+
+        }
     }
 }
 

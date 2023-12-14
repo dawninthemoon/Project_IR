@@ -1,5 +1,7 @@
 <ActionGraph Name="PlayerAction" DefaultAction="Idle" DefaultFramePerSecond="12">
 
+    <GlobalVariable Name="gv_normalJumpPower" Value="20.0"/>
+
     <Idle MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Idle" XFlip="true">
@@ -7,6 +9,7 @@
         </Animation>
 
         <Branch Condition="getKey_Move" Execute="Move"/>
+        <Branch Condition="getKey_Jump == true" Execute="JumpStart"/>
         <Branch Condition="End == true" Execute="Idle"/>
     </Idle>
 
@@ -17,8 +20,26 @@
         </Animation>
 
         <Branch Condition="getKey_Move == false" Execute="Idle"/>
+        <Branch Condition="getKey_Jump == true" Execute="JumpStart"/>
         <Branch Condition="End" Execute="Move"/>
     </Move>
+
+    <JumpStart MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <Animation Path="Sprites/Player/" XFlip="True">
+            <FrameEvent Type="Jump" StartFrame="1" JumpPower="gv_normalJumpPower"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="JumpLoop"/>
+    </JumpStart>
+
+    <JumpLoop MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <Animation Path="Sprites/Player/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="JumpLoop"/>
+    </JumpLoop>
 
     <Dead MovementType="Empty" DirectionType="MoveInput">
         <AnimationHeader MasterPath="Sprites/Player/"/>
