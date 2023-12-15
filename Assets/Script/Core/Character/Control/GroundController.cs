@@ -13,11 +13,11 @@ public class GroundController : RaycastController {
 		collisions.faceDir = 1;
 	}
 
-	public void Progress(Vector2 moveAmount, bool standingOnPlatform) {
-		Progress(moveAmount, Vector2.zero, standingOnPlatform);
-	}
+	//public void Progress(Vector2 moveAmount, bool standingOnPlatform) {
+	//	Progress(moveAmount, Vector2.zero, standingOnPlatform);
+	//}
 
-	public void Progress(Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {
+	public Vector2 Progress(Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {
 		UpdateRaycastOrigins();
 
 		collisions.Reset();
@@ -33,16 +33,18 @@ public class GroundController : RaycastController {
 		}
 
 		HorizontalCollisions(ref moveAmount);
-		//if (moveAmount.y != 0) {
+		if (moveAmount.y != 0) {
 			VerticalCollisions(ref moveAmount);
-		//}
+		}
 
-		transform.Translate(moveAmount);
+		//transform.Translate(moveAmount);
 
 		if (standingOnPlatform) {
 			collisions.below = true;
 		}
-	}
+
+        return moveAmount;
+    }
 
 	void HorizontalCollisions(ref Vector2 moveAmount) {
 		float directionX = collisions.faceDir;
@@ -57,7 +59,7 @@ public class GroundController : RaycastController {
 			rayOrigin += Vector2.up * (_horizontalRaySpacing * i);
 
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength);
-			Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.green);
+			Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.green);
 			if (hit.collider != null) {
 				if (hit.distance < Mathf.Epsilon) continue;
 
@@ -124,7 +126,7 @@ public class GroundController : RaycastController {
 				}
 
 				collisions.below = directionY < 0f;
-				collisions.above = directionY < 0f;
+				collisions.above = directionY > 0f;
 			}
 		}
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class RaycastController : MonoBehaviour {
-	protected float _skinWidth = 0.01f;
+	protected float _skinWidth = 0.005f;
 	[SerializeField] private float _dstBetweenRays = 0.01f;
 	[HideInInspector]
 	public int _horizontalRayCount;
@@ -26,8 +26,8 @@ public class RaycastController : MonoBehaviour {
 	public void UpdateRaycastOrigins() {
         Vector2 position = transform.position;
 
-		raycastOrigins.bottomLeft = new Vector2(position.x - _targetRadius.x, position.y - _targetRadius.y);
-		raycastOrigins.bottomRight = new Vector2(position.x + _targetRadius.x, position.y - _targetRadius.y);
+		raycastOrigins.bottomLeft = new Vector2(position.x - _targetRadius.x, position.y - _targetRadius.y + _skinWidth);
+		raycastOrigins.bottomRight = new Vector2(position.x + _targetRadius.x, position.y - _targetRadius.y + _skinWidth);
 		raycastOrigins.topLeft = new Vector2(position.x - _targetRadius.x, position.y + _targetRadius.y);
 		raycastOrigins.topRight = new Vector2(position.x + _targetRadius.x, position.y + _targetRadius.y);
 	}

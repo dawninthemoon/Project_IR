@@ -19,6 +19,7 @@ public class FrameEventMovement : MovementBase
     private Vector3 _currentVelocity = Vector3.zero;
     private GroundController _controller;
     private float _gravityAccumulate = 0f;
+    private float _gravity = -1f;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -70,11 +71,13 @@ public class FrameEventMovement : MovementBase
         movementOfFrame.y = _controller.VerticalVelocity;
 
         _currentDirection = _currentVelocity.normalized;*/
-        Vector2 movementOfFrame;
-        movementOfFrame.x = (direction * _movementValues[0]).x * deltaTime;
-        movementOfFrame.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
-        _controller.Progress(movementOfFrame, false);
-        bool onGround = _controller.collisions.above || _controller.collisions.below;
+
+        Vector3 moveDelta = (direction * _movementValues[0]) * deltaTime;
+        _gravityAccumulate += _gravity * deltaTime;
+        moveDelta.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
+
+        Vector2 moveAmount = _controller.Progress(moveDelta, Vector2.zero, false);
+        bool onGround = _controller.collisions.below;
         
         _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, onGround);
 
