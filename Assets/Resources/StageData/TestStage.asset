@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestStage
   m_EditorClassIdentifier: 
   _stageName: TestStage
-  _tilemapConfigPath: {fileID: 11400000, guid: c2f5845e15ac77a4a987bd7abc857093, type: 2}
+  _tilemapConfigPath: {fileID: 11400000, guid: acc3360e7b4086245b97919941c63f2c, type: 2}
   _backgroundPrefabPath: {fileID: 0}
   _isMiniStage: 0
   _stagePointData:
