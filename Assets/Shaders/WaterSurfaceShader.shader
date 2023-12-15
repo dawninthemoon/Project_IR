@@ -45,6 +45,7 @@ Shader "Custom/WaterSurfaceShader" {
 
             fixed4 _Tint;
             sampler2D _Displacement;
+            float4 _Displacement_ST;
 
 	        float4 frag(v2f i) : SV_TARGET 
             {
