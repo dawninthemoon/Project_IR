@@ -31,6 +31,16 @@
         Key_PS="X"
     />
 
+    <Attack
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="X"
+        Key_XBOX="A"
+        Key_PS="X"
+    />
+
     <EditorHotKey_EditorOnOff
         PressType="KeyDown"
         MultiInputType="Single"

@@ -31,7 +31,7 @@ MonoBehaviour:
     - _characterKey: Player
       _uniqueKey: Player
       _uniqueGroupKey: 
-      _startAction: Idle
+      _startAction: AC_Idle
       _flip: 0
       _hideWhenDeactive: 0
       _searchIdentifier: 0

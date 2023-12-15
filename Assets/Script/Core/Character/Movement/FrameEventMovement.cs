@@ -19,7 +19,7 @@ public class FrameEventMovement : MovementBase
     private Vector3 _currentVelocity = Vector3.zero;
     private GroundController _controller;
     private float _gravityAccumulate = 0f;
-    private float _gravity = -1f;
+    private float _gravity = -3.0f;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -55,8 +55,7 @@ public class FrameEventMovement : MovementBase
             return false;
         }
 
-
-        /*float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
+        float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
         _currentVelocity += (direction * _movementValues[0]) * deltaTime;
 
         Vector3 velocityDirection = _currentVelocity.normalized;
@@ -67,19 +66,19 @@ public class FrameEventMovement : MovementBase
         else if(_currentVelocity.sqrMagnitude > _movementValues[2] * _movementValues[2])
             _currentVelocity = _currentVelocity.normalized * _movementValues[2];
 
-        movementOfFrame += _currentVelocity * deltaTime;
-        movementOfFrame.y = _controller.VerticalVelocity;
+        _currentDirection = _currentVelocity.normalized;
+        Vector3 moveDelta = _currentVelocity * deltaTime;
 
-        _currentDirection = _currentVelocity.normalized;*/
-
-        Vector3 moveDelta = (direction * _movementValues[0]) * deltaTime;
         _gravityAccumulate += _gravity * deltaTime;
         moveDelta.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
 
-        Vector2 moveAmount = _controller.Progress(moveDelta, Vector2.zero, false);
+        movementOfFrame = _controller.Progress(moveDelta, Vector2.zero, false);
         bool onGround = _controller.collisions.below;
-        
+        if(onGround)
+            _gravityAccumulate = 0f;
+
         _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, onGround);
+        _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_IsFalling, !onGround && moveDelta.y < 0f);
 
         return true;
     }

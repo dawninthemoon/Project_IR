@@ -119,7 +119,7 @@ MonoBehaviour:
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-      m_RotationOrder: 0
+      m_RotationOrder: 4
   - _name: XSpring
     _xScaleCurve:
       serializedVersion: 2

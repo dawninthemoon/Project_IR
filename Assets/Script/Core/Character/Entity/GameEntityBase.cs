@@ -65,6 +65,7 @@ public class GameEntityBase : SequencerObjectBase
 
     private float               _headUpOffset = 0f;
     private float               _characterLifeTime = 0f;
+    private float               _directionInputRate = 1f;
 
     private float               _leftHP = 0f;
 
@@ -423,7 +424,7 @@ public class GameEntityBase : SequencerObjectBase
 
             //animation 바뀌는 시점
             _actionGraph.updateAnimation(deltaTime, this);
-            _movementControl?.progress(deltaTime, _direction);
+            _movementControl?.progress(deltaTime, _direction * _directionInputRate);
             
             updatePhysics(deltaTime);
 
@@ -751,6 +752,7 @@ public class GameEntityBase : SequencerObjectBase
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Input_AttackBlood, Input.GetKey(KeyCode.R));
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Input_Guard, Input.GetMouseButton(1));
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Input_CanInput, _blockInput == false);
+        _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Input_MoveInput, ControllerEx.Instance().GetJoystickAxis().x != 0f);
 
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Attack_Guarded, _attackState == AttackState.AttackGuarded);
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Attack_Success, _attackState == AttackState.AttackSuccess);
@@ -799,6 +801,9 @@ public class GameEntityBase : SequencerObjectBase
     {
         FlipState currentFlipState = _actionGraph.getCurrentFlipState();
         FlipState flipState = new FlipState();
+
+        if(_direction.sqrMagnitude <= 0.01f)
+            return _flipState;
 
         switch(flipType)
         {
@@ -937,6 +942,7 @@ public class GameEntityBase : SequencerObjectBase
     public Vector3 getDirectionFromType(DirectionType directionType)
     {
         Vector3 direction = _direction;
+        _directionInputRate = 1f;
 
         switch(directionType)
         {
@@ -955,13 +961,30 @@ public class GameEntityBase : SequencerObjectBase
             case DirectionType.Keep:
                 break;
             case DirectionType.MoveInput:
+            case DirectionType.MoveInputHorizontal:
+            {
                 Vector3 input = ControllerEx.Instance().GetJoystickAxis();
                 if(MathEx.equals(input.sqrMagnitude,0f,float.Epsilon) == false )
                 {
                     direction = input;
+                    _directionInputRate = input.magnitude;
                     direction.Normalize();
                 }
-                break;
+                else
+                {
+                    _directionInputRate = 0f;
+                    break;
+                }
+
+                if(directionType == DirectionType.MoveInputHorizontal)
+                {
+                    direction.y = 0f;
+                    _directionInputRate = direction.magnitude;
+                    direction.Normalize();
+                }
+                
+            }
+            break;
             case DirectionType.MousePoint:
                 direction = ControllerEx.Instance().getJoystickAxisR(transform.position);
                 break;
@@ -983,8 +1006,8 @@ public class GameEntityBase : SequencerObjectBase
                 break;
         }
 
-        if(direction.sqrMagnitude == 0f)
-            direction = Vector3.right;
+        // if(direction.sqrMagnitude == 0f)
+        //     direction = Vector3.right;
 
         direction = Quaternion.Euler(0f,0f,_actionGraph.getCurrentDirectionAngle()) * direction;
 

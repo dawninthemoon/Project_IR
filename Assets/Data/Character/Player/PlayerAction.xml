@@ -1,48 +1,166 @@
-<ActionGraph Name="PlayerAction" DefaultAction="Idle" DefaultFramePerSecond="12">
+<ActionGraph Name="PlayerAction" DefaultAction="AC_Idle" DefaultFramePerSecond="12">
 
-    <GlobalVariable Name="gv_normalJumpPower" Value="0.2"/>
+    <GlobalVariable Name="gv_normalJumpPower" Value="1.5"/>
+    <GlobalVariable Name="gv_movementSpeed" Value="12"/>
+    <GlobalVariable Name="gv_movementMaxVelocity" Value="1"/>
+    <GlobalVariable Name="gv_movementDefaultFriction" Value="1"/>
 
-    <Idle MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+    <GlobalVariable Name="gv_jumpDuration" Value="0.2"/>
+
+<!-- BranchSet -->
+    <BranchSet Name="AttackGround">
+        <Branch Key="getKey_Attack" Condition="OnGround" Execute="AC_Attack_Ground"/>
+    </BranchSet>
+
+    <BranchSet Name="AttackAir">
+        <Branch Key="getKey_Attack" Condition="OnGround == false" Execute="AC_Attack_Air"/>
+    </BranchSet>
+
+<!-- BranchSet -->
+
+<!-- Locomotion -->
+    <AC_Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Idle" XFlip="true">
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
         </Animation>
 
-        <Branch Condition="getKey_Move" Execute="Move"/>
-        <Branch Key="getKey_Jump == true" Condition="OnGround" Execute="JumpStart"/>
-        <Branch Condition="End == true" Execute="Idle"/>
-    </Idle>
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <UseBranchSet Name="AttackGround"/>
 
-    <Move MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <Branch Condition="MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_Idle>
+
+    <AC_Move MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Move" XFlip="true">
-            <FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
-        <Branch Condition="getKey_Move == false" Execute="Idle"/>
-        <Branch Key="getKey_Jump == true" Condition="OnGround" Execute="JumpStart"/>
-        <Branch Condition="End" Execute="Move"/>
-    </Move>
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <UseBranchSet Name="AttackGround"/>
 
-    <JumpStart MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+        <Branch Condition="MoveInput == false" Execute="AC_Idle"/>
+        <Branch Condition="End" Execute="AC_Move"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_Move>
+
+    <AC_JumpStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/JumpStart/" XFlip="True">
-            <FrameEvent Type="Jump" StartTime="0" JumpPower="gv_normalJumpPower"/>
-            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
-        <Branch Condition="End" Execute="JumpLoop"/>
-    </JumpStart>
+        <Branch Condition="End" Execute="AC_JumpingLoop"/>
+    </AC_JumpStart>
 
-    <JumpLoop MovementType="FrameEvent" DirectionType="MoveInput" FlipType="Direction">
+    <AC_JumpingLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/JumpLoop/" XFlip="True" Duration="gv_jumpDuration">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Jump" StartTime="0" EndTime="gv_jumpDuration" JumpPower="gv_normalJumpPower"/>
+        </Animation>
+
+        <Branch Condition="getKey_Jump == false" Execute="AC_JumpLoop"/>
+        <UseBranchSet Name="AttackAir"/>
+
+        <Branch Condition="End" Execute="AC_JumpLoop"/>
+
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_JumpingLoop>
+
+    <AC_JumpLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/JumpLoop/" XFlip="True">
-            <!--FrameEvent Type="Movement" StartTime="0" Friction="0" MaxVelocity="1" Speed="12"/-->
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
-        <Branch Condition="End" Execute="JumpLoop"/>
-        <Branch Condition="OnGround" Execute="Idle"/>
-    </JumpLoop>
+        <UseBranchSet Name="AttackAir"/>
 
-    <Dead MovementType="Empty" DirectionType="MoveInput">
+        <Branch Condition="End" Execute="AC_JumpLoop"/>
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_JumpLoop>
+
+    <AC_FallStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/FallStart/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <UseBranchSet Name="AttackAir"/>
+
+        <Branch Condition="End" Execute="AC_FallLoop"/>
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+    </AC_FallStart>
+
+    <AC_FallLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/FallLoop/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_FallLoop"/>
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+    </AC_FallLoop>
+
+    <AC_FallToGroundIdle MovementType="Empty" DirectionType="Keep" FlipType="Keep">
+        <Animation Preset="Sprites/Player/Land/" XFlip="True">
+            <FrameEvent Type="FrameTag" StartTime="0.2" EndTime="999" Tag="CanMove"/>
+        </Animation>
+
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <UseBranchSet Name="AttackGround"/>
+
+        <Branch Condition="getFrameTag_CanMove && MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_FallToGroundIdle>
+
+    <AC_FallToGroundMove MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/LandToRun/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <UseBranchSet Name="AttackGround"/>
+
+        <Branch Condition="End && MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_FallToGroundMove>
+
+<!-- Locomotion -->
+
+<!-- Attack -->
+
+    <AC_Attack_Ground MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Player/AttackGround/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
+        </Animation>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+        <Branch Condition="End && MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Attack_Ground>
+
+    <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Keep">
+        <Animation Preset="Sprites/Player/AttackMidair/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="OnGround && MoveInput" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+    </AC_Attack_Air>
+
+<!-- Attack -->
+
+
+    <Dead MovementType="Empty" DirectionType="Keep">
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Idle" XFlip="true">
             <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Player/Idle" FramePerSecond="0.2" CastShadow="True">

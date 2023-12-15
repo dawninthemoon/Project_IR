@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 using ICSharpCode.WpfDesign.XamlDom;
+using System.Linq;
 
 public class ActionGraphLoader : LoaderBase<ActionGraphBaseData>
 {
@@ -619,25 +620,9 @@ public class ActionGraphLoader : LoaderBase<ActionGraphBaseData>
                         continue;
                     
                     if(frameEvent._isTimeBase)
-                    {
                         timeEventList.Add(frameEvent);
-                    }
                     else
-                    {
-                        if(playData._customPresetData != null)
-                        {
-                            DebugUtil.assert_fileOpen(false, "프리셋 애니메이션에 Frame 단위의 이벤트를 추가하려 합니다. 실수인가요? [Line: {0}] [FileName: {1}]", filePath, XMLScriptConverter.getLineNumberFromXMLNode(nodeList[i]), XMLScriptConverter.getLineFromXMLNode(nodeList[i]), filePath);
-                            return null;
-                        }
-
-                        if(playData._frameEventData != null)
-                        {
-                            DebugUtil.assert_fileOpen(false, "어딘가에서 이상한 FrameEvent 데이터가 들어왔습니다. 통보 요망 [Line: {0}] [FileName: {1}]", filePath, XMLScriptConverter.getLineNumberFromXMLNode(nodeList[i]), XMLScriptConverter.getLineFromXMLNode(nodeList[i]), filePath);
-                            return null;
-                        }
-
                         frameEventList.Add(frameEvent);
-                    }
                 }
                 else if(nodeList[i].Name == "MultiSelectAnimation")
                 {
@@ -660,7 +645,7 @@ public class ActionGraphLoader : LoaderBase<ActionGraphBaseData>
                 return x._startFrame.CompareTo(y._startFrame);
             });
 
-            if(playData._frameEventData == null)
+            if(playData._frameEventData == null || playData._frameEventData.Length == 0)
             {
                 frameEventList.Sort((x,y)=>{
                     return x._startFrame.CompareTo(y._startFrame);

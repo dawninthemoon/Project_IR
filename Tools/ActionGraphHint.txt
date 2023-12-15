@@ -21,7 +21,7 @@ FrameEventAndInQuote,SetDefenceType DefenceType=,"Empty,Guard,Parry,Evade"
 FrameEventAndInQuote,Projectile ShotInfoUseType=,"UseDefault,Overlap,Add"
 FrameEventAndInQuote,Projectile SpawnTargetType=,"Self,Target,AITarget"
 InQuote,MovementType=,"Empty,RootMotion,GraphPreset,FrameEvent"
-InQuote,DirectionType=,"AlwaysRight,AlwaysLeft,AlwaysUp,AlwaysDown,Keep,MoveInput,MousePoint,AttackedPoint,MoveDirection,AI,AITarget"
+InQuote,DirectionType=,"AlwaysRight,AlwaysLeft,AlwaysUp,AlwaysDown,Keep,MoveInput,MousePoint,AttackedPoint,MoveDirection,AI,AITarget,MoveInputHorizontal"
 InQuote,DefenceDirectionType=,"Direction,MousePoint"
 InQuote,FlipType=,"AlwaysTurnOff,Direction,MousePoint,Keep"
 InQuote,RotationType=,"AlwaysRight,Direction,MousePoint,MoveDirection,Keep,Torque"
@@ -30,7 +30,7 @@ InQuote,IsActionSelection=,"true,false"
 InQuote,NormalizedSpeed=,"true,false"
 InQuote,Attach=,"true,false"
 InQuote,DirectionUpdateOnce=,"true,false"
-InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_"
+InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_,OnGround,IsFalling"
 InQuote,UpdateType=,"ScaledDeltaTime,NoneScaledDeltaTime"
 InQuote,ToTarget=,"true,false"
 InQuote,AngleType=,"Normal,AttackPoint,Direction"
@@ -113,8 +113,8 @@ InQuote,MultiSelectUpdateOnce=,"True,False"
 FrameEvent,EffectPreset,Key=~~
 ShortCut,__FrameEvent_EffectPreset,<FrameEvent Type=~EffectPreset~ StartTime=~0~ Key=~~/>
 InQuote,NotifyAttackSuccess=,"True,False"
-,,
-,,
+ShortCut,__FrameEvent_Jump,"<FrameEvent Type=""Jump"" StartTime=""0"" JumpPower=""0""/>"
+FrameEvent,Jump,JumpPower=~~
 ,,
 ,,
 ,,
