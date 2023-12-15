@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CombinePass : AkaneRenderPass
 {
-    public override RenderTexture RenderTexture { get { return null; } }
+    public override RenderTexture RenderTexture { get { return combineRenderTexture; } }
     private Material renderMaterial;
+
+    [SerializeField] private RenderTexture combineRenderTexture;
 
     BackgroundRenderPass backgroundRenderPass;
     CharacterRenderPass characterRenderPass;
@@ -28,6 +30,8 @@ public class CombinePass : AkaneRenderPass
     public void Awake()
     {
         shadowScreenLayer = (1 << LayerMask.NameToLayer(layerName));
+        combineRenderTexture = new RenderTexture(480, 270, 1, RenderTextureFormat.ARGBHalf, 1);
+        combineRenderTexture.filterMode = FilterMode.Point;
 
         if (renderMaterial == null)
         {
@@ -58,10 +62,13 @@ public class CombinePass : AkaneRenderPass
         renderMaterial?.SetTexture("_InterfaceTexture", interfaceRenderPass?.RenderTexture);
         renderMaterial?.SetTexture("_PerspectiveDepthTexture", perspectiveDepthRenderPass?.RenderTexture);
 
+        renderCamera.orthographicSize = 1.35f;
+        renderCamera.targetTexture = RenderTexture;
         renderCamera.cullingMask = layerMasks;
 
         renderCamera.Render();
 
+        renderCamera.orthographicSize = 5.12f;
         renderCamera.cullingMask = 0;
     }
 }

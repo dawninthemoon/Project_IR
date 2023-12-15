@@ -43,11 +43,26 @@
         <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
         <UseBranchSet Name="AttackGround"/>
 
+        <Branch Condition="(ActionExecutedTime >= 0.5) && (MoveInput == false)" Execute="AC_MoveEnd"/>
         <Branch Condition="MoveInput == false" Execute="AC_Idle"/>
         <Branch Condition="End" Execute="AC_Move"/>
-
         <Branch Condition="IsFalling" Execute="AC_FallStart"/>
     </AC_Move>
+
+    <AC_MoveEnd MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Preset="MoveEnd" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <UseBranchSet Name="AttackGround"/>
+
+        <Branch Condition="MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_MoveEnd>
 
     <AC_JumpStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/JumpStart/" XFlip="True">

@@ -6,12 +6,18 @@ using UnityEngine;
 [ExecuteAlways]
 public class AkaneRenderPipeline : MonoBehaviour
 {
+    public static AkaneRenderPipeline _instance;
+
     [SerializeField] private Camera internalCamera;
     [SerializeField] private List<AkaneRenderPass> renderPasses;
     [SerializeField] private float fieldOfView;
     static public float FieldOfView;
+
+    private CombinePass _resultPass;
     private void initializeRenderResources()
     {
+        _instance = this;
+
         renderPasses = new List<AkaneRenderPass>();
 
         BackgroundRenderPass backgroundPass = ScriptableObject.CreateInstance<BackgroundRenderPass>();
@@ -53,6 +59,8 @@ public class AkaneRenderPipeline : MonoBehaviour
         renderPasses.Add(interfacePass);
         renderPasses.Add(combinePass);
         renderPasses.Add(emptyPass);
+
+        _resultPass = combinePass;
     }
 
     private void Awake()
@@ -100,5 +108,10 @@ public class AkaneRenderPipeline : MonoBehaviour
 
             renderPass.Draw(internalCamera);
         }
+    }
+
+    public RenderTexture getResultTexture()
+    {
+        return _resultPass.RenderTexture;
     }
 }
