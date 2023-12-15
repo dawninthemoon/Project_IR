@@ -18,6 +18,7 @@ public class FrameEventMovement : MovementBase
     private float[] _movementValues = new float[(int)FrameEventMovementValueType.Count];
     private Vector3 _currentVelocity = Vector3.zero;
     private GroundController _controller;
+    private float _gravityAccumulate = 0f;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -53,9 +54,8 @@ public class FrameEventMovement : MovementBase
             return false;
         }
 
-        _controller.Progress();
 
-        float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
+        /*float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
         _currentVelocity += (direction * _movementValues[0]) * deltaTime;
 
         Vector3 velocityDirection = _currentVelocity.normalized;
@@ -69,9 +69,14 @@ public class FrameEventMovement : MovementBase
         movementOfFrame += _currentVelocity * deltaTime;
         movementOfFrame.y = _controller.VerticalVelocity;
 
-        _currentDirection = _currentVelocity.normalized;
+        _currentDirection = _currentVelocity.normalized;*/
+        Vector2 movementOfFrame;
+        movementOfFrame.x = (direction * _movementValues[0]).x * deltaTime;
+        movementOfFrame.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
+        _controller.Progress(movementOfFrame, false);
+        bool onGround = _controller.collisions.above || _controller.collisions.below;
         
-        _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, _controller.IsGrounded);
+        _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, onGround);
 
         return true;
     }
@@ -97,6 +102,6 @@ public class FrameEventMovement : MovementBase
     }
 
     public void StartJump(float jumpPower) {
-        _controller.VerticalVelocity = jumpPower;
+        _gravityAccumulate = jumpPower;
     }
 }

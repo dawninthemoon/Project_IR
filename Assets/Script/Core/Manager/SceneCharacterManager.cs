@@ -317,7 +317,7 @@ public class SceneCharacterManager : ManagerBase
         {
             GameObject characterObject = new GameObject(characterData._displayName);
             characterObject.layer = LayerMask.NameToLayer("Character");
-            characterObject.AddComponent<GroundController>();
+            characterObject.AddComponent<GroundController>().Initialize(new Vector2(0.065f, 0.175f));
             characterEntity = characterObject.AddComponent<CharacterEntityBase>();
         }
 
