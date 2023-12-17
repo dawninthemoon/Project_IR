@@ -7,9 +7,9 @@ AIEvent,Test,Log=~~
 InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_,OnGround,IsFalling"
 InQuote,Consume=,"true,false"
 InQuote,SearchIdentifier,"Player,Enemy"
-InQuote,TargetSearchType,"Near,NearDirection,NearMousePointDirection"
+InQuote,TargetSearchType,"Near,NearDirection,NearMousePointDirection,NearHorizontal,NearHorizontalDirection"
 InQuote,Type=,"Test,SetAngleDirection,SetDirectionToTarget,SetAction,ClearTarget,ExecuteState,TerminatePackage,KillEntity"
-InScope,,"Update=~~,TargetSearchType=~~,TargetSearchRange=~~,TargetSearchStartRange=~~,TargetSearchSphereRadius=~~,SearchIdentifier=~~,TargetPosition=~~,ArriveThreshold=~~"
+InScope,,"Update=~~,TargetSearchType=~~,TargetSearchRange=~~,TargetSearchStartRange=~~,TargetSearchSphereRadius=~~,SearchIdentifier=~~,TargetPosition=~~,ArriveThreshold=~~,HorizontalTargetSearchRangeUp=~~,HorizontalTargetSearchRangeDown=~~"
 LineStart,<AIPackage,"Name=~~,DefaultState=~~"
 LineStart,<Event_OnAttack,Consume=~~
 LineStart,<Event_OnAttacked,Consume=~~

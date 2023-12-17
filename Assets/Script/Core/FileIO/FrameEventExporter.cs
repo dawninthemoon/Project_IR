@@ -111,11 +111,13 @@ public static class FrameEventLoader
             
             if(targetName == "StartFrame")
             {
+                outFrameEvent._isTimeBase = false;
                 outFrameEvent._startFrame = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
                 outFrameEvent._endFrame = outFrameEvent._startFrame;
             }
             else if(targetName == "EndFrame")
             {
+                outFrameEvent._isTimeBase = false;
                 outFrameEvent._endFrame = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
 
                 if(outFrameEvent._startFrame > outFrameEvent._endFrame)

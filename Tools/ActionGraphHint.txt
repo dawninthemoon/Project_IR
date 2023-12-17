@@ -5,7 +5,7 @@ FrameEvent,ApplyBuff,ApplyBuff=~~
 FrameEvent,ApplyBuffTarget,ApplyBuff=~~
 FrameEvent,DeleteBuff,BuffList=~~
 FrameEvent,SetDefenceType,DefenceType=~/${1|Empty Guard Parry Evade}~
-FrameEvent,Effect,"Path=~~,FramePerSecond=~~,Offset=~~,Angle=~~,ToTarget=~~,UseFlip=~~,Attach=~~,UpdateType=~~"
+FrameEvent,Effect,"Path=~~,FramePerSecond=~~,Offset=~~,Angle=~~,ToTarget=~~,UseFlip=~~,Attach=~~,UpdateType=~~,Preset=~~"
 FrameEvent,SetFrameTag,"EndTime=~~,Tag=~~,Tag=~~"
 FrameEvent,Projectile,"GraphName=~~,DirectionType=~~,ShotInfoUseType=~~,SpawnTargetType=~~,StartTerm=~~,PredictionAccuracy=~~,Offset=~~,UseFlip=~~,SearchIdentifier=~~,DirectionAngle=~~"
 FrameEvent,Danmaku,"Path=~~,Offset=~~,UseFlip=~~"
@@ -21,7 +21,7 @@ FrameEventAndInQuote,SetDefenceType DefenceType=,"Empty,Guard,Parry,Evade"
 FrameEventAndInQuote,Projectile ShotInfoUseType=,"UseDefault,Overlap,Add"
 FrameEventAndInQuote,Projectile SpawnTargetType=,"Self,Target,AITarget"
 InQuote,MovementType=,"Empty,RootMotion,GraphPreset,FrameEvent"
-InQuote,DirectionType=,"AlwaysRight,AlwaysLeft,AlwaysUp,AlwaysDown,Keep,MoveInput,MousePoint,AttackedPoint,MoveDirection,AI,AITarget,MoveInputHorizontal"
+InQuote,DirectionType=,"AlwaysRight,AlwaysLeft,AlwaysUp,AlwaysDown,Keep,MoveInput,MousePoint,AttackedPoint,MoveDirection,AI,AITarget,AIHorizontal,MoveInputHorizontal"
 InQuote,DefenceDirectionType=,"Direction,MousePoint"
 InQuote,FlipType=,"AlwaysTurnOff,Direction,MousePoint,Keep"
 InQuote,RotationType=,"AlwaysRight,Direction,MousePoint,MoveDirection,Keep,Torque"
@@ -61,7 +61,7 @@ ShortCut,__FrameEvent_TeleportToTarget,<FrameEvent Type=~TeleportToTarget~ Start
 ShortCut,__FrameEvent_TeleportToTargetBack,<FrameEvent Type=~TeleportToTargetBack~ StartTime=~0~/>
 ShortCut,__FrameEvent_SetDefenceType,<FrameEvent Type=~SetDefenceType~ StartTime=~0~ DefenceType=~~/>
 ShortCut,__EffectPhysics,<Physics UseGravity=~True~ Velocity=~0.0^10.0~ Friction=~1~ Torque=~360~ AngularFriction=~360~/>
-ShortCut,__FrameEvent_Effect,<FrameEvent Type=~Effect~ StartTime=~0~ Path=~~ FramePerSecond=~~/>
+ShortCut,__FrameEvent_Effect,<FrameEvent Type=~Effect~ StartTime=~0~ Preset=~~/>
 ShortCut,__FrameEvent_SetFrameTag,<FrameEvent Type=~FrameTag~ StartTime=~0~ EndTime=~999~ Tag=~~/>
 ShortCut,__FrameEvent_Projectile,<FrameEvent Type=~Projectile~ StartTime=~0~ GraphName=~~ DirectionType=~~ SpawnTargetType=~~/>
 ShortCut,__FrameEvent_Danmaku,<FrameEvent Type=~Danmaku~ StartTime=~0~ Path=~~/>

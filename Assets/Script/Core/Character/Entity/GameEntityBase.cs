@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -556,6 +558,20 @@ public class GameEntityBase : SequencerObjectBase
                     GizmoHelper.instance.drawCircle(transform.position + direction * _aiGraph.getCurrentTargetSearchRange(),_aiGraph.getCurrentTargetSearchSphereRadius(),18,hasTarget ? Color.green : Color.red);
                 }
                 break;
+                case TargetSearchType.NearHorizontal:
+                case TargetSearchType.NearHorizontalDirection:
+                {
+                    float width = _aiGraph.getCurrentTargetSearchRange();
+                    float up = _aiGraph.getCurrentHorizontalTargetSearchRangeUp();
+                    float down = _aiGraph.getCurrentHorizontalTargetSearchRangeDown();
+                    Vector3 direction = getDirection();
+
+                    float height = up + down;
+                    Vector3 centerOffset = new Vector3(width * 0.5f * (direction.x < 0f ? -1f : 1f), height * 0.5f - down);
+
+                    GizmoHelper.instance.drawRectangle(transform.position + centerOffset, new Vector3(width,height) * 0.5f, hasTarget ? Color.green : Color.red);
+                }
+                break;
             }
 
             Dictionary<string, float> customValueDictionary = _actionGraph.getCustomValueDictionary();
@@ -993,6 +1009,11 @@ public class GameEntityBase : SequencerObjectBase
                 break;
             case DirectionType.AI:
                 direction = _aiGraph.getRecentlyAIDirection();
+                break;
+            case DirectionType.AIHorizontal:
+                direction = _aiGraph.getRecentlyAIDirection();
+                direction.y = 0f;
+                direction.Normalize();
                 break;
             case DirectionType.AITarget:
                 if(_currentTarget != null && _currentTarget.isValid())

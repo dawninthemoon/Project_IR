@@ -17,6 +17,9 @@ public class GameEditorMaster : MonoBehaviour
     public bool _animationDebugAll = false;
     public bool _soundDebugAll = false;
 
+    public float _debugCameraMoveSpeed = 2f;
+    public float _debugCameraMoveSpeedMultiflier = 4f;
+
     public Slider   _timeMagnitudeSlider;
     public Text     _timeMagnitudeText;
 
@@ -82,6 +85,31 @@ public class GameEditorMaster : MonoBehaviour
                 continue;
 
             window.mainUpdate(Time.deltaTime);
+        }
+
+        float debugCameraMoveSpeed = _debugCameraMoveSpeed;
+        if(Input.GetKey(KeyCode.LeftShift))
+            debugCameraMoveSpeed *= _debugCameraMoveSpeedMultiflier;
+
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            Vector3 position = Camera.main.transform.position;
+            Camera.main.transform.position = position + Vector3.up * debugCameraMoveSpeed * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.DownArrow))
+        {
+            Vector3 position = Camera.main.transform.position;
+            Camera.main.transform.position = position + Vector3.down * debugCameraMoveSpeed * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.LeftArrow))
+        {
+            Vector3 position = Camera.main.transform.position;
+            Camera.main.transform.position = position + Vector3.left * debugCameraMoveSpeed * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.RightArrow))
+        {
+            Vector3 position = Camera.main.transform.position;
+            Camera.main.transform.position = position + Vector3.right * debugCameraMoveSpeed * Time.deltaTime;
         }
 
 #if UNITY_EDITOR

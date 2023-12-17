@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class TargetSearchDescription : MessageData
@@ -10,6 +11,9 @@ public class TargetSearchDescription : MessageData
     public float                   _searchRange;
     public float                   _searchStartRange;
     public float                   _searchSphereRadius;
+
+    public float                   _horizontalSearchUpDistance;
+    public float                   _horizontalSearchDownDistance;
 }
 
 public struct SpawnCharacterOptionDesc
@@ -227,6 +231,40 @@ public class SceneCharacterManager : ManagerBase
 
                 float toCurrent = currentTarget.getDistanceSq(requester);
                 if(toNewDistanceSq < range && toCurrent > toNewDistanceSq)
+                    requester.setTargetEntity(receiverCharacter);
+            }
+            break;
+            case TargetSearchType.NearHorizontal:
+            case TargetSearchType.NearHorizontalDirection:
+            {
+                if(requester == receiverCharacter || desc._searchIdentifier != receiverCharacter._searchIdentifier || receiverCharacter.isDead())
+                    return true;
+
+                if(desc._searchType == TargetSearchType.NearHorizontalDirection)
+                {
+                    float xFace = receiverCharacter.transform.position.x - requester.transform.position.x;
+                    float face = requester.getDirection().x;
+                    if(face < 0f && xFace > 0)
+                        return true;
+                    
+                    if(face > 0f && xFace < 0)
+                        return true;
+                }
+
+                float yDistance = receiverCharacter.transform.position.y - requester.transform.position.y;
+                if(yDistance < desc._horizontalSearchDownDistance || yDistance > desc._horizontalSearchUpDistance)
+                    return true;
+
+                float xDistance = MathEx.distancef(receiverCharacter.transform.position.x, requester.transform.position.x);
+                if(currentTarget == null)
+                {
+                    if(xDistance < desc._searchRange)
+                        requester.setTargetEntity(receiverCharacter);
+                    return true;
+                }
+
+                float toCurrent = MathEx.distancef(currentTarget.transform.position.x, requester.transform.position.x);
+                if(xDistance < desc._searchRange && toCurrent > xDistance)
                     requester.setTargetEntity(receiverCharacter);
             }
             break;

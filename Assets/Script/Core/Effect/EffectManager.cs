@@ -162,6 +162,8 @@ public class EffectItem : EffectItemBase
         _animationPlayData._flipState = new FlipState{xFlip = false, yFlip = false};
 
         _stopEffect = false;
+        _useFlip = effectData._useFlip;
+        _rotation = effectData._rotation;
 
         if(effectData._animationCustomPreset != null)
         {
@@ -203,6 +205,7 @@ public class EffectItem : EffectItemBase
         _spriteRenderer.transform.localScale = effectData._scale;
         _spriteRenderer.sprite = _animationPlayer.getCurrentSprite();
         _spriteRenderer.gameObject.SetActive(true);
+        _spriteRenderer.flipX = _useFlip;
 
         _localPosition = _spriteRenderer.transform.position;
         if(_parentTransform != null)
@@ -211,8 +214,6 @@ public class EffectItem : EffectItemBase
         _physicsBody.initialize(effectData._physicsBodyDesc);
         _usePhysics = effectData._usePhysics;
 
-        _useFlip = effectData._useFlip;
-        _rotation = effectData._rotation;
     }
 
     public override bool progress(float deltaTime)

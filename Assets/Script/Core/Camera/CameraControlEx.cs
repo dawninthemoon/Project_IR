@@ -204,7 +204,6 @@ public class CameraControlEx : Singleton<CameraControlEx>
     private float _shakeSpeed = 0f;
 
     private Vector3 _shakePosition = Vector3.zero;
-
     private Vector2 _cameraBoundHalf = Vector2.zero;
 
     public void initialize()

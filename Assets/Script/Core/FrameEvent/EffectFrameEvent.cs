@@ -432,6 +432,7 @@ public class ActionFrameEvent_Effect : ActionFrameEventBase
     public bool _usePhysics = false;
     public bool _useFlip = false;
     public bool _castShadow = false;
+    public bool _useAnimationPreset = false;
     public PhysicsBodyDescription _physicsBodyDesc = new PhysicsBodyDescription(null);
     public EffectUpdateType _effectUpdateType = EffectUpdateType.ScaledDeltaTime;
 
@@ -447,6 +448,8 @@ public class ActionFrameEvent_Effect : ActionFrameEventBase
 
         EffectRequestData requestData = MessageDataPooling.GetMessageData<EffectRequestData>();
         requestData.clearRequestData();
+        if(_useAnimationPreset)
+            requestData.createPresetAnimationRequestData(_effectPath);
         requestData._effectPath = _effectPath;
         requestData._startFrame = 0f;
         requestData._endFrame = -1f;
@@ -512,6 +515,11 @@ public class ActionFrameEvent_Effect : ActionFrameEventBase
         {
             if(attributes[i].Name == "Path")
                 _effectPath = attributes[i].Value;
+            else if(attributes[i].Name == "Preset")
+            {
+                _effectPath = attributes[i].Value;
+                _useAnimationPreset = true;
+            }
             // else if(attributes[i].Name == "StartFrame")
             //     _aniStartFrame = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
             // else if(attributes[i].Name == "EndFrame")

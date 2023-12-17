@@ -155,6 +155,7 @@
 
     <AC_Attack_Ground MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackGround/" XFlip="True">
+            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
         </Animation>
 
@@ -165,6 +166,7 @@
 
     <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Keep">
         <Animation Preset="Sprites/Player/AttackMidair/" XFlip="True">
+            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true" Attach="true"/>
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 

@@ -79,7 +79,7 @@ public abstract class ActionFrameEventBase
     public float                                _startFrame;
     public float                                _endFrame;
 
-    public bool                                 _isTimeBase = false;
+    public bool                                 _isTimeBase = true;
 
     public ActionGraphConditionCompareData      _conditionCompareData = null;
 
@@ -590,16 +590,16 @@ public class ActionFrameEvent_ReleaseCatch : ActionFrameEventBase
             return true;
 
         ObjectBase childObject = parentObject.getChildObject();
+        ObjectBase pushTarget = executeEntity == parentObject ? childObject : parentObject;
 
-        if(_pushVector.sqrMagnitude > float.Epsilon && childObject is GameEntityBase)
+        if(_pushVector.sqrMagnitude > float.Epsilon && pushTarget is GameEntityBase)
         {
-            GameEntityBase target = (childObject as GameEntityBase);
-            UnityEngine.Vector3 attackPointDirection = parentObject.getDirection();
+            GameEntityBase target = (pushTarget as GameEntityBase);
+            UnityEngine.Vector3 attackPointDirection = executeEntity.getDirection();
             target.setVelocity(UnityEngine.Quaternion.Euler(0f,0f,UnityEngine.Mathf.Atan2(attackPointDirection.y,attackPointDirection.x) * UnityEngine.Mathf.Rad2Deg) * _pushVector);
         }
 
         parentObject.detachChildObject();
-
         return true;
     }
 

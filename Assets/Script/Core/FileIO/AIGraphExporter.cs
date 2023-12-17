@@ -608,6 +608,14 @@ public class AIGraphLoader : LoaderBase<AIGraphBaseData>
             {
                 nodeData._targetSearchSphereRadius = XMLScriptConverter.valueToFloatExtend(targetValue);
             }
+            else if(targetName == "HorizontalTargetSearchRangeUp")
+            {
+                nodeData._horizontalTargetSearchRangeUp = XMLScriptConverter.valueToFloatExtend(targetValue);
+            }
+            else if(targetName == "HorizontalTargetSearchRangeDown")
+            {
+                nodeData._horizontalTargetSearchRangeDown = XMLScriptConverter.valueToFloatExtend(targetValue);
+            }
             else if(targetName == "SearchIdentifier")
             {
                 nodeData._searchIdentifier = (SearchIdentifier)System.Enum.Parse(typeof(SearchIdentifier), targetValue);

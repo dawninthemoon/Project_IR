@@ -16,6 +16,8 @@ public enum TargetSearchType
     Near,
     NearDirection,
     NearMousePointDirection,
+    NearHorizontal,
+    NearHorizontalDirection,
     Count,
 }
 

@@ -98,6 +98,9 @@ public class AIPackageNodeData
     public float                        _targetSearchStartRange = 0f;
     public float                        _targetSearchSphereRadius = 0f;
 
+    public float                        _horizontalTargetSearchRangeUp = 0f;
+    public float                        _horizontalTargetSearchRangeDown = 0f;
+
     public UnityEngine.Vector3          _targetPosition;
     public float                        _arriveThreshold = 0.1f;
     public bool                         _hasTargetPosition = false;
