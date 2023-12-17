@@ -7,8 +7,6 @@
         Threshold="0.0"
         
         Key_KM="Space"
-        Key_XBOX="A"
-        Key_PS="X"
     />
 
     <Move
@@ -17,8 +15,6 @@
         Threshold="0.0"
         
         Key_KM="Space"
-        Key_XBOX="A"
-        Key_PS="X"
     />
 
     <Jump
@@ -27,8 +23,6 @@
         Threshold="0.0"
         
         Key_KM="Z"
-        Key_XBOX="A"
-        Key_PS="X"
     />
 
     <Attack
@@ -37,8 +31,14 @@
         Threshold="0.0"
         
         Key_KM="X"
-        Key_XBOX="A"
-        Key_PS="X"
+    />
+
+    <GunMode
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="LeftShift"
     />
 
     <EditorHotKey_EditorOnOff

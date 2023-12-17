@@ -200,6 +200,8 @@ public class GameEntityBase : SequencerObjectBase
         _collisionInfo = new CollisionInfo(data);
         CollisionManager.Instance().registerObject(_collisionInfo, this);
         
+        _collisionInfo.setActiveCollision(_actionGraph.isActiveCollision());
+
         _spriteRenderer.enabled = true;
         _spriteRenderer.sprite = _actionGraph.getCurrentSprite(_actionGraph.getCurrentRotationType() != RotationType.AlwaysRight ? (_spriteRotation * _actionStartRotation).eulerAngles.z : MathEx.directionToAngle(_direction));
         _spriteRenderer.flipX = false;
@@ -293,6 +295,8 @@ public class GameEntityBase : SequencerObjectBase
         CollisionInfoData data = new CollisionInfoData(0.1f,0.1f, CollisionType.Character);
         _collisionInfo = new CollisionInfo(data);
 
+        _collisionInfo.setActiveCollision(_actionGraph.isActiveCollision());
+
         _graphicInterface.initialize(this,_statusInfo,new Vector3(0f, _collisionInfo.getBoundBox().getHeightHalf(), 0f), true);
 
         CollisionManager.Instance().registerObject(_collisionInfo, this);
@@ -380,6 +384,8 @@ public class GameEntityBase : SequencerObjectBase
 
                 _currentDefenceType = _actionGraph.getCurrentDefenceType();
                 _currentDirectionType = _actionGraph.getDirectionType();
+
+                _collisionInfo.setActiveCollision(_actionGraph.isActiveCollision());
 
                 if(_currentRotationType == RotationType.Torque && _currentRotationType != _actionGraph.getCurrentRotationType())
                     _physicsBody.setTorque(0f);

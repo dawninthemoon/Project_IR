@@ -394,7 +394,7 @@ public class CameraControlEx : Singleton<CameraControlEx>
         if(_currentCamera == null || _currentCameraMode == null)
             return;
 
-        _currentCamera.transform.position = getCameraPosition() + _shakePosition;
+        _currentCamera.transform.position = _cameraPosition;
     }
 
     public bool isCameraTargetObject(ObjectBase targetObject)

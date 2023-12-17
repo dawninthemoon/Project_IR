@@ -18,3 +18,8 @@ MonoBehaviour:
     _attackHeight: 0.4
     _pushVector: {x: 0, y: 0, z: 0}
     _attackMaterial: 0
+  - _name: GunAttack
+    _attackWidth: 5
+    _attackHeight: 0.1
+    _pushVector: {x: 0, y: 0, z: 0}
+    _attackMaterial: 0

@@ -10,6 +10,7 @@
 <!-- BranchSet -->
     <BranchSet Name="AttackGround">
         <Branch Key="getKey_Attack" Condition="OnGround" Execute="AC_Attack_Ground"/>
+        <Branch Key="getKey_GunMode" Condition="OnGround" Execute="AC_GunState_ReadyStart"/>
     </BranchSet>
 
     <BranchSet Name="AttackAir">
@@ -192,17 +193,74 @@
 
 <!-- Attack -->
 
+<!-- GunState -->
 
-    <Dead MovementType="Empty" DirectionType="Keep">
+    <AC_GunState_ReadyStart MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
-        <Animation Preset="Idle" XFlip="true">
-            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/Player/Idle" FramePerSecond="0.2" CastShadow="True">
-                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+        <Animation Path="GunRdyStart" XFlip="true">
+            <FrameEvent Type="FrameTag" StartFrame="5" EndFrame="999" Tag="AttackCancel"/>
+        </Animation>
+
+        <Branch Condition="getFrameTag_AttackCancel && getKey_Attack" Execute="AC_GunState_Fire"/>
+        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
+    </AC_GunState_ReadyStart>
+
+    <AC_GunState_ReadyLoop MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Path="GunRdyLoop" XFlip="true">
+        </Animation>
+
+        <Branch Condition="getKey_Attack" Execute="AC_GunState_Fire"/>
+        <Branch Condition="getKey_GunMode" Execute="AC_GunState_ToIdle"/>
+        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
+    </AC_GunState_ReadyLoop>
+
+    <AC_GunState_ToIdle MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Path="GunRdyToIdle" XFlip="true">
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_GunState_ToIdle>
+
+    <AC_GunState_Fire MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Path="FIring" XFlip="true">
+            <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/GunFire" UseFlip="true"/>
+            <FrameEvent Type="FrameTag" StartFrame="3" EndFrame="999" Tag="AttackCancel"/>
+
+            <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
+            <FrameEvent Type="Attack" StartTime="0" AttackPreset="GunAttack" AttackCount="1">
+                <OnHit>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/BulletImpact" ToTarget="true"/>
+                </OnHit>
             </FrameEvent>
-            <FrameEvent Type="KillEntity" StartTime="0"/>
+        </Animation>
+
+        <Branch Condition="getFrameTag_AttackCancel && getKey_Attack" Execute="AC_GunState_Fire"/>
+        <Branch Condition="getFrameTag_AttackCancel && getKey_GunMode" Execute="AC_GunState_ToIdle"/>
+        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
+    </AC_GunState_Fire>
+
+
+<!-- GunState -->
+
+<!-- State -->
+    <AC_Hit MovementType="FrameEvent" DirectionType="Keep">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Preset="GettingHit" XFlip="true">
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Hit>
+
+    <Dead MovementType="Empty" DirectionType="Keep" ActiveCollision="false">
+        <AnimationHeader MasterPath="Sprites/Player/"/>
+        <Animation Preset="Die" XFlip="true">
         </Animation>
 
         <Branch Condition="End == true" Execute="Dead"/>
     </Dead>
-
+<!-- State -->
 </ActionGraph>

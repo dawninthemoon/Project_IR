@@ -152,7 +152,6 @@ public class MasterManager : MessageHub<ManagerBase>
 
         deltaTime = GlobalTimer.Instance().getSclaedDeltaTime();
 
-        StageProcessor.Instance().processStage(deltaTime);
         DanmakuManager.Instance().process(deltaTime);
 
         ManagersUpdate(deltaTime);
@@ -168,6 +167,8 @@ public class MasterManager : MessageHub<ManagerBase>
         TalkBalloonManager.Instance().updateTalkBalloonManager(deltaTime);
         CameraControlEx.Instance().progress(deltaTime);
 
+        StageProcessor.Instance().processStage(deltaTime);
+        
         FMODAudioManager.Instance().updateAudio();
         CameraControlEx.Instance().SyncPosition();
 

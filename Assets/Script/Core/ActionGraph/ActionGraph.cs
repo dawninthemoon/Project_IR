@@ -716,6 +716,7 @@ public class ActionGraph
 
     public bool checkFrameTag(string tag) {return _currentFrameTag.Contains(tag);}
 
+    public bool isActiveCollision() {return getCurrentAction()._activeCollision;}
     public bool isActionLoop() {return _currentActionNodeIndex == _prevActionNodeIndex;}
     public int[] getDefaultBuffList() {return _actionGraphBaseData._defaultBuffList;}
     public int[] getCurrentBuffList() {return getCurrentAction()._applyBuffList;}

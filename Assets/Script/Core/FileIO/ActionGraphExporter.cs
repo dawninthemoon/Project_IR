@@ -361,6 +361,10 @@ public class ActionGraphLoader : LoaderBase<ActionGraphBaseData>
             {
                 nodeData._headUpOffset = float.Parse(targetValue);
             }
+            else if(targetName == "ActiveCollision")
+            {
+                nodeData._activeCollision = bool.Parse(targetValue);
+            }
             else
             {
                 DebugUtil.assert_fileOpen(false,"invalid attribute type !!! : {0} [Line: {1}] [FileName: {2}]", _currentFileName, XMLScriptConverter.getLineNumberFromXMLNode(node), targetName, XMLScriptConverter.getLineFromXMLNode(node), filePath);
