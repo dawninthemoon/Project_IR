@@ -17,8 +17,8 @@ public class GroundController : RaycastController {
 	//	Progress(moveAmount, Vector2.zero, standingOnPlatform);
 	//}
 
-	public Vector2 Progress(Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {
-		UpdateRaycastOrigins();
+	public Vector2 Progress(Vector3 position, Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {
+		UpdateRaycastOrigins(position);
 
 		collisions.Reset();
 		collisions.moveAmountOld = moveAmount;

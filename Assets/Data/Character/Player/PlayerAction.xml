@@ -155,8 +155,14 @@
 
     <AC_Attack_Ground MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackGround/" XFlip="True">
-            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
+            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
+            <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+                <OnHit>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
+                </OnHit>
+            </FrameEvent>
         </Animation>
 
         <Branch Condition="IsFalling" Execute="AC_FallStart"/>
@@ -166,8 +172,14 @@
 
     <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Keep">
         <Animation Preset="Sprites/Player/AttackMidair/" XFlip="True">
-            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true" Attach="true"/>
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true" Attach="true"/>
+            <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+                <OnHit>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
+                </OnHit>
+            </FrameEvent>
         </Animation>
 
         <Branch Condition="OnGround && MoveInput" Execute="AC_FallToGroundMove"/>

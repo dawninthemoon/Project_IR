@@ -41,7 +41,7 @@ public struct PhysicsBodyDescription
 
 public class PhysicsBodyEx
 {
-    public static Vector3 _gravity = new Vector3(0f,-12f,0f);
+    public static Vector3 _gravity = new Vector3(0f,-8f,0f);
 
     private Vector3 _currentVelocity;
     private float _currentTorque;

@@ -20,7 +20,7 @@ public class ProjectileEntityBase : ObjectBase
     {
         base.assign();
         _projectileGraph = new ProjectileGraph();
-        CollisionInfoData data = new CollisionInfoData(0f,0f,0f,0f,CollisionType.Projectile);
+        CollisionInfoData data = new CollisionInfoData(0f,0f,CollisionType.Projectile);
         _collisionInfo = new CollisionInfo(data);
         _collisionDelegate = onProjectileHit;
         
@@ -38,7 +38,7 @@ public class ProjectileEntityBase : ObjectBase
     {
         _spriteRotation = baseData._useSpriteRotation;
         _projectileGraph.setData(baseData);
-        _collisionInfo.setCollisionInfo(baseData._collisionRadius, baseData._collisionAngle, baseData._collisionStartDistance);
+        _collisionInfo.setCollisionInfo(baseData._collisionRadius * 2f, baseData._collisionRadius * 2f,CollisionType.Projectile);
 
         _spriteRenderer.gameObject.layer = baseData._castShadow ? LayerMask.NameToLayer("Character") : LayerMask.NameToLayer("EffectEtc");
     }
@@ -110,10 +110,10 @@ public class ProjectileEntityBase : ObjectBase
         _projectileGraph.getCurrentAnimationTranslation(out outTranslation);
         _spriteRenderer.transform.localPosition = outTranslation;
 
-        _collisionInfo.updateCollisionInfo(transform.position,Vector3.right);
+        _collisionInfo.updateCollisionInfo(transform.position);
         CollisionManager.Instance().collisionRequest(_collisionInfo,this,_collisionDelegate,null);
         
-        GizmoHelper.instance.drawCircle(transform.position,_collisionInfo.getRadius(),36,_debugColor);
+        GizmoHelper.instance.drawRectangle(transform.position,_collisionInfo.getBoundBox().getWidthHeightHalf(),_debugColor);
     }
 
     private void onProjectileHit(CollisionSuccessData successData)

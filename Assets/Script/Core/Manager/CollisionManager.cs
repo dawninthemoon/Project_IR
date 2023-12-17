@@ -147,7 +147,14 @@ public class CollisionManager : Singleton<CollisionManager>
 
     public void collisionRequest(CollisionInfo collisionData, object requestObject, CollisionDelegate collisionDelegate, System.Action collisionEndEvent)
     {
-        collisionRequest(new CollisionRequestData{_collisionDelegate = collisionDelegate, _collisionEndEvent = collisionEndEvent, _requestObject = requestObject, _collision = collisionData});
+        collisionRequest(
+            new CollisionRequestData
+            {
+                _collisionDelegate = collisionDelegate, 
+                _collisionEndEvent = collisionEndEvent, 
+                _requestObject = requestObject, 
+                _collision = collisionData,
+            });
     }
 
     public void collisionRequest(CollisionRequestData request)
@@ -187,7 +194,6 @@ public class CollisionManager : Singleton<CollisionManager>
         {
             if(collisionInfo.getUniqueID() == collisionList[i]._collisionInfo.getUniqueID() || request._requestObject == collisionList[i]._collisionObject)
                 continue;
-
             
             if(collisionInfo.collisionCheck(collisionList[i]._collisionInfo) == true)
             {

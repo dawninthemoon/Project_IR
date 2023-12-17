@@ -1,6 +1,6 @@
 HintType,Symbol,TextList
 FrameEvent,Test,Log=~~
-FrameEvent,Attack,"Radius=~~,Angle=~~,StartDistance=~~,AttackPreset=~~,Push=~~,IgnoreDefenceType=~~,CatchOffset=~~,AttackType=~~,AttackCount=~~,NotifyAttackSuccess=~~"
+FrameEvent,Attack,"Width=~~,Height=~~,AttackPreset=~~,Push=~~,IgnoreDefenceType=~~,CatchOffset=~~,AttackType=~~,AttackCount=~~,NotifyAttackSuccess=~~,Offset=~~"
 FrameEvent,ApplyBuff,ApplyBuff=~~
 FrameEvent,ApplyBuffTarget,ApplyBuff=~~
 FrameEvent,DeleteBuff,BuffList=~~

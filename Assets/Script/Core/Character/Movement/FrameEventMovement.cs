@@ -29,9 +29,7 @@ public class FrameEventMovement : MovementBase
         _currentDirection = Vector3.zero;
 
         if(_controller == null)
-        {
-            _controller = targetEntity.GetComponent<GroundController>();
-        }
+            _controller = targetEntity.getGroundController();
         
         int numMovementValue = (int)FrameEventMovementValueType.Count;
         for(int i = 0; i < numMovementValue; ++i)
@@ -72,7 +70,7 @@ public class FrameEventMovement : MovementBase
         _gravityAccumulate += _gravity * deltaTime;
         moveDelta.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
 
-        movementOfFrame = _controller.Progress(moveDelta, Vector2.zero, false);
+        movementOfFrame = _controller.Progress(_targetEntity.transform.position, moveDelta, Vector2.zero, false);
         bool onGround = _controller.collisions.below;
         if(onGround)
             _gravityAccumulate = 0f;

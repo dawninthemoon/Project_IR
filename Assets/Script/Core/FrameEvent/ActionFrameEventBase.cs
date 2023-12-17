@@ -1,6 +1,7 @@
 using System.Xml;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 
 public enum FrameEventType
 {
@@ -1206,7 +1207,7 @@ public class ActionFrameEvent_TeleportToTarget : ActionFrameEventBase
 
         UnityEngine.Vector3 direction = (requester.transform.position - target.transform.position).normalized;
 
-        requester.updatePosition(target.transform.position + direction * (requester.getCollisionInfo().getRadius() + target.getCollisionInfo().getRadius() + _distanceOffset));
+        requester.updatePosition(target.transform.position + direction * (requester.getCollisionInfo().getBoundBox().getWidthHalf() + target.getCollisionInfo().getBoundBox().getWidthHalf() + _distanceOffset));
         return true;
     }
 
@@ -1238,7 +1239,7 @@ public class ActionFrameEvent_TeleportToTargetBack : ActionFrameEventBase
         UnityEngine.Vector3 direction = requester.getDirection();
         UnityEngine.Vector3 perpendicular = MathEx.getPerpendicularPointOnLine(executeEntity.transform.position,executeEntity.transform.position + direction * 9999f, target.transform.position);
         
-        float length = (requester.getCollisionInfo().getRadius() + target.getCollisionInfo().getRadius() + _distanceOffset);
+        float length = (requester.getCollisionInfo().getBoundBox().getWidthHalf() + target.getCollisionInfo().getBoundBox().getWidthHalf() + _distanceOffset);
         requester.updatePosition(perpendicular + direction * length);
 
         return true;
@@ -1407,6 +1408,7 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
     private DefenceType[]           _ignoreDefenceType = null;
 
     private AttackType              _attackType;
+    private UnityEngine.Vector3     _attackOffset = UnityEngine.Vector3.zero;
     private UnityEngine.Vector3     _pushVector = UnityEngine.Vector3.zero;
     private UnityEngine.Vector3     _catchOffset = UnityEngine.Vector3.zero;
 
@@ -1432,8 +1434,11 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
 
     public override bool onExecute(ObjectBase executeEntity, ObjectBase targetEntity = null)
     {
-        _collisionInfo.updateCollisionInfo(executeEntity.transform.position,executeEntity.getDirection());
-        _collisionInfo.drawCollosionArea(UnityEngine.Color.red, _startFrame != _endFrame ? 0f : 1f);
+        UnityEngine.Vector3 offset = _attackOffset;
+        offset.x *= executeEntity.getDirection().x > 0f ? 1f : -1f;
+
+        _collisionInfo.updateCollisionInfo(executeEntity.transform.position + offset);
+        _collisionInfo.drawCollosionArea(UnityEngine.Color.red, (_startFrame != _endFrame || _endFrame == -1f) ? 0f : 1f);
         CollisionManager.Instance().collisionRequest(_collisionInfo,executeEntity,_collisionDelegate,_collisionEndEvent);
 
         return true;
@@ -1515,6 +1520,8 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
         if(_pushVector.sqrMagnitude > float.Epsilon)
         {
             UnityEngine.Vector3 attackPointDirection = (target.transform.position - successData._startPoint).normalized;
+            attackPointDirection.y = 0f;
+            attackPointDirection.Normalize();
             target.setVelocity(UnityEngine.Quaternion.Euler(0f,0f,UnityEngine.Mathf.Atan2(attackPointDirection.y,attackPointDirection.x) * UnityEngine.Mathf.Rad2Deg) * _pushVector);
         }
 
@@ -1670,26 +1677,21 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
     public override void loadFromXML(XmlNode node)
     {
         XmlAttributeCollection attributes = node.Attributes;
-        float radius = 0f;
-        float angle = 0f;
-        float startDistance = 0f;
-        float rayRadius = 0f;
+        float width = 0f;
+        float height = 0f;
+
         _attackType = AttackType.Default;
 
 
         for(int i = 0; i < attributes.Count; ++i)
         {
-            if(attributes[i].Name == "Radius")
+            if(attributes[i].Name == "Width")
             {
-                radius = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
+                width = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
             }
-            else if(attributes[i].Name == "Angle")
+            else if(attributes[i].Name == "Height")
             {
-                angle = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
-            }
-            else if(attributes[i].Name == "StartDistance")
-            {
-                startDistance = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
+                height = XMLScriptConverter.valueToFloatExtend(attributes[i].Value);
             }
             else if(attributes[i].Name == "AttackType")
             {
@@ -1705,10 +1707,8 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
                     return;
                 }
 
-                radius = presetData._attackRadius;
-                angle = presetData._attackAngle;
-                startDistance = presetData._attackStartDistance;
-                rayRadius = presetData._attackRayRadius;
+                width = presetData._attackWidth;
+                height = presetData._attackHeight;
                 _pushVector = presetData._pushVector;
                 _attackMaterial = presetData._attackMaterial;
             }
@@ -1729,6 +1729,17 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
                 {
                     _ignoreDefenceType[index] = (DefenceType)System.Enum.Parse(typeof(DefenceType), defencies[index]);
                 }
+            }
+            else if(attributes[i].Name == "Offset")
+            {
+                string[] value = attributes[i].Value.Split(' ');
+                if(value == null || value.Length > 2)
+                {
+                    DebugUtil.assert(false, "invalid Action Frame Event Data: Offset, {0}",attributes[i].Value);
+                    return;
+                }
+
+                _attackOffset = new UnityEngine.Vector3(XMLScriptConverter.valueToFloatExtend(value[0]),XMLScriptConverter.valueToFloatExtend(value[1]));
             }
             else if(attributes[i].Name == "Push")
             {
@@ -1756,7 +1767,7 @@ public class ActionFrameEvent_Attack : ActionFrameEventBase
 
         }
 
-        CollisionInfoData data = new CollisionInfoData(radius,angle,startDistance,rayRadius, CollisionType.Attack);
+        CollisionInfoData data = new CollisionInfoData(width,height, CollisionType.Attack);
         _collisionInfo = new CollisionInfo(data);
 
         

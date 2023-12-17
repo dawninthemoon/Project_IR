@@ -1,45 +1,41 @@
 
+using System.Diagnostics;
+using System.Numerics;
+
 public class CollisionInfoData
 {
     private BoundBox _boundBox;
     private CollisionType _collisionType = CollisionType.Default;
-    private float _radius = 0f;
-    private float _angle = 0f;
-    private float _startDistance = 0f;
-    private float _rayRadius = 0f;
+    private float _width = 0f;
+    private float _height = 0f;
 
-    public CollisionInfoData(float radius, float angle, float startDistance, float rayRadius, CollisionType collisionType)
+    public CollisionInfoData(float width, float height, CollisionType collisionType)
     {
-        _boundBox = new BoundBox(radius,radius,UnityEngine.Vector3.zero);
-        _radius = radius;
-        _angle = angle;
-        _startDistance = startDistance;
-        _rayRadius = rayRadius;
+        _width = width;
+        _height = height;
+        _boundBox = new BoundBox(_width * 0.5f,_height * 0.5f,UnityEngine.Vector3.zero);
         _collisionType = collisionType;
     }
 
     public bool isValid()
     {
-        return _radius != 0f && _boundBox.isValid();
+        return _width != 0f && _height != 0f && _boundBox.isValid();
     }
+
+    public float getWidth() {return _width;}
+    public float getHeight() {return _height;}
 
     public BoundBox getBoundBox() {return _boundBox;}
     public CollisionType getCollisionType() {return _collisionType;}
-    public float getRadius() {return _radius;}
-    public float getSqrRadius() {return _radius * _radius;}
+    public Vector2 getWidthHeight() {return new Vector2(_width,_height);}
 
-    public float getAngle() {return _angle;}
-    public float getRayRadius() {return _rayRadius;}
-    public float getStartDistance() {return _startDistance;}
-
-    public void setCollisionInfoData(float radius, float angle, float startDistance, CollisionType type)
+    public void setCollisionInfoData(float width, float height, CollisionType type)
     {
-        _radius = radius;
-        _angle = angle;
-        _startDistance = startDistance;
-        _collisionType = type;
+        _width = width;
+        _height = height;
 
-        _boundBox.setData(radius,radius,UnityEngine.Vector3.zero);
+        _collisionType = type;
+        _boundBox.setData(_width * 0.5f,_height * 0.5f,UnityEngine.Vector3.zero);
     }
 }
 

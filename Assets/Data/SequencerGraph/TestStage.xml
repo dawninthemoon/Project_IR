@@ -3,10 +3,9 @@
 
     <InitializePhase>
         <ApplyPostProcessProfile Path="PostProcessProfile/PostProcessProfile_Default"/>
-
+ 
         <SetCameraTarget UniqueKey="Player" CameraMode="TargetCenterMode"/>
         <SetAudioListner UniqueKey="Player"/>
-        <SetCrossHair UniqueKey="Player"/>
 
         <SetCameraZoom Size="0.0"/>
         
@@ -14,15 +13,6 @@
 
     <UpdatePhase>
         <WaitSecond Time="1.0"/>
-
-        <!-- <AIMove UniqueKey="Player" StartAction="AIMove_Start" EndAction="AIMove_End" LoopAction="AIMove_Loop" EndPosition="3.0 0.0 0.0"/>
-
-        <AIMove UniqueKey="Player" StartAction="AIMove_Start" EndAction="AIMove_End" LoopAction="AIMove_Loop" EndPosition="3.0 2.0 0.0"/>
-
-        <AIMove UniqueKey="Player" StartAction="AIMove_Start" EndAction="AIMove_End" LoopAction="AIMove_Loop" EndPosition="0.0 0.0 0.0"/>
-        <AIMove UniqueKey="Player" StartAction="AIMove_Start" EndAction="AIMove_End" LoopAction="AIMove_Loop" EndPosition="0.1 0.0 0.0"/> -->
-
-        <!-- 스테이지 시퀀서는 스테이지 진행중에 절대 꺼지면 안된다 -->
         <WaitSignal Signal="NeverEnd"/>
     </UpdatePhase>
 

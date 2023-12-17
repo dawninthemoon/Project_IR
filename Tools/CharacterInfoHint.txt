@@ -4,11 +4,11 @@ InQuote,DisplayName=,
 InQuote,ActionGraph=,
 InQuote,AIGraph=,
 InQuote,StatusInfoName=,
-InQuote,CollisionRadius=,
+InQuote,CollisionWidth=,
 InQuote,HeadUpOffset=,
-InScope,,"DisplayName=~~,ActionGraph=~~,AIGraph=~~,StatusInfoName=~~,CollisionRadius=~~,HeadUpOffset=~~,SearchIdentifier=~~,DefaultMaterial=~~"
+InScope,,"DisplayName=~~,ActionGraph=~~,AIGraph=~~,StatusInfoName=~~,CollisionWidth=~~,CollisionHeight=~~,HeadUpOffset=~~,SearchIdentifier=~~,DefaultMaterial=~~"
 InQuote,DefaultMaterial=,"Skin,Metal,Katana,Laser"
-,,
+InQuote,CollisionHeight=,
 ,,
 ,,
 ,,

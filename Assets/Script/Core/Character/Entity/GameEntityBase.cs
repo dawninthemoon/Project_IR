@@ -52,6 +52,7 @@ public class GameEntityBase : SequencerObjectBase
     private DefenceType         _currentDefenceType = DefenceType.Empty;
 
     private PhysicsBodyEx       _physicsBody = new PhysicsBodyEx();
+    private GroundController    _groundController = new GroundController();
 
 
     private Vector3             _currentVelocity = Vector3.zero;
@@ -171,6 +172,8 @@ public class GameEntityBase : SequencerObjectBase
 
         _physicsBody.initialize(false,0f,10f);
 
+        _groundController.Initialize(new Vector2(characterInfo._characterWidth, characterInfo._characterHeight));
+
         _movementControl.initialize();
         _actionGraph.initialize(ResourceContainerEx.Instance().GetActionGraph(characterInfo._actionGraphPath));
         _aiGraph.initialize(this, _actionGraph, ResourceContainerEx.Instance().GetAIGraph(characterInfo._aiGraphPath));
@@ -193,7 +196,7 @@ public class GameEntityBase : SequencerObjectBase
         _currentDirectionType = _actionGraph.getDirectionType();
         _currentRotationType = _actionGraph.getCurrentRotationType();
 
-        CollisionInfoData data = new CollisionInfoData(characterInfo._characterRadius,0f,0f,0f, CollisionType.Character);
+        CollisionInfoData data = new CollisionInfoData(characterInfo._characterWidth,characterInfo._characterHeight,CollisionType.Character);
         _collisionInfo = new CollisionInfo(data);
         CollisionManager.Instance().registerObject(_collisionInfo, this);
         
@@ -287,10 +290,10 @@ public class GameEntityBase : SequencerObjectBase
 
         _headUpOffset = _actionGraph.getCurrentHeadUpOffset();
 
-        CollisionInfoData data = new CollisionInfoData(0.2f,0f,0f,0f, CollisionType.Character);
+        CollisionInfoData data = new CollisionInfoData(0.1f,0.1f, CollisionType.Character);
         _collisionInfo = new CollisionInfo(data);
 
-        _graphicInterface.initialize(this,_statusInfo,new Vector3(0f, _collisionInfo.getRadius(), 0f), true);
+        _graphicInterface.initialize(this,_statusInfo,new Vector3(0f, _collisionInfo.getBoundBox().getHeightHalf(), 0f), true);
 
         CollisionManager.Instance().registerObject(_collisionInfo, this);
 
@@ -451,7 +454,7 @@ public class GameEntityBase : SequencerObjectBase
         _deadEventDelegate = null;
         laserEffectCheck();
 
-        _collisionInfo.updateCollisionInfo(transform.position,getDirection());
+        _collisionInfo.updateCollisionInfo(transform.position);
 
         updateDebug();
     }
@@ -596,24 +599,24 @@ public class GameEntityBase : SequencerObjectBase
 
     private void gameEntityCollisionEvent(CollisionSuccessData data)
     {
-        _debugColor = Color.green;
+        // _debugColor = Color.green;
 
-        if(data._target == null || data._target is GameEntityBase == false)
-            return;
+        // if(data._target == null || data._target is GameEntityBase == false)
+        //     return;
         
-        GameEntityBase targetEntity = data._target as GameEntityBase;
-        if (targetEntity.getCurrentSearchIdentifier() != getCurrentSearchIdentifier())
-            return;
+        // GameEntityBase targetEntity = data._target as GameEntityBase;
+        // if (targetEntity.getCurrentSearchIdentifier() != getCurrentSearchIdentifier())
+        //     return;
 
-        float totalRadius = targetEntity.getCollisionInfo().getRadius() + getCollisionInfo().getRadius();
-        float collapseDistance = totalRadius - Vector3.Distance(targetEntity.transform.position, data._startPoint);
+        // float totalRadius = targetEntity.getCollisionInfo().getRadius() + getCollisionInfo().getRadius();
+        // float collapseDistance = totalRadius - Vector3.Distance(targetEntity.transform.position, data._startPoint);
 
-        float scaledDeltaTime = GlobalTimer.Instance().getSclaedDeltaTime();
-        scaledDeltaTime = MathEx.clampf(scaledDeltaTime, 0f, 0.5f);
+        // float scaledDeltaTime = GlobalTimer.Instance().getSclaedDeltaTime();
+        // scaledDeltaTime = MathEx.clampf(scaledDeltaTime, 0f, 0.5f);
 
-        Vector3 direction = (targetEntity.transform.position - data._startPoint).normalized;
-        targetEntity.transform.position += direction * collapseDistance * scaledDeltaTime;
-        transform.position -= direction * collapseDistance * scaledDeltaTime;
+        // Vector3 direction = (targetEntity.transform.position - data._startPoint).normalized;
+        // targetEntity.transform.position += direction * collapseDistance * scaledDeltaTime;
+        // transform.position -= direction * collapseDistance * scaledDeltaTime;
     }
 
     private void collisionEndEvent()
@@ -1113,6 +1116,8 @@ public class GameEntityBase : SequencerObjectBase
     {
         _graphicInterface?.setActive(value);
     }
+
+    public GroundController getGroundController() {return _groundController;}
 
     public void addTorque(float torque) {_physicsBody.addTorque(torque);}
     public void setTorque(float torque) {_physicsBody.setTorque(torque);}

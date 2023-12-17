@@ -18,13 +18,13 @@ public class AtteckRayEffect : MonoBehaviour
             return;
         }
 
-        _targetLine.startWidth = presetData._attackRayRadius * 2f;
-        _targetLine.endWidth = presetData._attackRayRadius * 2f;
+        // _targetLine.startWidth = presetData._attackRayRadius * 2f;
+        // _targetLine.endWidth = presetData._attackRayRadius * 2f;
 
-        _placeholder.startWidth = _targetLine.startWidth;
-        _placeholder.endWidth = _targetLine.endWidth;
+        // _placeholder.startWidth = _targetLine.startWidth;
+        // _placeholder.endWidth = _targetLine.endWidth;
 
-        _targetLine.SetPosition(1, new Vector3(presetData._attackRadius,0f,0f));
-        _placeholder.SetPosition(1, new Vector3(presetData._attackRadius,0f,0f));
+        // _targetLine.SetPosition(1, new Vector3(presetData._attackRadius,0f,0f));
+        // _placeholder.SetPosition(1, new Vector3(presetData._attackRadius,0f,0f));
     }
 }

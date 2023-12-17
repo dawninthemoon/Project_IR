@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -71,6 +72,10 @@ public class AkaneRenderPipeline : MonoBehaviour
     [ExecuteAlways]
     private void LateUpdate()
     {
+        Vector3 position = MathEx.floorNoSign(transform.position,2);
+        position.z = internalCamera.transform.position.z;
+        internalCamera.transform.position = position;
+
         FieldOfView = fieldOfView;
         if (Application.isPlaying == true)
         {

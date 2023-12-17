@@ -3094,7 +3094,7 @@ public class CharacterInfoView
             EditorGUILayout.LabelField("AIGraph: " + _selectedData._aiGraphPath);
             
             EditorGUILayout.LabelField("Status: " + _selectedData._statusName);
-            EditorGUILayout.LabelField("Radius: " + _selectedData._characterRadius);
+            EditorGUILayout.LabelField("Width Height: " + _selectedData._characterWidth + ", " + _selectedData._characterHeight);
             EditorGUILayout.LabelField("HeadUpOffset: " + _selectedData._headUpOffset);
             EditorGUILayout.LabelField("SearchIdentifier: " + _selectedData._searchIdentifer);
 

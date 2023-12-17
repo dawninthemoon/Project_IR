@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _presetData:
   - _name: PlayerAttackTest
-    _attackRadius: 1.5
-    _attackAngle: 8
-    _attackStartDistance: 0.1
-    _attackRayRadius: 0.17
-    _pushVector: {x: 1.5, y: 0, z: 0}
+    _attackWidth: 0.5
+    _attackHeight: 0.4
+    _pushVector: {x: 0, y: 0, z: 0}
     _attackMaterial: 0

@@ -383,7 +383,7 @@ public class CameraControlEx : Singleton<CameraControlEx>
 
     public void setCameraPosition(Vector3 position)
     {
-        _currentCamera.transform.position = position;
+        _currentCamera.transform.position = position + _shakePosition;
     }
 
     public void SyncPosition()

@@ -19,13 +19,14 @@ MonoBehaviour:
   _stagePointData:
   - _pointName: New Point 0
     _stagePoint: {x: 0, y: 0, z: 0}
-    _maxLimitedDistance: 0
+    _maxLimitedDistance: 1
     _cameraZoomSize: 1.35
     _cameraZoomSpeed: 4
     _lerpCameraZoom: 0
     _lockCameraInBound: 0
     _cameraBoundToTrigger: 0
-    _onEnterSequencerPath: []
+    _onEnterSequencerPath:
+    - TestStage.xml
     _onExitSequencerPath: []
     _characterSpawnData:
     - _characterKey: Player

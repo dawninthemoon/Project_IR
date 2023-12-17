@@ -98,22 +98,22 @@ public struct Triangle
 public class BoundBox
 {
     private Vector3[] _vertices;
-    private float _width;
-    private float _height;
+    private float _widthHalf;
+    private float _heightHalf;
     private Vector3 _worldCenter;
     private Vector3 _localPivot;
 
     private float _l,_r,_b,_t;
 
-    public BoundBox(float width, float height, Vector3 localPivot)
+    public BoundBox(float widthHalf, float heightHalf, Vector3 localPivot)
     {
         _vertices = new Vector3[4];
-        setData(width,height,localPivot);
+        setData(widthHalf,heightHalf,localPivot);
     }
 
     public bool isValid()
     {
-        return _width > 0f && _height > 0f;
+        return _widthHalf > 0f && _heightHalf > 0f;
     }
 
     public void setPivot(Vector3 pivot)
@@ -121,10 +121,10 @@ public class BoundBox
         _localPivot = pivot;
     }
 
-    public void setData(float width, float height, Vector3 localPivot)
+    public void setData(float widthHalf, float heightHalf, Vector3 localPivot)
     {
-        _width = width;
-        _height = height;
+        _widthHalf = widthHalf;
+        _heightHalf = heightHalf;
 
         _worldCenter = Vector3.zero;
         _localPivot = localPivot;
@@ -174,11 +174,11 @@ public class BoundBox
 
         Vector3 pivotCenter = worldPosition + _localPivot;
 
-        _l = pivotCenter.x - _width;
-        _r = pivotCenter.x + _width;
+        _l = pivotCenter.x - _widthHalf;
+        _r = pivotCenter.x + _widthHalf;
 
-        _b = pivotCenter.y - _height;
-        _t = pivotCenter.y + _height;
+        _b = pivotCenter.y - _heightHalf;
+        _t = pivotCenter.y + _heightHalf;
 
         _vertices[0].x = _l;
         _vertices[0].y = _b;
@@ -210,9 +210,9 @@ public class BoundBox
         return true;
     }
 
-
-    public float getWidth() {return _width;}
-    public float getHeight() {return _height;}
+    public Vector2 getWidthHeightHalf() {return new Vector2(_widthHalf,_heightHalf);}
+    public float getWidthHalf() {return _widthHalf;}
+    public float getHeightHalf() {return _heightHalf;}
     public float getBottom() {return _b;}
 
 }

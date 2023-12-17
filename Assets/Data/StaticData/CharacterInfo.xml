@@ -6,12 +6,23 @@
         ActionGraph="Assets/Data/Character/Player/PlayerAction.xml"
         AIGraph="Assets/Data/Character/Player/PlayerAI.xml"
         StatusInfoName="CommonPlayerStatus"
-        
-        CollisionRadius="0.2"
-        HeadUpOffset="0.5"
-        ProjectileCollisionRadius=""
 
+        CollisionWidth="0.065"
+        CollisionHeight="0.17"
+        
         SearchIdentifier="Player"
+    />
+
+    <MiniHog
+        DisplayName="미니 멧돼지"
+        ActionGraph="Assets/Data/Character/MiniHog/MiniHogAcion.xml"
+        AIGraph="Assets/Data/Character/MiniHog/MiniHogAI.xml"
+        StatusInfoName="CommonEnemyStatus"
+        
+        CollisionWidth="0.065"
+        CollisionHeight="0.17"
+
+        SearchIdentifier="Enemy"
     />
 
 </CharacterInfo>

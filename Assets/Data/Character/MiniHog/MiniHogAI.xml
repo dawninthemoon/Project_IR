@@ -1,5 +1,4 @@
-<AIGraph Name="#SCRIPTNAME#" DefaultState="Entry">
-
+<AIGraph Name="MiniHogAI" DefaultState="Entry">
     <Include Path="Assets/Data/AILibrary/Package/EmptyPackage.xml"/>
     <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
     
@@ -9,5 +8,4 @@
 
     <Dead Package="CommonDeadPackage">
     </Dead>
-
 </AIGraph>

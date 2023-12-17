@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RaycastController : MonoBehaviour {
+public class RaycastController {
 	protected float _skinWidth = 0.005f;
 	[SerializeField] private float _dstBetweenRays = 0.01f;
 	[HideInInspector]
@@ -23,8 +23,7 @@ public class RaycastController : MonoBehaviour {
 		CalculateRaySpacing();
 	}
 
-	public void UpdateRaycastOrigins() {
-        Vector2 position = transform.position;
+	public void UpdateRaycastOrigins(Vector3 position) {
 
 		raycastOrigins.bottomLeft = new Vector2(position.x - _targetRadius.x, position.y - _targetRadius.y + _skinWidth);
 		raycastOrigins.bottomRight = new Vector2(position.x + _targetRadius.x, position.y - _targetRadius.y + _skinWidth);
