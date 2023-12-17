@@ -72,15 +72,17 @@ namespace TilemapEditor {
             AssetDatabase.CreateAsset(asset, path);
         }
 
-        public static List<TilemapConfig> GetAllTilemaps() {
+        public static List<TilemapConfig> GetAllTilemaps(string searchString = null) {
             List<TilemapConfig> tilemaps = new List<TilemapConfig>();
 
             string[] allTilemapFiles = Directory.GetFiles(Application.dataPath, "*.asset", SearchOption.AllDirectories);
             foreach(string tilemapFile in allTilemapFiles) {
-                string assetPath = "Assets" + tilemapFile.Replace(Application.dataPath, "").Replace('\\', '/');
-                TilemapConfig source = AssetDatabase.LoadAssetAtPath(assetPath, typeof(TilemapConfig)) as TilemapConfig;
-                if (source) {
-                    tilemaps.Add(source);
+                if ((searchString == null) || tilemapFile.Contains(searchString)) {
+                    string assetPath = "Assets" + tilemapFile.Replace(Application.dataPath, "").Replace('\\', '/');
+                    TilemapConfig source = AssetDatabase.LoadAssetAtPath(assetPath, typeof(TilemapConfig)) as TilemapConfig;
+                    if (source) {
+                        tilemaps.Add(source);
+                    }
                 }
             }
 

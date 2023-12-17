@@ -9,11 +9,12 @@ using TilemapEditor;
 
 public class TilemapImportWindow : EditorWindow
 {
+    private string _searchString;
     public static void OpenWindow()
     {
         TilemapImportWindow window = (TilemapImportWindow)EditorWindow.GetWindow(typeof(TilemapImportWindow));
         Texture icon = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Sprites/Gear.png");
-        GUIContent titleContent = new GUIContent("Rooms", icon);
+        GUIContent titleContent = new GUIContent("Tilemaps", icon);
         window.titleContent = titleContent;
         window.Show();
     }
@@ -38,11 +39,16 @@ public class TilemapImportWindow : EditorWindow
         {
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Rooms");
+                GUILayout.Label("Tilemaps");
             }
             GUILayout.EndHorizontal();
         }
         GUILayout.EndVertical();
+
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Search", GUILayout.MaxWidth(60f));
+        _searchString = GUILayout.TextField(_searchString);
+        GUILayout.EndHorizontal();
 
         bool roomClicked = false;
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, (GUIStyle)"hostview");
@@ -50,9 +56,9 @@ public class TilemapImportWindow : EditorWindow
             _nowRoomIndex = 0;
             GUILayout.BeginVertical(sceneBoxStyle);
             {
-                GUILayout.Label("Saved Rooms", (GUIStyle)"OL Title");
+                GUILayout.Label("Saved Tilemaps", (GUIStyle)"OL Title");
 
-                List<TilemapConfig> tilemaps = TilemapEditor.TilemapInspectorEditor.GetAllTilemaps();
+                List<TilemapConfig> tilemaps = TilemapInspectorEditor.GetAllTilemaps(_searchString);
                 int numOfTilemaps = tilemaps.Count;
 
                 for (int i = 0; i < numOfTilemaps; i++)
@@ -114,7 +120,7 @@ public class TilemapImportWindow : EditorWindow
                 {
                     if (_lastClickedScene == _nowRoomIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) {
                         TilemapEditorScript editor = GameObject.Find("TilemapEditor").GetComponent<TilemapEditorScript>();
-                        if (EditorUtility.DisplayDialog("Are you sure?", "Importing this room will overlap the current one without saving it.", "Okay", "Cancel"))
+                        if (EditorUtility.DisplayDialog("Are you sure?", "Importing this tilemap will overlap the current one without saving it.", "Okay", "Cancel"))
                         {
                             editor.Import(tilemap);
                             TilemapInspectorEditor.CurrentTilemapName = tilemap._tilemapName;
