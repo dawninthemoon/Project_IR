@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: GunRdyToIdle
   m_EditorClassIdentifier: 
   _animationCustomPresetData:
-    _duration: []
+    _duration:
+    - 0.1
+    - 0.1
+    - 0.1
     _effectFrameEvent: []
-    _playCount: 0
+    _playCount: 1
   _translationPresetName: 
   _rotationPresetName: 
   _scalePresetName: 
