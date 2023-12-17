@@ -20,7 +20,7 @@ public abstract class CameraModeBase
 
     protected Vector3 _cameraPosition;
     protected Vector3 _currentTargetPosition;
-    protected ObjectBase _currentTarget;
+    protected Transform _currentTarget;
     protected GameEntityBase _targetEntity;
 
 
@@ -34,7 +34,7 @@ public abstract class CameraModeBase
         _targetEntity = targetEntity;
     }
 
-    public void setCurrentTarget(ObjectBase obj)
+    public void setCurrentTarget(Transform obj)
     {
         _currentTarget = obj;
     }
@@ -119,12 +119,12 @@ public class CameraArenaMode : CameraModeBase
     {
         _cameraCenterPosition = position;
 
-        if(_currentTarget != null && _currentTarget is GameEntityBase)
-        {
-            GameEntityBase target = ((GameEntityBase)_currentTarget).getCurrentTargetEntity();
-            if(target != null && target.isDead() == false)
-                _cameraCenterPosition = target.transform.position + (_currentTarget.transform.position - target.transform.position) * 0.5f;
-        }
+        // if(_currentTarget != null && _currentTarget is GameEntityBase)
+        // {
+        //     GameEntityBase target = ((GameEntityBase)_currentTarget).getCurrentTargetEntity();
+        //     if(target != null && target.isDead() == false)
+        //         _cameraCenterPosition = target.transform.position + (_currentTarget.transform.position - target.transform.position) * 0.5f;
+        // }
 
         _cameraPosition = position;
     }
@@ -159,7 +159,7 @@ public class CameraTargetCenterMode : CameraModeBase
     public override void progress(float deltaTime, Vector3 targetPosition)
     {
         updateCameraCenter();
-        _cameraPosition = MathEx.damp(_cameraPosition, _currentCenterPosition, _cameraMoveSpeedRate, deltaTime);
+        _cameraPosition = _currentCenterPosition;//MathEx.damp(_cameraPosition, _currentCenterPosition, _cameraMoveSpeedRate, deltaTime);
         GizmoHelper.instance.drawLine(_currentCenterPosition, targetPosition, Color.red);
     }
 
@@ -181,7 +181,7 @@ public class CameraControlEx : Singleton<CameraControlEx>
 {
     public float _cameraBoundRate = 0.9f;
     private Camera _currentCamera;
-    private ObjectBase _currentTarget;
+    private Transform _currentTarget;
 
     private CameraModeBase _currentCameraMode;
     private Vector3 _cameraTargetPosition;
@@ -203,12 +203,15 @@ public class CameraControlEx : Singleton<CameraControlEx>
     private float _shakeTimer = 0f;
     private float _shakeSpeed = 0f;
 
+    private Vector3 _cameraPosition = Vector3.zero;
+
     private Vector3 _shakePosition = Vector3.zero;
     private Vector2 _cameraBoundHalf = Vector2.zero;
 
     public void initialize()
     {
         _currentCamera = Camera.main;
+        _cameraPosition = _currentCamera.transform.position;
 
         _mainCamSize = _currentCamera.orthographicSize;
         _currentMainCamSize = _mainCamSize;
@@ -251,7 +254,7 @@ public class CameraControlEx : Singleton<CameraControlEx>
             _shakePosition = MathEx.lemniscate(_shakeTimer * _shakeSpeed) * shakeScale;
         }
 
-        GizmoHelper.instance.drawRectangle(_currentCamera.transform.position,_cameraBoundHalf,Color.green);
+        GizmoHelper.instance.drawRectangle(_cameraPosition,_cameraBoundHalf,Color.green);
     }
 
     public void setShake(float scale, float speed, float time)
@@ -302,10 +305,10 @@ public class CameraControlEx : Singleton<CameraControlEx>
 
         Vector3 currentPosition = position;
         currentPosition.z = -10f;
-        _currentCamera.transform.position = currentPosition + _shakePosition;
+        _cameraPosition = currentPosition + _shakePosition;
 
         CameraControlEx.Instance().setCameraMode(CameraModeType.PositionMode);
-        CameraControlEx.Instance().setCameraTargetPosition(_currentCamera.transform.position);
+        CameraControlEx.Instance().setCameraTargetPosition(_cameraPosition);
     }
 
     public void setCameraMode(CameraModeType mode)
@@ -345,14 +348,14 @@ public class CameraControlEx : Singleton<CameraControlEx>
         _currentCameraMode = _cameraModes[index];
         _currentCameraMode.setCurrentTarget(_currentTarget);
         _currentCameraMode.setCurrentTargetPosition(_cameraTargetPosition);
-        _currentCameraMode.initialize(_currentCamera.transform.position);
+        _currentCameraMode.initialize(_cameraPosition);
     }
 
-    public void setCameraTarget(ObjectBase obj)
+    public void setCameraTarget(Transform obj)
     {
         _currentTarget = obj;
         _currentCameraMode?.setCurrentTarget(_currentTarget);
-        _currentCameraMode?.initialize(_currentTarget.transform.position);
+        _currentCameraMode?.initialize(_cameraPosition);
     }
 
     public void setCameraTargetPosition(Vector3 targetPosition)
@@ -371,19 +374,19 @@ public class CameraControlEx : Singleton<CameraControlEx>
         else
             _currentCameraMode.setCurrentTargetEntity(null);
 
-        _currentCameraMode.progress(deltaTime,_currentTarget == null ? _cameraTargetPosition : _currentTarget.transform.position);
+        _currentCameraMode.progress(deltaTime,_currentTarget == null ? _cameraTargetPosition : _cameraPosition);
     }
 
     public Vector3 getCameraPosition()
     {
-        Vector3 currentPosition = _currentCameraMode == null ? _currentCamera.transform.position : _currentCameraMode.getCameraPosition();
+        Vector3 currentPosition = _currentCameraMode == null ? _cameraPosition : _currentCameraMode.getCameraPosition();
         currentPosition.z = -10f;
         return currentPosition;
     }
 
     public void setCameraPosition(Vector3 position)
     {
-        _currentCamera.transform.position = position + _shakePosition;
+        _cameraPosition = position + _shakePosition;
     }
 
     public void SyncPosition()

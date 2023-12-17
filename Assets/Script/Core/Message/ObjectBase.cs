@@ -71,10 +71,10 @@ public abstract class ObjectBase : MessageReceiver, IProgress
 
         transform.position = position;
 
-        if(CameraControlEx.Instance().isCameraTargetObject(this) == false)
+        //if(CameraControlEx.Instance().isCameraTargetObject(this) == false)
             _spriteObject.transform.position = MathEx.floorNoSign(transform.position,2);
-        else
-            _spriteObject.transform.localPosition = Vector3.zero;
+        // else
+        //     _spriteObject.transform.localPosition = Vector3.zero;
 
         _spriteObject.transform.localPosition += _localSpritePosition;
         updateChildTransform();

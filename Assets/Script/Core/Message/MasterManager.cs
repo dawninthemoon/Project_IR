@@ -152,9 +152,7 @@ public class MasterManager : MessageHub<ManagerBase>
 
         deltaTime = GlobalTimer.Instance().getSclaedDeltaTime();
 
-        CameraControlEx.Instance().SyncPosition();
         StageProcessor.Instance().processStage(deltaTime);
-
         DanmakuManager.Instance().process(deltaTime);
 
         ManagersUpdate(deltaTime);
@@ -171,6 +169,7 @@ public class MasterManager : MessageHub<ManagerBase>
         CameraControlEx.Instance().progress(deltaTime);
 
         FMODAudioManager.Instance().updateAudio();
+        CameraControlEx.Instance().SyncPosition();
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {

@@ -1633,7 +1633,7 @@ public class SequencerGraphEvent_SetCameraTarget : SequencerGraphEventBase
     {
         if(_cameraMode != CameraModeType.Count)
             CameraControlEx.Instance().setCameraMode(_cameraMode);
-        CameraControlEx.Instance().setCameraTarget(processor.getUniqueEntity(_uniqueKey));
+        CameraControlEx.Instance().setCameraTarget(processor.getUniqueEntity(_uniqueKey).getSpriteRendererTransform());
 
         return true;
     }
