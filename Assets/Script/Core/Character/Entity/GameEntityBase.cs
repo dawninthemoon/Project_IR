@@ -196,7 +196,7 @@ public class GameEntityBase : SequencerObjectBase
         _currentDirectionType = _actionGraph.getDirectionType();
         _currentRotationType = _actionGraph.getCurrentRotationType();
 
-        CollisionInfoData data = new CollisionInfoData(characterInfo._characterWidth,characterInfo._characterHeight,CollisionType.Character);
+        CollisionInfoData data = new CollisionInfoData(characterInfo._characterWidth * 2f,characterInfo._characterHeight * 2f,CollisionType.Character);
         _collisionInfo = new CollisionInfo(data);
         CollisionManager.Instance().registerObject(_collisionInfo, this);
         
@@ -520,7 +520,7 @@ public class GameEntityBase : SequencerObjectBase
             GizmoHelper.instance.drawLine(transform.position, transform.position + _direction * 1.2f,Color.magenta);
             GizmoHelper.instance.drawLine(transform.position, transform.position + ControllerEx.Instance().getJoystickAxisR(transform.position) * 0.5f,Color.cyan);
 
-            _collisionInfo.drawCollosionArea(_debugColor);
+            _collisionInfo.drawCollosionArea(_debugColor,1f);
         }
 
         if(_aiDebug == true || GameEditorMaster._instance._aiDebugAll)
@@ -599,24 +599,7 @@ public class GameEntityBase : SequencerObjectBase
 
     private void gameEntityCollisionEvent(CollisionSuccessData data)
     {
-        // _debugColor = Color.green;
-
-        // if(data._target == null || data._target is GameEntityBase == false)
-        //     return;
-        
-        // GameEntityBase targetEntity = data._target as GameEntityBase;
-        // if (targetEntity.getCurrentSearchIdentifier() != getCurrentSearchIdentifier())
-        //     return;
-
-        // float totalRadius = targetEntity.getCollisionInfo().getRadius() + getCollisionInfo().getRadius();
-        // float collapseDistance = totalRadius - Vector3.Distance(targetEntity.transform.position, data._startPoint);
-
-        // float scaledDeltaTime = GlobalTimer.Instance().getSclaedDeltaTime();
-        // scaledDeltaTime = MathEx.clampf(scaledDeltaTime, 0f, 0.5f);
-
-        // Vector3 direction = (targetEntity.transform.position - data._startPoint).normalized;
-        // targetEntity.transform.position += direction * collapseDistance * scaledDeltaTime;
-        // transform.position -= direction * collapseDistance * scaledDeltaTime;
+        _debugColor = Color.green;
     }
 
     private void collisionEndEvent()

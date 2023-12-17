@@ -120,6 +120,8 @@
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
+        <UseBranchSet Name="AttackAir"/>
+
         <Branch Condition="End" Execute="AC_FallLoop"/>
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
@@ -170,7 +172,7 @@
         <Branch Condition="End" Execute="AC_Idle"/>
     </AC_Attack_Ground>
 
-    <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Keep">
+    <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackMidair/" XFlip="True">
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
             <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true" Attach="true"/>
@@ -182,6 +184,8 @@
             </FrameEvent>
         </Animation>
 
+        <Branch Condition="End && IsFalling" Execute="AC_FallLoop"/>
+        <Branch Condition="End" Execute="AC_JumpLoop"/>
         <Branch Condition="OnGround && MoveInput" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
     </AC_Attack_Air>
