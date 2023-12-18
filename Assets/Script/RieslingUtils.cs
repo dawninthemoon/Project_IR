@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Linq;
+using YamlDotNet.Core;
 
 namespace RieslingUtils {
     public static class ExVector {
@@ -192,6 +193,36 @@ namespace RieslingUtils {
     public static class ExTilemap {
         public static void SetTiles(this UnityEngine.Tilemaps.Tilemap tilemap, TilemapConfig.TilemapInfo config) {
             tilemap.SetTiles(config._positions, config._tileBases);
+        }
+    }
+
+    public static class ExParser {
+        public static bool ParseBoolOrDefault(string value) {
+            if (!bool.TryParse(value, out bool result)) {
+                result = default(bool);
+            }
+            return result;
+        }
+
+        public static int ParseIntOrDefault(string value) {
+            if (!int.TryParse(value, out int result)) {
+                result = default(int);
+            }
+            return result;
+        }
+
+        public static float ParseFloatOrDefault(string value) {
+            if (!float.TryParse(value, out float result)) {
+                result = default(float);
+            }
+            return result;
+        }
+    }
+
+    public static class ExColor {
+        public static Color ToColor(this string color)
+        {
+            return (Color)typeof(Color).GetProperty(color.ToLowerInvariant()).GetValue(null, null);
         }
     }
 }
