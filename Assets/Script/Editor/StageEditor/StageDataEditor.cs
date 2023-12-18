@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
+using RieslingUtils;
 using System;
 using NUnit.Framework.Internal;
 using System.Net;
@@ -2417,9 +2418,12 @@ public class StageDataEditor : EditorWindow
             GameObject tileSettingPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
             _tilemapSettingPrefabObject = Instantiate(tileSettingPrefab, _editItemParent.transform);
 
-            Tilemap tilemap = _tilemapSettingPrefabObject.GetComponentInChildren<Tilemap>();
             TilemapConfig tilemapConfig = _editStageData._tilemapConfigPath;
-            tilemap.SetTiles(tilemapConfig._positions, tilemapConfig._tileBases);
+            Tilemap wallTilemap = _tilemapSettingPrefabObject.transform.Find("Wall").GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = _tilemapSettingPrefabObject.transform.Find("Background").GetComponent<Tilemap>();
+            
+            wallTilemap.SetTiles(tilemapConfig._wall);
+            backgroundTilemap.SetTiles(tilemapConfig._background);
         }
 
         if(_backgroundPrefabObject != null)

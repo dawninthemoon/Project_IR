@@ -2,31 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using RieslingUtils;
 
 namespace TilemapEditor {
     [ExecuteInEditMode]
     public class TilemapEditorScript : MonoBehaviour
     {
-        public void ClearAll() {
-            ClearAllTilemaps();
+        public void ClearAllBackgrounds() 
+        {
+            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
+            backgroundTilemap.ClearAllTiles();
         }
 
-        public void ClearAllTilemaps() {
+        public void ClearAllTilemaps() 
+        {
             Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
-
             collisionTilemap.ClearAllTiles();
         }
 
-        public TilemapConfig RequestExport(string tilemapName) {
-            Tilemap collisionableTilemap = transform.Find("Wall").GetComponent<Tilemap>();
+        public TilemapConfig RequestExport(string tilemapName) 
+        {
+            Tilemap wallTilemap = transform.Find("Wall").GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
 
             TilemapConfig asset = ScriptableObject.CreateInstance<TilemapConfig>();
-            LoadTileInfo(tilemapName, collisionableTilemap, asset);
+            var wall = LoadTileInfo(wallTilemap);
+            var background = LoadTileInfo(backgroundTilemap);
+            asset.Initialize(tilemapName, wall, background);
 
             return asset;
         }
 
-        private void LoadTileInfo(string tilemapName, Tilemap tilemap, TilemapConfig asset) {
+        private TilemapConfig.TilemapInfo LoadTileInfo(Tilemap tilemap) 
+        {
             List<Vector3Int> positions = new List<Vector3Int>();
             List<TileBase> tileBases = new List<TileBase>();
 
@@ -36,15 +44,18 @@ namespace TilemapEditor {
                 tileBases.Add(tilemap.GetTile(pos));
             }
 
-            asset.Initialize(tilemapName, positions.ToArray(), tileBases.ToArray());
+            return new TilemapConfig.TilemapInfo(positions.ToArray(), tileBases.ToArray());
         }
 
-        public void Import(TilemapConfig tilemap) {
-            ClearAll();
+        public void Import(TilemapConfig tilemapConfig) 
+        {
+            ClearAllBackgrounds();
 
             Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
 
-            collisionTilemap.SetTiles(tilemap._positions, tilemap._tileBases);
+            collisionTilemap.SetTiles(tilemapConfig._wall);
+            collisionTilemap.SetTiles(tilemapConfig._background);
         }
     }
 }

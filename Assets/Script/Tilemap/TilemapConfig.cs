@@ -5,13 +5,22 @@ using UnityEngine.Tilemaps;
 
 [System.Serializable]
 public class TilemapConfig : ScriptableObject {
+    [System.Serializable]
+    public struct TilemapInfo {
+        public Vector3Int[] _positions;
+        public TileBase[]   _tileBases;
+        public TilemapInfo(Vector3Int[] positions, TileBase[] tileBases) {
+            _positions = positions;
+            _tileBases = tileBases;
+        }
+    }
     public string       _tilemapName;
-    public Vector3Int[] _positions;
-    public TileBase[]   _tileBases;
-
-    public void Initialize(string tilemapName, Vector3Int[] positions, TileBase[] tileBases) {
+    public TilemapInfo  _wall;
+    public TilemapInfo  _background;
+    
+    public void Initialize(string tilemapName, TilemapInfo wall, TilemapInfo background) {
         _tilemapName = tilemapName;
-        _positions = positions;
-        _tileBases = tileBases;
+        _wall = wall;
+        _background = background;
     }
 }

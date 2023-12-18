@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using RieslingUtils;
 
 public class StageProcessor : Singleton<StageProcessor>
 {
@@ -209,8 +210,12 @@ public class StageProcessor : Singleton<StageProcessor>
             GameObject tilemapParentPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
             _stageTilemapParent = GameObject.Instantiate(tilemapParentPrefab);
 
-            Tilemap tilemap = _stageTilemapParent.GetComponentInChildren<Tilemap>();
-            tilemap.SetTiles(_stageData._tilemapConfigPath._positions, _stageData._tilemapConfigPath._tileBases);
+            Tilemap wallTilemap = _stageTilemapParent.transform.Find("Wall").GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = _stageTilemapParent.transform.Find("Background").GetComponent<Tilemap>();
+            
+            wallTilemap.SetTiles(_stageData._tilemapConfigPath._wall);
+            backgroundTilemap.SetTiles(_stageData._tilemapConfigPath._background);
+
             _stageTilemapParent.transform.position = startPosition;
         }
 

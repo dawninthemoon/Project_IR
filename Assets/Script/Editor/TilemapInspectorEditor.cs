@@ -51,13 +51,13 @@ namespace TilemapEditor {
             EditorGUILayout.Space(5f);
 
             GUI.backgroundColor = defaultColor;
-            if (GUILayout.Button("Clear All")) {
+            if (GUILayout.Button("Clear Backgrounds")) {
                 if (EditorUtility.DisplayDialog("Warning", "Are you sure?", "Clear", "Do Not Clear")) {
-                    _context.ClearAll();
+                    _context.ClearAllBackgrounds();
                 }
             }
 
-            if (GUILayout.Button("Clear Tilemaps")) {
+            if (GUILayout.Button("Clear Walls")) {
                 if (EditorUtility.DisplayDialog("Warning", "Are you sure?", "Clear", "Do Not Clear")) {
                     _context.ClearAllTilemaps();
                 }
