@@ -29,14 +29,5 @@ public class DialogueCommandData
 public class DialogueData : ScriptableObject 
 {
     public string                       _name;
-    public List<DialogueCommandData>    _commandsDataList 
-    {
-        get;
-        private set;
-    }
-
-    public void Initialize(List<DialogueCommandData> commandsDataList)
-    {
-        _commandsDataList = commandsDataList;
-    }
+    public List<DialogueCommandData>    _commandsDataList = new List<DialogueCommandData>();
 }
