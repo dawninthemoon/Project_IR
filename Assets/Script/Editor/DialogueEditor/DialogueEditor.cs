@@ -7,37 +7,12 @@ using System.Linq;
 using RieslingUtils;
 using Unity.VisualScripting;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class DialogueEditor : EditorWindow
 {
-    private class DialogueCommandConfig 
-    {
-        public DialogueCommandType  _type;
-        public string[]             _parameters;
-
-        public DialogueCommandConfig(DialogueCommandType type, int parameterCount) {
-            _type = type;
-            _parameters = new string[parameterCount];
-        }
-
-        public DialogueCommandConfig(DialogueCommandType type, string[] parameters) {
-            _type = type;
-            _parameters = parameters;
-        }
-
-        public DialogueCommandConfig Clone() 
-        {
-            DialogueCommandType type = _type;
-            string[] parameters = _parameters.Clone() as string[];
-            DialogueCommandConfig cloneObject = new DialogueCommandConfig(type, parameters);
-            return cloneObject;
-        }
-    }
-
     private class EditorDialogueConfig 
     {
         public IDialogueCommand     _instance;
@@ -50,7 +25,9 @@ public class DialogueEditor : EditorWindow
     }
 
     private static DialogueEditor _window;
-    private List<DialogueCommandConfig> _dialogueConfigList;
+
+    private DialogueData _selectedDialogueData;
+    private List<DialogueCommandData> _commandsDataList;
     private Dictionary<DialogueCommandType, EditorDialogueConfig> _commandInstanceDictionary;
 
     private Vector2 _scrollPosition;
@@ -78,63 +55,93 @@ public class DialogueEditor : EditorWindow
                         return new EditorDialogueConfig(instance, attr);
                     }
                 );
-
-        _dialogueConfigList = new List<DialogueCommandConfig>();
     }
 
     private void OnGUI()
     {
+        Color defaultColor = GUI.color;
         GUILayout.BeginHorizontal();
-            if(GUILayout.Button("Add Point"))
-            {
-                AddNewCommand(DialogueCommandType.None);
-            }
+            _selectedDialogueData = EditorGUILayout.ObjectField("Dialogue Data", _selectedDialogueData, typeof(DialogueData), false) as DialogueData;
+            
+            if (_selectedDialogueData)
+                _commandsDataList = _selectedDialogueData._commandsDataList;
 
-            //GUI.enabled = GUI.enabled ? _pointSelectedIndex >= 0 && _pointSelectedIndex < _editingStagePointList.Count - 1 : false;
-            if(GUILayout.Button("Insert Point Next"))
+            GUI.color = new Color(0f, 0.694f, 1f);
+            if (GUILayout.Button("Create New", GUILayout.Width(100f)))
             {
-                //insertNextStagePoint(_pointSelectedIndex);
+                bool createNew = true;
+                if (_selectedDialogueData != null)
+                {
+                    createNew = EditorUtility.DisplayDialog("alert", "이미 편집중인 스테이지가 존재합니다. 새로 생성 하시겠습니까?","네","아니오");
+                }
+
+                if (createNew)
+                {
+                    _selectedDialogueData = ScriptableObject.CreateInstance<DialogueData>();
+                    _selectedDialogueData._name = "NewDialogueData";
+                    _selectedDialogueData.Initialize(_commandsDataList = new List<DialogueCommandData>());
+                }
             }
+            GUI.color = new Color(0f, 1f, 0.408f);
+            if (GUILayout.Button("Save", GUILayout.Width(100f)))
+            {
+                SaveCurrentData();
+            }
+            GUI.color = defaultColor;
         GUILayout.EndHorizontal();
 
-        OnScrollViewGUI();
+        if (_selectedDialogueData != null)
+        {
+            GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Add New Command"))
+                {
+                    AddNewCommand(DialogueCommandType.None);
+                }
+            GUILayout.EndHorizontal();
+
+            OnScrollViewGUI();
+        }
     }
 
     private void OnScrollViewGUI() 
     {
         _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, "box", GUILayout.ExpandHeight(true));
         Color defaultColor = GUI.color;
-            for(int i = 0; i < _dialogueConfigList.Count; ++i)
+            for(int i = 0; i < _commandsDataList.Count; ++i)
             {
-                var type = _dialogueConfigList[i]._type;
+                var type = _commandsDataList[i]._type;
                 //if (_commandInstanceDictionary[type]._attr.Color != null) 
                 //    GUI.contentColor = _commandInstanceDictionary[type]._attr.Color.ToColor();
 
                 GUILayout.BeginHorizontal();
                     EditorGUI.BeginChangeCheck();
-                    _dialogueConfigList[i]._type = (DialogueCommandType)EditorGUILayout.EnumPopup($"{i + 1}. CommandType", _dialogueConfigList[i]._type);
+                    _commandsDataList[i]._type = (DialogueCommandType)EditorGUILayout.EnumPopup($"{i + 1}. CommandType", _commandsDataList[i]._type);
                     if (EditorGUI.EndChangeCheck())
                     {
-                        _dialogueConfigList[i] = CreateNewCommand(_dialogueConfigList[i]._type);
+                        _commandsDataList[i] = CreateNewCommand(_commandsDataList[i]._type);
                     }
 
                     GUI.color = new Color(0, 0.871f, 0.616f);
-                    if (GUILayout.Button("Copy", GUILayout.Width(80f))) {
-                        _dialogueConfigList.Add(_dialogueConfigList[i].Clone());
+                    if (GUILayout.Button("Copy", GUILayout.Width(80f))) 
+                    {
+                        _commandsDataList.Add(_commandsDataList[i].Clone());
                     }
-                    if (GUILayout.Button("Copy To Next", GUILayout.Width(120f))) {
-                        _dialogueConfigList.Insert(i + 1, _dialogueConfigList[i].Clone());
+                    if (GUILayout.Button("Copy To Next", GUILayout.Width(120f))) 
+                    {
+                        _commandsDataList.Insert(i + 1, _commandsDataList[i].Clone());
                     }
                     GUI.color = new Color(1f,0.2f,0.2f);
-                    if (GUILayout.Button("Delete", GUILayout.Width(100f))) {
-                        _dialogueConfigList.RemoveAt(i--);
+                    if (GUILayout.Button("Delete", GUILayout.Width(100f))) 
+                    {
+                        _commandsDataList.RemoveAt(i--);
                     }
                     GUI.color = defaultColor;
                 GUILayout.EndHorizontal();
 
-                if (_commandInstanceDictionary.TryGetValue(_dialogueConfigList[i]._type, out EditorDialogueConfig current)) {
+                if (_commandInstanceDictionary.TryGetValue(_commandsDataList[i]._type, out EditorDialogueConfig current)) 
+                {
                     GUILayout.Space(10f);
-                    current._instance.Draw(_dialogueConfigList[i]._parameters);
+                    current._instance.Draw(_commandsDataList[i]._parameters);
                     GUILayout.Space(10f);
                 }
 
@@ -146,13 +153,33 @@ public class DialogueEditor : EditorWindow
 
     private void AddNewCommand(DialogueCommandType type)
     {
-        _dialogueConfigList.Add(CreateNewCommand(type));
+        _commandsDataList.Add(CreateNewCommand(type));
     }
 
-    private DialogueCommandConfig CreateNewCommand(DialogueCommandType type) 
+    private DialogueCommandData CreateNewCommand(DialogueCommandType type) 
     {
         int parameterCount = _commandInstanceDictionary[type]._attr.ParameterCount;
-        DialogueCommandConfig newConfig = new DialogueCommandConfig(type, parameterCount);
+        DialogueCommandData newConfig = new DialogueCommandData(type, parameterCount);
         return newConfig;
+    }
+
+    private void SaveCurrentData() 
+    {
+        if (_selectedDialogueData == null)
+            return;
+
+        string defaultName = _selectedDialogueData._name + ".asset";
+        string path = EditorUtility.SaveFilePanel(
+            "Save Stage Data",
+            "Assets/Resources/DialogueData/",
+            defaultName,
+            "asset"
+        );
+
+        if (string.IsNullOrEmpty(path)) 
+            return;
+
+        path = FileUtil.GetProjectRelativePath(path);
+        AssetDatabase.CreateAsset(_selectedDialogueData, path);
     }
 }
