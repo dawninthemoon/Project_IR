@@ -32,7 +32,7 @@ public enum DialogueCommandType {
 }
 
 public class DialogueCommand {
-    public enum SCGDirection
+    public enum SCGPivot
     {
         Left,
         Right
@@ -131,8 +131,8 @@ public class DialogueCommand {
             }
             
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("SCG 방향", GUILayout.Width(100f));
-                SCGDirection selectedDir = ExParser.ParseEnumOrDefault<SCGDirection>(parameters[4]);
+                EditorGUILayout.LabelField("SCG 기준 위치", GUILayout.Width(100f));
+                SCGPivot selectedDir = ExParser.ParseEnumOrDefault<SCGPivot>(parameters[4]);
                 parameters[4] = EditorGUILayout.EnumPopup(selectedDir).ToString();
             GUILayout.EndHorizontal();
 
