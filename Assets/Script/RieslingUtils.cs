@@ -104,9 +104,9 @@ namespace RieslingUtils {
     }
 
     public static class ExEnum {
-        public static T Parse<T>(string str) {
-            T rarity = (T)System.Enum.Parse(typeof(T), str);
-            return rarity;
+        public static T Parse<T>(string str) where T : System.Enum {
+            T enumValue = (T)System.Enum.Parse(typeof(T), str);
+            return enumValue;
         }
     }
 
@@ -216,6 +216,12 @@ namespace RieslingUtils {
                 result = default(float);
             }
             return result;
+        }
+
+        public static T ParseEnumOrDefault<T>(string value) where T : System.Enum {
+            if ((value != null) && System.Enum.IsDefined(typeof(T), value))
+                return ExEnum.Parse<T>(value);
+            return default(T);
         }
     }
 

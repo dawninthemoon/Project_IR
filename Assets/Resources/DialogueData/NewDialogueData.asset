@@ -20,6 +20,18 @@ MonoBehaviour:
     - Test Dialogue 1.
     - False
     - 
+  - _type: 2
+    _parameters:
+    - False
+    - 
+    - 
+    - 
+    - Left
+    - 1
+    - False
+    - 0
+    - False
+    - 0
   - _type: 1
     _parameters:
     - Tevi
