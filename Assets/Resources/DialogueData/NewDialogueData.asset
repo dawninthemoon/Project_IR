@@ -20,18 +20,25 @@ MonoBehaviour:
     - Test Dialogue 1.
     - False
     - 
-  - _type: 2
+  - _type: 1
     _parameters:
+    - System
+    - Execute ShowSCG
     - False
     - 
+  - _type: 2
+    _parameters:
+    - ChongChang
+    - True
+    - StandingIllust/ChongChan
     - 
     - 
     - Left
-    - 1
-    - False
     - 0
-    - False
-    - 0
+    - True
+    - 0.5
+    - True
+    - 0.5
   - _type: 1
     _parameters:
     - Tevi

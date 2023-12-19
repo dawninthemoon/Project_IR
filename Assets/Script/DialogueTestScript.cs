@@ -7,6 +7,7 @@ using TMPro;
 
 public class DialogueTestScript : MonoBehaviour
 {
+    [SerializeField, Header("Temp Option")] private Canvas _dialogueCanvas;
     [SerializeField, Header("Temp Option")] private TMP_Text _dialogueNameText;
     [SerializeField, Header("Temp Option")] private TMP_Text _dialogueText;
 
@@ -16,12 +17,13 @@ public class DialogueTestScript : MonoBehaviour
 
     private void Awake()
     {
-        SharedData.SharedUIData uiData = new SharedData.SharedUIData() 
+        SharedDialogueData.SharedUIData uiData = new SharedDialogueData.SharedUIData() 
         {
+            DialogueCanvas = _dialogueCanvas,
             DialogueNameText = _dialogueNameText,
             DialogueText = _dialogueText,
         };
-        SharedData sharedData = new SharedData(uiData);
+        SharedDialogueData sharedData = new SharedDialogueData(uiData);
         SharedVariables sharedVariables = new SharedVariables();
         _executer = new DialogueExecuter(sharedData);
     }

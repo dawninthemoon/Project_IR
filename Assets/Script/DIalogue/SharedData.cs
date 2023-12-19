@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class SharedVariables
@@ -12,10 +13,15 @@ public class SharedVariables
     } = new Dictionary<string, string>();
 }
 
-public class SharedData 
+public class SharedDialogueData 
 {
     public class SharedUIData
     {
+        public Canvas DialogueCanvas
+        {
+            get;
+            set;
+        }
         public TMP_Text DialogueNameText
         {
             get;
@@ -28,13 +34,19 @@ public class SharedData
         }
     }
 
+    public Dictionary<string, Image> ActiveSCGDictionary
+    {
+        get;
+        private set;
+    } = new Dictionary<string, Image>();
+
     public SharedUIData UIData 
     {
         get;
         private set;
     }
 
-    public SharedData(SharedUIData uiData)
+    public SharedDialogueData(SharedUIData uiData)
     {
         UIData = uiData;
     }

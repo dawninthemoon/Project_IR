@@ -8,9 +8,9 @@ using System.Reflection;
 public class DialogueExecuter
 {
     private Dictionary<DialogueCommandType, IDialogueCommand> _commandInstanceDictionary;
-    private SharedData _sharedData;
+    private SharedDialogueData _sharedData;
 
-    public DialogueExecuter(SharedData sharedData) 
+    public DialogueExecuter(SharedDialogueData sharedData) 
     {
         _sharedData = sharedData;
 
