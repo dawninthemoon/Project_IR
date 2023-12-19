@@ -22,6 +22,7 @@ public class DialogueTestScript : MonoBehaviour
             DialogueText = _dialogueText,
         };
         SharedData sharedData = new SharedData(uiData);
+        SharedVariables sharedVariables = new SharedVariables();
         _executer = new DialogueExecuter(sharedData);
     }
 

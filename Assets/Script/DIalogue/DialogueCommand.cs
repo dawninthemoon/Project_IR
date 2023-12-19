@@ -97,6 +97,11 @@ public class DialogueCommand {
     public class Command_ShowSCG : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedData sharedData) 
         {
+            if (bool.Parse(parameters[0]))
+            {
+                Sprite sprite = ResourceContainerEx.Instance().GetSprite(parameters[1]);
+            }
+
             await UniTask.Yield();
         }
 

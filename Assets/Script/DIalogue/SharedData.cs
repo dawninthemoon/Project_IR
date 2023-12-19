@@ -3,7 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SharedData {
+public class SharedVariables
+{
+    public Dictionary<string, string> GlobalVariables
+    {
+        get;
+        private set;
+    } = new Dictionary<string, string>();
+}
+
+public class SharedData 
+{
     public class SharedUIData
     {
         public TMP_Text DialogueNameText
