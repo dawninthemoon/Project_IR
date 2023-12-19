@@ -14,25 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: NewDialogueData
   _commandsDataList:
-  - _type: 0
-    _parameters: []
   - _type: 1
     _parameters:
-    - das
-    - dasds
-    - True
-    - 
-  - _type: 1
-    _parameters:
-    - das
-    - dasds
+    - Tevi
+    - Test Dialogue 1.
     - False
     - 
-  - _type: 0
-    _parameters: []
-  - _type: 0
-    _parameters: []
-  - _type: 0
-    _parameters: []
-  - _type: 0
-    _parameters: []
+  - _type: 1
+    _parameters:
+    - Tevi
+    - Test Dialogue 2.
+    - False
+    - 
+  - _type: 1
+    _parameters:
+    - Tevi
+    - Test Dialogue 123.
+    - False
+    - 
+  - _type: 1
+    _parameters:
+    - Tevi
+    - 'Test End.
+
+      Goodbye.'
+    - False
+    - 

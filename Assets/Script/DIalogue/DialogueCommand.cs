@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 
 public interface IDialogueCommand {
-    UniTask Execute(string[] parameters);
+    UniTask Execute(string[] parameters, SharedData sharedData);
     void Draw(string[] parameters);
 }
 
@@ -35,7 +35,7 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.None)]
     public class Command_None : IDialogueCommand {
-        public async UniTask Execute(string[] parameters) 
+        public async UniTask Execute(string[] parameters, SharedData sharedData) 
         {
             await UniTask.Yield();
         }
@@ -48,9 +48,14 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.Dialogue, Color = "green", ParameterCount = 4)]
     public class Command_Dialogue : IDialogueCommand {
-        public async UniTask Execute(string[] parameters) 
+        public async UniTask Execute(string[] parameters, SharedData sharedData) 
         {
-            await UniTask.Yield();
+            sharedData.UIData.DialogueNameText.text = parameters[0];
+            
+            var dialogueText = sharedData.UIData.DialogueText;
+            dialogueText.text = parameters[1];
+
+            await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
         }
 
         public void Draw(string[] parameters) 
@@ -85,7 +90,7 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.ShowSCG, ParameterCount = 4)]
     public class Command_ShowSCG : IDialogueCommand {
-        public async UniTask Execute(string[] parameters) 
+        public async UniTask Execute(string[] parameters, SharedData sharedData) 
         {
             await UniTask.Yield();
         }

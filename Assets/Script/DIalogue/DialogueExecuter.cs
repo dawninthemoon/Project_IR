@@ -8,9 +8,12 @@ using System.Reflection;
 public class DialogueExecuter
 {
     private Dictionary<DialogueCommandType, IDialogueCommand> _commandInstanceDictionary;
+    private SharedData _sharedData;
 
-    public DialogueExecuter() 
+    public DialogueExecuter(SharedData sharedData) 
     {
+        _sharedData = sharedData;
+
         string interfaceName = "IDialogueCommand";
         var dialogueTypes = typeof(DialogueCommand).GetNestedTypes();
         _commandInstanceDictionary 
@@ -36,7 +39,7 @@ public class DialogueExecuter
 
             if (_commandInstanceDictionary.TryGetValue(current._type, out IDialogueCommand instance)) 
             {
-                await instance.Execute(current._parameters);
+                await instance.Execute(current._parameters, _sharedData);
             }
         }
     }
