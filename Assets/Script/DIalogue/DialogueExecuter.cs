@@ -39,7 +39,9 @@ public class DialogueExecuter
 
             if (_commandInstanceDictionary.TryGetValue(current._type, out IDialogueCommand instance)) 
             {
-                await instance.Execute(current._parameters, _sharedData);
+                UniTask currentTask = instance.Execute(current._parameters, _sharedData);
+                if (!current._executeWithNextCommand)
+                    await currentTask;
             }
         }
     }

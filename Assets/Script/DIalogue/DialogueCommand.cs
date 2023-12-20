@@ -285,7 +285,7 @@ public class DialogueCommand {
                     EditorGUILayout.LabelField("시간", GUILayout.Width(100f));
                     parameters[10] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[10])).ToString();
                 GUILayout.EndHorizontal();
-            } 
+            }
 
             GUI.color = currentColor;
         }

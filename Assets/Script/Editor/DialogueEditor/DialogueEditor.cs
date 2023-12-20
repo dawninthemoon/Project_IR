@@ -146,6 +146,12 @@ public class DialogueEditor : EditorWindow
                 {
                     GUILayout.Space(10f);
                     current._instance.Draw(commandsDataList[i]._parameters);
+                    GUILayout.BeginHorizontal();
+                        GUI.contentColor = Color.red;
+                        EditorGUILayout.LabelField("다음 커맨드와 동시에 실행", GUILayout.Width(150f));
+                        commandsDataList[i]._executeWithNextCommand = EditorGUILayout.Toggle(commandsDataList[i]._executeWithNextCommand);
+                        GUI.contentColor = defaultColor;
+                    GUILayout.EndHorizontal();
                     GUILayout.Space(10f);
                 }
 

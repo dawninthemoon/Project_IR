@@ -20,12 +20,14 @@ MonoBehaviour:
     - Test Dialogue 1.
     - False
     - 
+    _executeWithNextCommand: 0
   - _type: 1
     _parameters:
     - ChongChang
     - Execute ShowSCG
     - False
     - 
+    _executeWithNextCommand: 0
   - _type: 2
     _parameters:
     - ChongChang
@@ -37,14 +39,16 @@ MonoBehaviour:
     - 0
     - True
     - 0.5
-    - False
+    - True
     - 0.5
+    _executeWithNextCommand: 0
   - _type: 1
     _parameters:
     - ChongChang
     - Now new SCG appears.
     - False
     - 
+    _executeWithNextCommand: 0
   - _type: 2
     _parameters:
     - WitchChan
@@ -58,12 +62,14 @@ MonoBehaviour:
     - 0.5
     - True
     - 0.5
+    _executeWithNextCommand: 0
   - _type: 1
     _parameters:
     - WitchChan
     - Hi!
     - False
     - 
+    _executeWithNextCommand: 0
   - _type: 1
     _parameters:
     - ChongChang
@@ -72,6 +78,7 @@ MonoBehaviour:
       Goodbye.'
     - True
     - 
+    _executeWithNextCommand: 0
   - _type: 3
     _parameters:
     - ChongChang
@@ -80,6 +87,7 @@ MonoBehaviour:
     - True
     - Left
     - 0.5
+    _executeWithNextCommand: 1
   - _type: 3
     _parameters:
     - WitchChan
@@ -88,3 +96,4 @@ MonoBehaviour:
     - True
     - Left
     - 0.5
+    _executeWithNextCommand: 0
