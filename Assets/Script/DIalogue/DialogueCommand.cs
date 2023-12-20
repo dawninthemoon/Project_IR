@@ -68,12 +68,12 @@ public class DialogueCommand {
         {
             Color currentColor = GUI.color;
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("이름", GUILayout.Width(40f));
+                EditorGUILayout.LabelField("이름", GUILayout.Width(100f));
                 parameters[0] = EditorGUILayout.TextField(parameters[0]);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("대사", GUILayout.Width(40f));
+                EditorGUILayout.LabelField("대사", GUILayout.Width(100f));
                 parameters[1] = EditorGUILayout.TextArea(parameters[1], GUILayout.MinHeight(40f));
             GUILayout.EndHorizontal();
 
@@ -193,8 +193,7 @@ public class DialogueCommand {
             Color currentColor = GUI.color;
 
             GUILayout.BeginHorizontal();
-                GUILayout.Space(20f);
-                EditorGUILayout.LabelField("ID", GUILayout.Width(40f));
+                EditorGUILayout.LabelField("ID", GUILayout.Width(100f));
                 parameters[0] = EditorGUILayout.TextField(parameters[0]);
             GUILayout.EndHorizontal();
 
@@ -207,7 +206,7 @@ public class DialogueCommand {
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
-                    EditorGUILayout.LabelField("경로", GUILayout.Width(40f));
+                    EditorGUILayout.LabelField("경로", GUILayout.Width(100f));
                     parameters[2] = EditorGUILayout.TextField(parameters[2]);
                 GUILayout.EndHorizontal();
             }
@@ -219,7 +218,7 @@ public class DialogueCommand {
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("종류", GUILayout.Width(40f));
+                EditorGUILayout.LabelField("종류", GUILayout.Width(100f));
                 parameters[4] = EditorGUILayout.TextField(parameters[4]);
                 GUILayout.EndHorizontal();
             }
@@ -231,7 +230,7 @@ public class DialogueCommand {
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("위치", GUILayout.Width(40f));
+                EditorGUILayout.LabelField("위치", GUILayout.Width(100f));
                 parameters[6] = EditorGUILayout.IntSlider(ExParser.ParseIntOrDefault(parameters[6]), 0, 3).ToString();
             GUILayout.EndHorizontal();
 
@@ -244,7 +243,7 @@ public class DialogueCommand {
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
-                    EditorGUILayout.LabelField("시간", GUILayout.Width(40f));
+                    EditorGUILayout.LabelField("시간", GUILayout.Width(100f));
                     parameters[8] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[8])).ToString();
                 GUILayout.EndHorizontal();
             }
@@ -257,7 +256,7 @@ public class DialogueCommand {
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
-                    EditorGUILayout.LabelField("시간", GUILayout.Width(40f));
+                    EditorGUILayout.LabelField("시간", GUILayout.Width(100f));
                     parameters[10] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[10])).ToString();
                 GUILayout.EndHorizontal();
             } 
