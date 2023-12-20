@@ -136,12 +136,12 @@ public class DialogueEditor : EditorWindow
                     GUI.color = new Color(1f,0.2f,0.2f);
                     if (GUILayout.Button("Delete", GUILayout.Width(100f))) 
                     {
-                        commandsDataList.RemoveAt(i--);
+                        commandsDataList.RemoveAt(i);
                     }
                     GUI.color = defaultColor;
                 GUILayout.EndHorizontal();
 
-                if (_commandInstanceDictionary.TryGetValue(commandsDataList[i]._type, out EditorDialogueConfig current)) 
+                if ((i < commandsDataList.Count) && _commandInstanceDictionary.TryGetValue(commandsDataList[i]._type, out EditorDialogueConfig current)) 
                 {
                     GUILayout.Space(10f);
                     current._instance.Draw(commandsDataList[i]._parameters);
@@ -150,7 +150,6 @@ public class DialogueEditor : EditorWindow
 
                 GUI.contentColor = defaultColor;
             }
-
         GUILayout.EndScrollView();
     }
 
