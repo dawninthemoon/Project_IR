@@ -155,14 +155,14 @@ public class DialogueCommand {
                 if (bool.Parse(parameters[7]))
                 {
                     float duration = float.Parse(parameters[8]);
-                    waitTime += duration;
+                    waitTime = Mathf.Max(waitTime, duration);
                     DoFade(newImage, duration).Forget();
                 }
 
                 if (bool.Parse(parameters[9]))
                 {
                     float duration = float.Parse(parameters[10]);
-                    waitTime += duration;
+                    waitTime = Mathf.Max(waitTime, duration);
                     DoMove(newImage.rectTransform, pivot, positionIndex, duration).Forget();
                 }
 
@@ -208,8 +208,9 @@ public class DialogueCommand {
 
         private Vector3 GetPositionByIndex(SCGPivot pivot, int positionIndex)
         {
-            float startPos = (pivot == SCGPivot.Left) ? -960f : 960f;
-            float xPos =  startPos + (1920f / 4f * (positionIndex + 1));
+            float sign = (pivot == SCGPivot.Left) ? 1f : -1f;
+            float startPos = -960f * sign;
+            float xPos =  startPos + (1920f / 4f * (positionIndex + 1)) * sign;
             return new Vector3(xPos, 0f, 0f);
         }
 
@@ -302,14 +303,14 @@ public class DialogueCommand {
                 if (bool.Parse(parameters[1]))
                 {
                     float duration = float.Parse(parameters[2]);
-                    waitTime += duration;
+                    waitTime = Mathf.Max(waitTime, duration);
                     DoFadeOut(scgImage, duration).Forget();
                 }
                 if (bool.Parse(parameters[3]))
                 {
                     SCGPivot pivot = ExEnum.Parse<SCGPivot>(parameters[4]);
                     float duration = float.Parse(parameters[5]);
-                    waitTime += duration;
+                    waitTime = Mathf.Max(waitTime, duration);
                     DoMove(scgImage.rectTransform, pivot, duration).Forget();
                 }
 
@@ -318,6 +319,7 @@ public class DialogueCommand {
 
                 scgImage.color = new Color(1f, 1f, 1f, 0f);
                 // 나중에 수정
+                sharedData.ActiveSCGDictionary.Remove(id);
                 GameObject.Destroy(scgImage.gameObject);
             }
         }

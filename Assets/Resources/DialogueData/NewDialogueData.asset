@@ -37,7 +37,7 @@ MonoBehaviour:
     - 0
     - True
     - 0.5
-    - True
+    - False
     - 0.5
   - _type: 1
     _parameters:
@@ -70,7 +70,7 @@ MonoBehaviour:
     - 'Test End.
 
       Goodbye.'
-    - False
+    - True
     - 
   - _type: 3
     _parameters:
