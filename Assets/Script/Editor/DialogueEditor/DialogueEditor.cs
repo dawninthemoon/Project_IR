@@ -113,8 +113,9 @@ public class DialogueEditor : EditorWindow
             for(int i = 0; i < commandsDataList.Count; ++i)
             {
                 var type = commandsDataList[i]._type;
-                //if (_commandInstanceDictionary[type]._attr.Color != null) 
-                //    GUI.contentColor = _commandInstanceDictionary[type]._attr.Color.ToColor();
+                if (_commandInstanceDictionary[type]._attr.Color != null) 
+                    GUI.backgroundColor = _commandInstanceDictionary[type]._attr.Color.ToColor();
+                GUILayout.BeginVertical("box");
 
                 GUILayout.BeginHorizontal();
                     EditorGUI.BeginChangeCheck();
@@ -148,7 +149,8 @@ public class DialogueEditor : EditorWindow
                     GUILayout.Space(10f);
                 }
 
-                GUI.contentColor = defaultColor;
+                GUILayout.EndVertical();
+                GUI.backgroundColor = defaultColor;
             }
         GUILayout.EndScrollView();
     }

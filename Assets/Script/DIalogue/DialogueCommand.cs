@@ -64,7 +64,7 @@ public class DialogueCommand {
             var dialogueText = sharedData.UIData.DialogueText;
             dialogueText.text = parameters[1];
 
-            if (bool.Parse(parameters[2]))
+            if (!bool.Parse(parameters[2]))
             {
                 string id = string.IsNullOrEmpty(parameters[3]) ? parameters[0] : parameters[3];
                 if (sharedData.ActiveSCGDictionary.TryGetValue(id, out Image scgImage))
@@ -103,11 +103,11 @@ public class DialogueCommand {
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("SCG 강조", GUILayout.Width(100f));
+                EditorGUILayout.LabelField("SCG 강조 안함", GUILayout.Width(100f));
                 parameters[2] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[2])).ToString();
             GUILayout.EndHorizontal();
 
-            if (ExParser.ParseBoolOrDefault(parameters[2])) 
+            if (!ExParser.ParseBoolOrDefault(parameters[2])) 
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);

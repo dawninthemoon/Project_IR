@@ -18,13 +18,13 @@ MonoBehaviour:
     _parameters:
     - ChongChang
     - Test Dialogue 1.
-    - True
+    - False
     - 
   - _type: 1
     _parameters:
     - ChongChang
     - Execute ShowSCG
-    - True
+    - False
     - 
   - _type: 2
     _parameters:
@@ -43,7 +43,7 @@ MonoBehaviour:
     _parameters:
     - ChongChang
     - Now new SCG appears.
-    - True
+    - False
     - 
   - _type: 2
     _parameters:
@@ -62,7 +62,7 @@ MonoBehaviour:
     _parameters:
     - WitchChan
     - Hi!
-    - True
+    - False
     - 
   - _type: 1
     _parameters:
