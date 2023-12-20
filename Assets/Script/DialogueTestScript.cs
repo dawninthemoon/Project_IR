@@ -13,6 +13,7 @@ public class DialogueTestScript : MonoBehaviour
 
     [SerializeField] private DialogueData _data;
     private DialogueExecuter _executer;
+    private SharedDialogueData _sharedData;
     private bool _isDialogueEnd;
 
     private void Awake()
@@ -23,14 +24,22 @@ public class DialogueTestScript : MonoBehaviour
             DialogueNameText = _dialogueNameText,
             DialogueText = _dialogueText,
         };
-        SharedDialogueData sharedData = new SharedDialogueData(uiData);
+        _sharedData = new SharedDialogueData(uiData);
+        _sharedData.InputData.NextProgress = KeyCode.Space;
+        _sharedData.InputData.FastForward = KeyCode.LeftControl;
+
         SharedVariables sharedVariables = new SharedVariables();
-        _executer = new DialogueExecuter(sharedData);
+        _executer = new DialogueExecuter(_sharedData);
     }
 
     private void Start()
     {
         StartDialogue().Forget();
+    }
+
+    private void Update()
+    {
+        Time.timeScale = Input.GetKey(_sharedData.InputData.FastForward) ? 2f : 1f;
     }
 
     private async UniTaskVoid StartDialogue()

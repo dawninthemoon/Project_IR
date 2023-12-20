@@ -17,7 +17,14 @@ MonoBehaviour:
   - _type: 1
     _parameters:
     - ChongChang
-    - Test Dialogue 1.
+    - 'Test Dialogue 1. Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue
+      1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue
+      1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.
+
+      Test Dialogue 1.Test
+      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test
+      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test
+      Dialogue 1.Test Dialogue '
     - False
     - 
     _executeWithNextCommand: 0

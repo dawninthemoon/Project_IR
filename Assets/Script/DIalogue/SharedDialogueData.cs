@@ -15,6 +15,28 @@ public class SharedVariables
 
 public class SharedDialogueData 
 {
+    public class SharedInputData
+    {
+        public KeyCode NextProgress { get; set; }
+        public KeyCode FastForward { get; set; }
+
+        public bool CanGoToNext
+        {
+            get 
+            { 
+                return IsNextKeyDown || Input.GetKey(FastForward);
+            }
+        }
+
+        public bool IsNextKeyDown
+        {
+            get 
+            { 
+                return Input.GetKeyDown(NextProgress);
+            }
+        }
+    }
+
     public class SharedUIData
     {
         public Canvas DialogueCanvas
@@ -45,9 +67,15 @@ public class SharedDialogueData
         get;
         private set;
     }
+    public SharedInputData InputData
+    {
+        get;
+        set;
+    }
 
     public SharedDialogueData(SharedUIData uiData)
     {
         UIData = uiData;
+        InputData = new SharedInputData();
     }
 }

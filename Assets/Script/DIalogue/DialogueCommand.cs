@@ -46,7 +46,7 @@ public class DialogueCommand {
     public class Command_None : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
         {
-            await UniTask.Yield();
+            await UniTask.Yield(PlayerLoopTiming.Update);
         }
 
         public void Draw(string[] parameters) 
@@ -61,9 +61,6 @@ public class DialogueCommand {
         {
             sharedData.UIData.DialogueNameText.text = parameters[0];
             
-            var dialogueText = sharedData.UIData.DialogueText;
-            dialogueText.text = parameters[1];
-
             if (!bool.Parse(parameters[2]))
             {
                 string id = string.IsNullOrEmpty(parameters[3]) ? parameters[0] : parameters[3];
@@ -73,7 +70,28 @@ public class DialogueCommand {
                 }
             }
 
-            await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            await DoText(parameters[1], 0.05f, sharedData);
+
+            await UniTask.Yield(PlayerLoopTiming.Update);
+            await UniTask.WaitUntil(() => sharedData.InputData.CanGoToNext);
+        }
+
+        private async UniTask DoText(string text, float delay, SharedDialogueData sharedData)
+        {
+            int textLength = text.Length;
+
+            sharedData.UIData.DialogueText.text = null;
+            for (int currentIndex = 0; currentIndex < textLength; ++currentIndex)
+            {
+                sharedData.UIData.DialogueText.text += text[currentIndex];
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
+
+                if (sharedData.InputData.IsNextKeyDown)
+                    break;
+            }
+
+            sharedData.UIData.DialogueText.text = text;
         }
 
         private void EmphasisSCG(string targetID, SharedDialogueData sharedData)
@@ -124,6 +142,7 @@ public class DialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
         {
             string id = parameters[0];
+            float timeScale = Time.timeScale;
             var scgDictionary = sharedData.ActiveSCGDictionary;
 
             if (scgDictionary.TryGetValue(id, out Image scgImage))
@@ -156,51 +175,48 @@ public class DialogueCommand {
                 {
                     float duration = float.Parse(parameters[8]);
                     waitTime = Mathf.Max(waitTime, duration);
-                    DoFade(newImage, duration).Forget();
+                    DoFade(newImage, duration, timeScale).Forget();
                 }
 
                 if (bool.Parse(parameters[9]))
                 {
                     float duration = float.Parse(parameters[10]);
                     waitTime = Mathf.Max(waitTime, duration);
-                    DoMove(newImage.rectTransform, pivot, positionIndex, duration).Forget();
+                    DoMove(newImage.rectTransform, pivot, positionIndex, duration, timeScale).Forget();
                 }
 
-                // waitTime /= timeScale;
-                await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime));
+                await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime / timeScale));
             }
         }
 
-        private async UniTaskVoid DoFade(Image image, float duration)
+        private async UniTaskVoid DoFade(Image image, float duration, float timeScale)
         {
             Color transparentColor = image.color;
             transparentColor.a = 0f;
             Color defaultColor = image.color;
 
             float timeAgo = 0f;
-            float timeScale = 1f; // 나중에 GlobalTimer에서 받아옴
             while (timeAgo < duration)
             {
                 image.color = Color.Lerp(transparentColor, defaultColor, timeAgo / duration);
 
-                await UniTask.Yield();
+                await UniTask.Yield(PlayerLoopTiming.Update);
 
                 timeAgo += Time.deltaTime * timeScale;
             }
         }
 
-        private async UniTaskVoid DoMove(RectTransform t, SCGPivot pivot, int positionIndex, float duration)
+        private async UniTaskVoid DoMove(RectTransform t, SCGPivot pivot, int positionIndex, float duration, float timeScale)
         {
             Vector3 defaultPosition = GetPositionByIndex(pivot, -1);
             Vector3 targetPosition = GetPositionByIndex(pivot, positionIndex);
 
             float timeAgo = 0f;
-            float timeScale = 1f; // 나중에 GlobalTimer에서 받아옴
             while (timeAgo < duration)
             {
                 t.localPosition = Vector3.Lerp(defaultPosition, targetPosition, timeAgo / duration);
 
-                await UniTask.Yield();
+                await UniTask.Yield(PlayerLoopTiming.Update);
 
                 timeAgo += Time.deltaTime * timeScale;
             }
@@ -295,6 +311,7 @@ public class DialogueCommand {
     public class Command_RemoveSCG : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
         {
+            float timeScale = Time.timeScale;
             string id = parameters[0];
             if (sharedData.ActiveSCGDictionary.TryGetValue(id, out Image scgImage))
             {
@@ -304,57 +321,54 @@ public class DialogueCommand {
                 {
                     float duration = float.Parse(parameters[2]);
                     waitTime = Mathf.Max(waitTime, duration);
-                    DoFadeOut(scgImage, duration).Forget();
+                    DoFadeOut(scgImage, duration, timeScale).Forget();
                 }
                 if (bool.Parse(parameters[3]))
                 {
                     SCGPivot pivot = ExEnum.Parse<SCGPivot>(parameters[4]);
                     float duration = float.Parse(parameters[5]);
                     waitTime = Mathf.Max(waitTime, duration);
-                    DoMove(scgImage.rectTransform, pivot, duration).Forget();
+                    DoMove(scgImage.rectTransform, pivot, duration, timeScale).Forget();
                 }
 
-                // waitTime /= timeScale;
-                await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime));
+                await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime / timeScale));
 
                 scgImage.color = new Color(1f, 1f, 1f, 0f);
-                // 나중에 수정
                 sharedData.ActiveSCGDictionary.Remove(id);
+                // 나중에 수정
                 GameObject.Destroy(scgImage.gameObject);
             }
         }
 
-        private async UniTaskVoid DoFadeOut(Image image, float duration)
+        private async UniTaskVoid DoFadeOut(Image image, float duration, float timeScale)
         {
             Color defaultColor = image.color;
             Color transparentColor = image.color;
             transparentColor.a = 0f;
 
             float timeAgo = 0f;
-            float timeScale = 1f; // 나중에 GlobalTimer에서 받아옴
             while (timeAgo < duration)
             {
                 image.color = Color.Lerp(defaultColor, transparentColor, timeAgo / duration);
 
-                await UniTask.Yield();
+                await UniTask.Yield(PlayerLoopTiming.Update);
 
                 timeAgo += Time.deltaTime * timeScale;
             }
         }
 
 
-        private async UniTaskVoid DoMove(RectTransform t, SCGPivot pivot, float duration)
+        private async UniTaskVoid DoMove(RectTransform t, SCGPivot pivot, float duration, float timeScale)
         {
             Vector3 defaultPosition = t.localPosition;
             Vector3 targetPosition = GetPositionByIndex(pivot, -1);
 
             float timeAgo = 0f;
-            float timeScale = 1f; // 나중에 GlobalTimer에서 받아옴
             while (timeAgo < duration)
             {
                 t.localPosition = Vector3.Lerp(defaultPosition, targetPosition, timeAgo / duration);
 
-                await UniTask.Yield();
+                await UniTask.Yield(PlayerLoopTiming.Update);
 
                 timeAgo += Time.deltaTime * timeScale;
             }
