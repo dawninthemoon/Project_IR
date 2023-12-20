@@ -23,8 +23,7 @@ MonoBehaviour:
 
       Test Dialogue 1.Test
       Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test
-      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test
-      Dialogue 1.Test Dialogue '
+      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue .'
     - False
     - 
     _executeWithNextCommand: 0

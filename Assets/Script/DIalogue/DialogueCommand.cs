@@ -137,7 +137,7 @@ public class DialogueCommand {
         }
     }
 
-    [DialogueAttribute(DialogueCommandType.ShowSCG, ParameterCount = 11)]
+    [DialogueAttribute(DialogueCommandType.ShowSCG, Color = "#03cafc", ParameterCount = 11)]
     public class Command_ShowSCG : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
         {

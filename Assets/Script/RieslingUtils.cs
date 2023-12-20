@@ -226,9 +226,13 @@ namespace RieslingUtils {
     }
 
     public static class ExColor {
-        public static Color ToColor(this string color)
+        public static Color ToColor(this string colorText)
         {
-            return (Color)typeof(Color).GetProperty(color.ToLowerInvariant()).GetValue(null, null);
+            if (!ColorUtility.TryParseHtmlString(colorText, out Color color))
+            {
+                color = Color.white;
+            }
+            return color;
         }
     }
 }

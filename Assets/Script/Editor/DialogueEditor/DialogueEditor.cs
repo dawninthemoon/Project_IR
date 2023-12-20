@@ -112,6 +112,8 @@ public class DialogueEditor : EditorWindow
             List<DialogueCommandData> commandsDataList = _selectedDialogueData._commandsDataList;
             for(int i = 0; i < commandsDataList.Count; ++i)
             {
+                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
                 var type = commandsDataList[i]._type;
                 if (_commandInstanceDictionary[type]._attr.Color != null) 
                     GUI.backgroundColor = _commandInstanceDictionary[type]._attr.Color.ToColor();
