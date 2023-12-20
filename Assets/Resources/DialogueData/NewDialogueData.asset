@@ -16,15 +16,15 @@ MonoBehaviour:
   _commandsDataList:
   - _type: 1
     _parameters:
-    - Tevi
+    - ChongChang
     - Test Dialogue 1.
-    - False
+    - True
     - 
   - _type: 1
     _parameters:
-    - System
+    - ChongChang
     - Execute ShowSCG
-    - False
+    - True
     - 
   - _type: 2
     _parameters:
@@ -41,21 +41,50 @@ MonoBehaviour:
     - 0.5
   - _type: 1
     _parameters:
-    - Tevi
-    - Test Dialogue 2.
-    - False
+    - ChongChang
+    - Now new SCG appears.
+    - True
+    - 
+  - _type: 2
+    _parameters:
+    - WitchChan
+    - True
+    - StandingIllust/WitchChan
+    - 
+    - 
+    - Left
+    - 1
+    - True
+    - 0.5
+    - True
+    - 0.5
+  - _type: 1
+    _parameters:
+    - WitchChan
+    - Hi!
+    - True
     - 
   - _type: 1
     _parameters:
-    - Tevi
-    - Test Dialogue 123.
-    - False
-    - 
-  - _type: 1
-    _parameters:
-    - Tevi
+    - ChongChang
     - 'Test End.
 
       Goodbye.'
     - False
     - 
+  - _type: 3
+    _parameters:
+    - ChongChang
+    - True
+    - 0.5
+    - True
+    - Left
+    - 0.5
+  - _type: 3
+    _parameters:
+    - WitchChan
+    - True
+    - 0.5
+    - True
+    - Left
+    - 0.5
