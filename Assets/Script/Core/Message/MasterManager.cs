@@ -174,7 +174,7 @@ public class MasterManager : MessageHub<ManagerBase>
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            StageProcessor.Instance().stopStage();
+            StageProcessor.Instance().stopStage(true);
             ScreenDirector._instance._screenFader.clear();
             LetterBox._instance.clear();
         }

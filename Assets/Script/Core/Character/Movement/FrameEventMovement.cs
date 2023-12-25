@@ -15,11 +15,12 @@ public class FrameEventMovement : MovementBase
         Count,
     };
 
+    private readonly float _gravity = -3.0f;
+
     private float[] _movementValues = new float[(int)FrameEventMovementValueType.Count];
     private Vector3 _currentVelocity = Vector3.zero;
     private GroundController _controller;
     private float _gravityAccumulate = 0f;
-    private float _gravity = -3.0f;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -38,6 +39,7 @@ public class FrameEventMovement : MovementBase
         }
 
         _currentVelocity = Vector3.zero;
+        _gravityAccumulate = 0f;
     }
 
     public override void updateFirst(GameEntityBase targetEntity)
@@ -101,7 +103,8 @@ public class FrameEventMovement : MovementBase
         _movementValues[valueType] = value;
     }
 
-    public void StartJump(float jumpPower) {
+    public void StartJump(float jumpPower) 
+    {
         _gravityAccumulate = jumpPower;
     }
 }

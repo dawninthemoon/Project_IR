@@ -166,6 +166,8 @@
                     <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
                 </OnHit>
             </FrameEvent>
+
+            <FrameEvent Type="FrameTag" StartFrame="2.0" EndFrame="999" Tag="CanAttack"/>
         </Animation>
 
         <Branch Condition="IsFalling" Execute="AC_FallStart"/>

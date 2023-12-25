@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using RieslingUtils;
+using System;
 
 public class StageProcessor : Singleton<StageProcessor>
 {
@@ -34,7 +35,8 @@ public class StageProcessor : Singleton<StageProcessor>
     private MiniStageListItem   _miniStageInfo = null;
     private BoundBox            _miniStageTrigger = new BoundBox(0f,0f,Vector3.zero);
 
-    Dictionary<int,List<CharacterEntityBase>> _spawnedCharacterEntityDictionary = new Dictionary<int, List<CharacterEntityBase>>();
+    Dictionary<int,List<SequencerGraphProcessor.SpawnedCharacterEntityInfo>> _spawnedCharacterEntityDictionary = new Dictionary<int, List<SequencerGraphProcessor.SpawnedCharacterEntityInfo>>();
+    Dictionary<string, CharacterEntityBase> _keepAliveMap = new Dictionary<string, CharacterEntityBase>();
 
     private Queue<StageProcessor> _miniStagePool = new Queue<StageProcessor>();
     private List<StageProcessor> _miniStageProcessor = new List<StageProcessor>();
@@ -112,15 +114,29 @@ public class StageProcessor : Singleton<StageProcessor>
         {
             StagePointData stagePointData = _stageData._stagePointData[index];
             if(_spawnedCharacterEntityDictionary.ContainsKey(index) == false)
-                _spawnedCharacterEntityDictionary.Add(index,new List<CharacterEntityBase>());
+                _spawnedCharacterEntityDictionary.Add(index,new List<SequencerGraphProcessor.SpawnedCharacterEntityInfo>());
 
             foreach(var characterSpawnData in stagePointData._characterSpawnData)
             {
+                if(_keepAliveMap.ContainsKey(characterSpawnData._uniqueKey))
+                {
+                    CharacterEntityBase characterEntity = _keepAliveMap[characterSpawnData._uniqueKey];
+                    characterEntity.updatePosition((stagePointData._stagePoint + _offsetPosition) + characterSpawnData._localPosition);
+
+                    SequencerGraphProcessor.SpawnedCharacterEntityInfo keepEntityInfo = new SequencerGraphProcessor.SpawnedCharacterEntityInfo();
+                    keepEntityInfo._keepAlive = characterSpawnData._keepAlive;
+                    keepEntityInfo._uniqueKey = characterSpawnData._uniqueKey;
+                    keepEntityInfo._characterEntity = characterEntity;
+
+                    _spawnedCharacterEntityDictionary[index].Add(keepEntityInfo);
+                    continue;
+                }
+
                 CharacterInfoData infoData = CharacterInfoManager.Instance().GetCharacterInfoData(characterSpawnData._characterKey);
                 if(infoData == null)
                 {
                     DebugUtil.assert(false,"CharacterInfo가 뭔가 잘못됐습니다. 통보 바람 [StageName: {0}]",data._stageName);
-                    stopStage();
+                    stopStage(true);
                     return;
                 }
 
@@ -135,7 +151,7 @@ public class StageProcessor : Singleton<StageProcessor>
                 if(createdCharacter == null)
                 {
                     DebugUtil.assert(false,"Character Spawn 실패! [StageName: {0}]",data._stageName);
-                    stopStage();
+                    stopStage(true);
                     return;
                 }
 
@@ -154,7 +170,12 @@ public class StageProcessor : Singleton<StageProcessor>
                 }
 
                 createdCharacter.setActiveSelf(activeSelf,characterSpawnData._hideWhenDeactive);
-                _spawnedCharacterEntityDictionary[index].Add(createdCharacter);
+                SequencerGraphProcessor.SpawnedCharacterEntityInfo entityInfo = new SequencerGraphProcessor.SpawnedCharacterEntityInfo();
+                entityInfo._keepAlive = characterSpawnData._keepAlive;
+                entityInfo._uniqueKey = characterSpawnData._uniqueKey;
+                entityInfo._characterEntity = createdCharacter;
+
+                _spawnedCharacterEntityDictionary[index].Add(entityInfo);
 
                 if(characterSpawnData._startAction != "")
                 {
@@ -239,7 +260,7 @@ public class StageProcessor : Singleton<StageProcessor>
 
     }
 
-    public void stopStage()
+    public void stopStage(bool forceStop)
     {
         _sequencerProcessManager.initialize();
         
@@ -260,16 +281,30 @@ public class StageProcessor : Singleton<StageProcessor>
         if(_stageBackgroundObject != null)
             GameObject.Destroy(_stageBackgroundObject);
 
+        _keepAliveMap.Clear();
         foreach(var item in _spawnedCharacterEntityDictionary.Values)
         {
-            item.Clear();
+            for(int i = 0; i < item.Count;)
+            {
+                if(forceStop == false && item[i]._keepAlive)
+                {
+                    _keepAliveMap.Add(item[i]._uniqueKey,item[i]._characterEntity);
+                    ++i;
+                    continue;
+                }
+
+                item[i]._characterEntity.deactive();
+                item[i]._characterEntity.DeregisterRequest();
+
+                item.RemoveAt(i);
+            }
         }
 
         if(isMiniStage == false)
         {
             foreach(var item in _miniStageProcessor)
             {
-                item.stopStage();
+                item.stopStage(forceStop);
                 _miniStagePool.Enqueue(item);
             }
 
@@ -290,7 +325,7 @@ public class StageProcessor : Singleton<StageProcessor>
         if(_startNextStageRequestDesc._startNextStage)
         {
             _startNextStageRequestDesc._startNextStage = false;
-            stopStage();
+            stopStage(false);
 
             StageData stageData = ResourceContainerEx.Instance().GetStageData(_startNextStageRequestDesc._stageDataPath);
             if(stageData == null)
@@ -326,7 +361,7 @@ public class StageProcessor : Singleton<StageProcessor>
                         for(int index = 0; index < _spawnedCharacterEntityDictionary[_currentPoint].Count; ++index)
                         {
                             if(_stageData._stagePointData[_currentPoint]._characterSpawnData[index]._activeType == StageSpawnCharacterActiveType.PointActivated)
-                                _spawnedCharacterEntityDictionary[_currentPoint][index]?.setActiveSelf(true,false);
+                                _spawnedCharacterEntityDictionary[_currentPoint][index]._characterEntity?.setActiveSelf(true,false);
                         }
                     }
                 }
@@ -381,7 +416,7 @@ public class StageProcessor : Singleton<StageProcessor>
                     for(int index = 0; index < _spawnedCharacterEntityDictionary[_currentPoint].Count; ++index)
                     {
                         if(_stageData._stagePointData[_currentPoint]._characterSpawnData[index]._activeType == StageSpawnCharacterActiveType.PointActivated)
-                            _spawnedCharacterEntityDictionary[_currentPoint][index]?.setActiveSelf(true,false);
+                            _spawnedCharacterEntityDictionary[_currentPoint][index]._characterEntity?.setActiveSelf(true,false);
                     }
                 }
             }

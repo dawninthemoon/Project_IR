@@ -18,6 +18,13 @@ public class SequencerGraphProcessor
         Count,
     }
 
+    public struct SpawnedCharacterEntityInfo
+    {
+        public bool                 _keepAlive;
+        public string               _uniqueKey;
+        public CharacterEntityBase  _characterEntity;
+    }
+
     public abstract class SequencerTaskProcessorBase
     {
         protected SequencerGraphProcessor     _sequencerGraphProessor;
@@ -394,7 +401,7 @@ public class SequencerGraphProcessor
         _processingTaskList.Clear();
     }
 
-    public void startSequencerFromStage(string sequencerGraphPath, StagePointData currentPoint, List<CharacterEntityBase> pointCharacters, GameEntityBase ownerEntity, GameEntityBase targetEntity, List<MarkerItem> markerList, bool includePlayer = false)
+    public void startSequencerFromStage(string sequencerGraphPath, StagePointData currentPoint, List<SequencerGraphProcessor.SpawnedCharacterEntityInfo> pointCharacters, GameEntityBase ownerEntity, GameEntityBase targetEntity, List<MarkerItem> markerList, bool includePlayer = false)
     {
         _currentSequencer = ResourceContainerEx.Instance().GetSequencerGraph(sequencerGraphPath);
         if(_currentSequencer == null)
@@ -416,10 +423,10 @@ public class SequencerGraphProcessor
         for(int index = 0; index < pointCharacters.Count; ++index)
         {
             if(currentPoint._characterSpawnData[index]._uniqueKey != "")
-                addUniqueEntity(currentPoint._characterSpawnData[index]._uniqueKey, pointCharacters[index]);
+                addUniqueEntity(currentPoint._characterSpawnData[index]._uniqueKey, pointCharacters[index]._characterEntity);
             
             if(currentPoint._characterSpawnData[index]._uniqueGroupKey != "")
-                addUniqueGroupEntity(currentPoint._characterSpawnData[index]._uniqueGroupKey, pointCharacters[index]);
+                addUniqueGroupEntity(currentPoint._characterSpawnData[index]._uniqueGroupKey, pointCharacters[index]._characterEntity);
 
         }
 

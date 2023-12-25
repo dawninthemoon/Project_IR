@@ -1185,6 +1185,7 @@ public class StageDataEditor : EditorWindow
 
         characterSpawnData._flip = EditorGUILayout.Toggle("Flip",characterSpawnData._flip);
         characterSpawnData._hideWhenDeactive = EditorGUILayout.Toggle("Hide When Deactive", characterSpawnData._hideWhenDeactive);
+        characterSpawnData._keepAlive = EditorGUILayout.Toggle("Keep Alive", characterSpawnData._keepAlive);
         characterSpawnData._searchIdentifier = (SearchIdentifier)EditorGUILayout.EnumPopup("Search Identifier", characterSpawnData._searchIdentifier);
         characterSpawnData._activeType = (StageSpawnCharacterActiveType)EditorGUILayout.EnumPopup("Active Type", characterSpawnData._activeType);
 

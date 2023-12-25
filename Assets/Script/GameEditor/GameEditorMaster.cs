@@ -179,7 +179,7 @@ public class GameEditorMaster : MonoBehaviour
                 if(_activeEditor)
                     editorOff();
 
-                StageProcessor.Instance().stopStage();
+                StageProcessor.Instance().stopStage(true);
                 StageProcessor.Instance().startStage(stageData[indexPointer],Vector3.zero);
                 stageSelectorOnOff();
                 
