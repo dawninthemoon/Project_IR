@@ -83,6 +83,7 @@ public class DialogueCommand {
                 EmphasisSCG(id, sharedData);
             }
 
+            sharedData.UIData.Logger.AddDialogue(name, parameters[3]);
             await DoText(parameters[3], 0.05f, sharedData);
 
             await UniTask.Yield(PlayerLoopTiming.Update);

@@ -60,6 +60,11 @@ public class SharedDialogueData
             get;
             set;
         }
+        public DialogueLogger Logger
+        {
+            get;
+            set;
+        }
     }
 
     public Dictionary<string, Image> ActiveSCGDictionary

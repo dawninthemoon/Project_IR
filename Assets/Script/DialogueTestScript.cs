@@ -10,6 +10,7 @@ public class DialogueTestScript : MonoBehaviour
     [SerializeField, Header("Temp Option")] private Canvas _dialogueCanvas;
     [SerializeField, Header("Temp Option")] private TMP_Text _dialogueNameText;
     [SerializeField, Header("Temp Option")] private TMP_Text _dialogueText;
+    [SerializeField, Header("Temp Option")] private ScrollRect _logWindow;
 
     [SerializeField] private DialogueData _data;
     private DialogueExecuter _executer;
@@ -23,6 +24,7 @@ public class DialogueTestScript : MonoBehaviour
             DialogueCanvas = _dialogueCanvas,
             DialogueNameText = _dialogueNameText,
             DialogueText = _dialogueText,
+            Logger = new DialogueLogger(_logWindow),
         };
         _sharedData = new SharedDialogueData(uiData);
         _sharedData.InputData.NextProgress = KeyCode.Space;
@@ -42,6 +44,11 @@ public class DialogueTestScript : MonoBehaviour
     private void Update()
     {
         Time.timeScale = Input.GetKey(_sharedData.InputData.FastForward) ? 2f : 1f;
+        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _sharedData.UIData.Logger.Toggle();
+        }
     }
 
     private async UniTaskVoid StartDialogue()

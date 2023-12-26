@@ -30,6 +30,7 @@ public class DialogueExecuter
 
     public async UniTask ExecuteDialogue(DialogueData dialogueData)
     {
+        _sharedData.UIData.Logger.Reset();
         await ExecuteCommands(dialogueData);
     }
 
