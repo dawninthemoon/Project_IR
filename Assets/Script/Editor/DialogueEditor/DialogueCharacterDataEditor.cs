@@ -38,6 +38,9 @@ public class DialogueCharacterDataEditor : Editor
                 GUI.color = defaultColor;
             GUILayout.EndHorizontal();
 
+            if (i >= _context.DialogueCharacterList.Count)
+                break;
+
             _context.DialogueCharacterList[i]._characterName_Kor
                 = EditorGUILayout.TextField("캐릭터 이름(한국어)", _context.DialogueCharacterList[i]._characterName_Kor);
                 
@@ -53,7 +56,11 @@ public class DialogueCharacterDataEditor : Editor
             _context.DialogueCharacterList.Add(new DialogueCharacterInfo());
         }
 
-        AssetDatabase.SaveAssets();
+        if (GUILayout.Button("Save"))
+        {
+            EditorUtility.SetDirty(_context);
+            AssetDatabase.SaveAssets();
+        }
     }
 
     private void DrawCharacterInfo(int index)
@@ -67,22 +74,22 @@ public class DialogueCharacterDataEditor : Editor
         for (int i = 0; i < info._scgPathList.Count; ++i)
         {
             GUILayout.BeginHorizontal();
-                info._scgPathList[i] = EditorGUILayout.TextField(info._scgPathList[i], GUILayout.Width(100f));
+                info._stateNameList[i] = EditorGUILayout.TextField(info._stateNameList[i], GUILayout.Width(100f));
                 GUILayout.Space(10f);
-                info._stateNameList[i] = EditorGUILayout.TextField(info._stateNameList[i]);
+                info._scgPathList[i] = EditorGUILayout.TextField(info._scgPathList[i]);
 
                 if (GUILayout.Button("-", GUILayout.Width(20f)))
                 {
-                    info._scgPathList.RemoveAt(i);
                     info._stateNameList.RemoveAt(i);
+                    info._scgPathList.RemoveAt(i);
                 }
             GUILayout.EndHorizontal();
         }
 
         if (GUILayout.Button("+", GUILayout.Width(20f)))
         {
-            info._scgPathList.Add(null);
             info._stateNameList.Add(null);
+            info._scgPathList.Add(null);
         }
     }
 }

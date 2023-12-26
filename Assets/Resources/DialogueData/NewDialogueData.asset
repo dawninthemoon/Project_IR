@@ -14,54 +14,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: NewDialogueData
   _commandsDataList:
-  - _type: 1
-    _parameters:
-    - ChongChang
-    - 'Test Dialogue 1. Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue
-      1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue
-      1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.
-
-      Test Dialogue 1.Test
-      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test
-      Dialogue 1.Test Dialogue 1.Test Dialogue 1.Test Dialogue .'
-    - False
-    - 
-    _executeWithNextCommand: 0
-  - _type: 1
-    _parameters:
-    - ChongChang
-    - Execute ShowSCG
-    - False
-    - 
-    _executeWithNextCommand: 0
   - _type: 2
     _parameters:
-    - ChongChang
-    - True
-    - StandingIllust/ChongChan
+    - ChongChan
+    - False
     - 
     - 
+    - Idle
     - Left
     - 0
     - True
     - 0.5
     - True
     - 0.5
+    _executeWithNextCommand: 1
+  - _type: 1
+    _parameters:
+    - False
+    - ChongChan
+    - 
+    - Hello!
+    - False
+    - 
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:
-    - ChongChang
-    - Now new SCG appears.
+    - False
+    - ChongChan
+    - 
+    - Now I Cry.
+    - False
+    - 
+    _executeWithNextCommand: 0
+  - _type: 2
+    _parameters:
+    - ChongChan
+    - False
+    - 
+    - 
+    - Cry
+    - Left
+    - 0
+    - False
+    - 0.5
+    - False
+    - 0.5
+    _executeWithNextCommand: 0
+  - _type: 1
+    _parameters:
+    - False
+    - WitchChan
+    - 
+    - Here comes a new challenger!
     - False
     - 
     _executeWithNextCommand: 0
   - _type: 2
     _parameters:
     - WitchChan
-    - True
-    - StandingIllust/WitchChan
+    - False
     - 
     - 
+    - Idle
     - Left
     - 1
     - True
@@ -71,35 +85,42 @@ MonoBehaviour:
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:
+    - True
+    - 
+    - System
+    - Remove SCG Test!
+    - True
+    - 
+    _executeWithNextCommand: 0
+  - _type: 3
+    _parameters:
     - WitchChan
-    - Hi!
+    - True
+    - 0.5
+    - True
+    - Left
+    - 0.5
+    _executeWithNextCommand: 0
+  - _type: 2
+    _parameters:
+    - PiranChan
     - False
     - 
+    - 
+    - Idle
+    - Right
+    - 0
+    - True
+    - 0.5
+    - True
+    - 0.5
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:
-    - ChongChang
-    - 'Test End.
-
-      Goodbye.'
-    - True
+    - False
+    - PiranChan
+    - System
+    - Hello!
+    - False
     - 
-    _executeWithNextCommand: 0
-  - _type: 3
-    _parameters:
-    - ChongChang
-    - True
-    - 0.5
-    - True
-    - Left
-    - 0.5
-    _executeWithNextCommand: 1
-  - _type: 3
-    _parameters:
-    - WitchChan
-    - True
-    - 0.5
-    - True
-    - Left
-    - 0.5
     _executeWithNextCommand: 0

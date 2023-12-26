@@ -29,7 +29,9 @@ public class DialogueTestScript : MonoBehaviour
         _sharedData.InputData.FastForward = KeyCode.LeftControl;
 
         SharedVariables sharedVariables = new SharedVariables();
-        _executer = new DialogueExecuter(_sharedData);
+        sharedVariables.CharacterData 
+            = ResourceContainerEx.Instance().GetScriptableObject("DialogueData/NewDialogueCharacterData") as DialogueCharacterData;
+        _executer = new DialogueExecuter(_sharedData, sharedVariables);
     }
 
     private void Start()

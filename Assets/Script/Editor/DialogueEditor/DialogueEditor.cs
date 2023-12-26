@@ -67,7 +67,7 @@ public class DialogueEditor : EditorWindow
                 bool createNew = true;
                 if (_selectedDialogueData != null)
                 {
-                    createNew = EditorUtility.DisplayDialog("alert", "이미 편집중인 스테이지가 존재합니다. 새로 생성 하시겠습니까?","네","아니오");
+                    createNew = EditorUtility.DisplayDialog("alert", "이미 편집중인 데이터가 존재합니다. 새로 생성 하시겠습니까?","네","아니오");
                 }
                 if (createNew)
                 {
@@ -127,7 +127,21 @@ public class DialogueEditor : EditorWindow
                         commandsDataList[i] = CreateNewCommand(commandsDataList[i]._type);
                     }
 
+                    if (GUILayout.Button("▲", GUILayout.Width(20f)) && (i > 0)) 
+                    {
+                        var temp = commandsDataList[i];
+                        commandsDataList[i] = commandsDataList[i - 1];
+                        commandsDataList[i - 1] = temp;
+                    }
+                    if (GUILayout.Button("▼", GUILayout.Width(20f)) && (i < commandsDataList.Count - 1)) 
+                    {
+                        var temp = commandsDataList[i];
+                        commandsDataList[i] = commandsDataList[i + 1];
+                        commandsDataList[i + 1] = temp;
+                    }
+
                     GUI.color = new Color(0, 0.871f, 0.616f);
+                    
                     if (GUILayout.Button("Copy", GUILayout.Width(80f))) 
                     {
                         commandsDataList.Add(commandsDataList[i].Clone());

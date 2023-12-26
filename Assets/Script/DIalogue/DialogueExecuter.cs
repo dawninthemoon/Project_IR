@@ -9,10 +9,12 @@ public class DialogueExecuter
 {
     private Dictionary<DialogueCommandType, IDialogueCommand> _commandInstanceDictionary;
     private SharedDialogueData _sharedData;
+    private SharedVariables _sharedVariables;
 
-    public DialogueExecuter(SharedDialogueData sharedData) 
+    public DialogueExecuter(SharedDialogueData sharedData, SharedVariables sharedVariables) 
     {
         _sharedData = sharedData;
+        _sharedVariables = sharedVariables;
 
         string interfaceName = "IDialogueCommand";
         var dialogueTypes = typeof(DialogueCommand).GetNestedTypes();
@@ -39,7 +41,7 @@ public class DialogueExecuter
 
             if (_commandInstanceDictionary.TryGetValue(current._type, out IDialogueCommand instance)) 
             {
-                UniTask currentTask = instance.Execute(current._parameters, _sharedData);
+                UniTask currentTask = instance.Execute(current._parameters, _sharedData, _sharedVariables);
                 if (!current._executeWithNextCommand)
                     await currentTask;
             }

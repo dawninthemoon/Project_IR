@@ -11,6 +11,12 @@ public class SharedVariables
         get;
         private set;
     } = new Dictionary<string, string>();
+
+    public DialogueCharacterData CharacterData
+    {
+        get;
+        set;
+    }
 }
 
 public class SharedDialogueData 

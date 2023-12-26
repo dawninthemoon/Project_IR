@@ -12,7 +12,7 @@ using UnityEditor;
 #endif
 
 public interface IDialogueCommand {
-    UniTask Execute(string[] parameters, SharedDialogueData sharedData);
+    UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables);
     void Draw(string[] parameters);
 }
 
@@ -44,7 +44,7 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.None)]
     public class Command_None : IDialogueCommand {
-        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
+        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
@@ -55,22 +55,37 @@ public class DialogueCommand {
         }
     }
 
-    [DialogueAttribute(DialogueCommandType.Dialogue, Color = "green", ParameterCount = 4)]
+    [DialogueAttribute(DialogueCommandType.Dialogue, Color = "green", ParameterCount = 6)]
     public class Command_Dialogue : IDialogueCommand {
-        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
+        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
-            sharedData.UIData.DialogueNameText.text = parameters[0];
-            
-            if (!bool.Parse(parameters[2]))
+            DialogueCharacterInfo targetCharacter = null;
+            string name = null;
+            if (!bool.Parse(parameters[0]))
             {
-                string id = string.IsNullOrEmpty(parameters[3]) ? parameters[0] : parameters[3];
+                targetCharacter = sharedVariables.CharacterData.Find(parameters[1]);
+                if (!string.IsNullOrEmpty(targetCharacter._nameColor))
+                    name = $"<color={targetCharacter._nameColor}>{targetCharacter._characterName_Kor}</color>";
+                else
+                    name = targetCharacter._characterName_Kor;
+            }
+            else
+            {
+                name = parameters[2];
+            }
+
+            sharedData.UIData.DialogueNameText.text = name;
+            
+            if (!bool.Parse(parameters[4]))
+            {
+                string id = string.IsNullOrEmpty(parameters[5]) ? parameters[1] : parameters[4];
                 if (sharedData.ActiveSCGDictionary.TryGetValue(id, out Image scgImage))
                 {
                     EmphasisSCG(id, sharedData);
                 }
             }
 
-            await DoText(parameters[1], 0.05f, sharedData);
+            await DoText(parameters[3], 0.05f, sharedData);
 
             await UniTask.Yield(PlayerLoopTiming.Update);
             await UniTask.WaitUntil(() => sharedData.InputData.CanGoToNext);
@@ -110,27 +125,41 @@ public class DialogueCommand {
         public void Draw(string[] parameters) 
         {
             Color currentColor = GUI.color;
+
             GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("이름", GUILayout.Width(100f));
-                parameters[0] = EditorGUILayout.TextField(parameters[0]);
+                EditorGUILayout.LabelField("이름 직접 입력", GUILayout.Width(100f));
+                parameters[0] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[0])).ToString();
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("캐릭터 ID", GUILayout.Width(100f));
+                parameters[1] = EditorGUILayout.TextField(parameters[1]);
+            GUILayout.EndHorizontal();
+            
+            if (ExParser.ParseBoolOrDefault(parameters[0]))
+            {
+                GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("이름", GUILayout.Width(100f));
+                    parameters[2] = EditorGUILayout.TextField(parameters[2]);
+                GUILayout.EndHorizontal();
+            }
+
+            GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("대사", GUILayout.Width(100f));
-                parameters[1] = EditorGUILayout.TextArea(parameters[1], GUILayout.MinHeight(40f));
+                parameters[3] = EditorGUILayout.TextArea(parameters[3], GUILayout.MinHeight(40f));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("SCG 강조 안함", GUILayout.Width(100f));
-                parameters[2] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[2])).ToString();
+                parameters[4] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[4])).ToString();
             GUILayout.EndHorizontal();
 
-            if (!ExParser.ParseBoolOrDefault(parameters[2])) 
+            if (!ExParser.ParseBoolOrDefault(parameters[4])) 
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
-                    EditorGUILayout.LabelField("강조할 SCG ID(공란일 시 '이름' 항목 따라감)", GUILayout.Width(250f));
-                    parameters[3] = EditorGUILayout.TextField(parameters[3]);
+                    EditorGUILayout.LabelField("강조할 SCG ID(공란일 시 'ID' 항목 따라감)", GUILayout.Width(250f));
+                    parameters[5] = EditorGUILayout.TextField(parameters[5]);
                 GUILayout.EndHorizontal();
             }
             GUI.color = currentColor;
@@ -139,54 +168,60 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.ShowSCG, Color = "#03cafc", ParameterCount = 11)]
     public class Command_ShowSCG : IDialogueCommand {
-        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
+        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
             string id = parameters[0];
             float timeScale = Time.timeScale;
             var scgDictionary = sharedData.ActiveSCGDictionary;
 
-            if (scgDictionary.TryGetValue(id, out Image scgImage))
+            if (!scgDictionary.TryGetValue(id, out Image scgImage))
             {
-                // 처리...
+                scgImage = new GameObject(id).AddComponent<Image>();
+                scgImage.transform.SetParent(sharedData.UIData.DialogueCanvas.transform);
+                scgImage.transform.SetSiblingIndex(scgDictionary.Count);
+                scgDictionary.Add(id, scgImage);
             }
 
             SCGPivot pivot = ExEnum.Parse<SCGPivot>(parameters[5]);
             float scaleX = (pivot == SCGPivot.Left) ? -1f : 1f;
 
+            string scgPath = null;
             if (bool.Parse(parameters[1]))
             {
-                Image newImage = new GameObject(id).AddComponent<Image>();
-                newImage.transform.SetParent(sharedData.UIData.DialogueCanvas.transform);
-                newImage.transform.SetSiblingIndex(scgDictionary.Count);
-                newImage.rectTransform.sizeDelta = new Vector2(1095f, 1742f);
-                newImage.rectTransform.localScale = new Vector3(scaleX, 1f, 1f);
-
-                int positionIndex = ExParser.ParseIntOrDefault(parameters[6]);
-                Vector3 position = GetPositionByIndex(pivot, positionIndex);
-                newImage.rectTransform.localPosition = position;
-                
-                Sprite sprite = ResourceContainerEx.Instance().GetSprite(parameters[2]);
-                newImage.sprite = sprite;
-
-                scgDictionary.Add(id, newImage);
-
-                float waitTime = 0f;
-                if (bool.Parse(parameters[7]))
-                {
-                    float duration = float.Parse(parameters[8]);
-                    waitTime = Mathf.Max(waitTime, duration);
-                    DoFade(newImage, duration, timeScale).Forget();
-                }
-
-                if (bool.Parse(parameters[9]))
-                {
-                    float duration = float.Parse(parameters[10]);
-                    waitTime = Mathf.Max(waitTime, duration);
-                    DoMove(newImage.rectTransform, pivot, positionIndex, duration, timeScale).Forget();
-                }
-
-                await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime / timeScale));
+                scgPath = parameters[2];
             }
+            else
+            {
+                scgPath = sharedVariables.CharacterData.FindSCGPath(parameters[0], parameters[4]);
+            }
+
+            scgImage.rectTransform.sizeDelta = new Vector2(1095f, 1742f);
+            scgImage.rectTransform.localScale = new Vector3(scaleX, 1f, 1f);
+
+            int positionIndex = ExParser.ParseIntOrDefault(parameters[6]);
+            Vector3 position = GetPositionByIndex(pivot, positionIndex);
+            scgImage.rectTransform.localPosition = position;
+            
+            Sprite sprite = ResourceContainerEx.Instance().GetSprite(scgPath);
+            scgImage.sprite = sprite;
+
+
+            float waitTime = 0f;
+            if (bool.Parse(parameters[7]))
+            {
+                float duration = float.Parse(parameters[8]);
+                waitTime = Mathf.Max(waitTime, duration);
+                DoFade(scgImage, duration, timeScale).Forget();
+            }
+
+            if (bool.Parse(parameters[9]))
+            {
+                float duration = float.Parse(parameters[10]);
+                waitTime = Mathf.Max(waitTime, duration);
+                DoMove(scgImage.rectTransform, pivot, positionIndex, duration, timeScale).Forget();
+            }
+
+            await UniTask.Delay(System.TimeSpan.FromSeconds(waitTime / timeScale));
         }
 
         private async UniTaskVoid DoFade(Image image, float duration, float timeScale)
@@ -255,13 +290,13 @@ public class DialogueCommand {
             else 
             {
                 GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("캐릭터 이름", GUILayout.Width(100f));
+                    EditorGUILayout.LabelField("캐릭터 ID", GUILayout.Width(100f));
                     parameters[3] = EditorGUILayout.TextField(parameters[3]);
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("종류", GUILayout.Width(100f));
-                parameters[4] = EditorGUILayout.TextField(parameters[4]);
+                    EditorGUILayout.LabelField("종류", GUILayout.Width(100f));
+                    parameters[4] = EditorGUILayout.TextField(parameters[4]);
                 GUILayout.EndHorizontal();
             }
             
@@ -309,7 +344,7 @@ public class DialogueCommand {
 
     [DialogueAttribute(DialogueCommandType.RemoveSCG, ParameterCount = 6)]
     public class Command_RemoveSCG : IDialogueCommand {
-        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData) 
+        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
             float timeScale = Time.timeScale;
             string id = parameters[0];
