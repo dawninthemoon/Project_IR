@@ -37,11 +37,9 @@ namespace TilemapEditor {
                 TilemapImportWindow.OpenWindow();
             }
 
-            if (GUILayout.Button("Export", GUILayout.Height(40f))) {
-                if (EditorUtility.DisplayDialog("Warning", "Are you sure? The RoomBase will be overlaped!", "Export", "Do Not Export")) {
-                    Export();
-                        
-                    AssetDatabase.SaveAssets();
+            if (GUILayout.Button("Save", GUILayout.Height(40f))) {
+                if (EditorUtility.DisplayDialog("Warning", "Are you sure? The RoomBase will be overlaped!", "Save", "Do Not Export")) {
+                    Save();
                     AssetDatabase.Refresh();
                 }
             }
@@ -57,17 +55,34 @@ namespace TilemapEditor {
 
             if (GUILayout.Button("Clear Walls")) {
                 if (EditorUtility.DisplayDialog("Warning", "Are you sure?", "Clear", "Do Not Clear")) {
-                    _context.ClearAllTilemaps();
+                    _context.ClearAllWalls();
                 }
             }
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void Export() {
-            TilemapConfig asset = _context.RequestExport(CurrentTilemapName);
-            string path = "Assets/TilemapData/Tilemap_" + asset._tilemapName + ".asset";
-            AssetDatabase.CreateAsset(asset, path);
+        private void Save() {
+            TilemapConfig asset = _context.LoadTilemapConfig(CurrentTilemapName);
+
+            if (!AssetDatabase.Contains(asset))
+            {
+                string defaultName = "Tilemap_" + asset._tilemapName + ".asset";
+                string path = EditorUtility.SaveFilePanel(
+                    "Save Stage Data",
+                    "Assets/TilemapData/",
+                    defaultName,
+                    "asset"
+                );
+
+                if (string.IsNullOrEmpty(path)) 
+                    return;
+
+                path = FileUtil.GetProjectRelativePath(path);
+                AssetDatabase.CreateAsset(asset, path);
+            }
+
+            AssetDatabase.SaveAssets();
         }
 
         public static List<TilemapConfig> GetAllTilemaps(string searchString = null) {

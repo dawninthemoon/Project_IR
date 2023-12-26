@@ -3,34 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using RieslingUtils;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TilemapEditor {
     [ExecuteInEditMode]
     public class TilemapEditorScript : MonoBehaviour
     {
+        public TilemapConfig Config
+        {
+            get;
+            private set;
+        }
+
+        private void Start()
+        {
+            ClearAll();
+        }
+
         public void ClearAllBackgrounds() 
         {
             Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
             backgroundTilemap.ClearAllTiles();
         }
 
-        public void ClearAllTilemaps() 
+        public void ClearAllWalls() 
         {
             Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
             collisionTilemap.ClearAllTiles();
         }
 
-        public TilemapConfig RequestExport(string tilemapName) 
+        public void ClearAll()
+        {
+            ClearAllBackgrounds();
+            ClearAllWalls();
+        }
+
+        public TilemapConfig LoadTilemapConfig(string tilemapName) 
         {
             Tilemap wallTilemap = transform.Find("Wall").GetComponent<Tilemap>();
             Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
 
-            TilemapConfig asset = ScriptableObject.CreateInstance<TilemapConfig>();
+            if (Config == null)
+            {
+                Config = ScriptableObject.CreateInstance<TilemapConfig>();
+            }
+
             var wall = LoadTileInfo(wallTilemap);
             var background = LoadTileInfo(backgroundTilemap);
-            asset.Initialize(tilemapName, wall, background);
+            Config.Initialize(tilemapName, wall, background);
 
-            return asset;
+            EditorUtility.SetDirty(Config);
+
+            return Config;
         }
 
         private TilemapConfig.TilemapInfo LoadTileInfo(Tilemap tilemap) 
@@ -49,13 +75,15 @@ namespace TilemapEditor {
 
         public void Import(TilemapConfig tilemapConfig) 
         {
-            ClearAllBackgrounds();
+            ClearAll();
+
+            Config = tilemapConfig;
 
             Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
             Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
 
             collisionTilemap.SetTiles(tilemapConfig._wall);
-            collisionTilemap.SetTiles(tilemapConfig._background);
+            backgroundTilemap.SetTiles(tilemapConfig._background);
         }
     }
 }
