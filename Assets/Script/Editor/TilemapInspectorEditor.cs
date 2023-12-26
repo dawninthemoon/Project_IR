@@ -13,8 +13,6 @@ namespace TilemapEditor {
         private TilemapEditorScript _context;
         public static string CurrentTilemapName;
 
-        private List<TilemapConfig> _tilemapsList;
-
         private void OnEnable() {
             _context = (TilemapEditorScript)target;
         }
