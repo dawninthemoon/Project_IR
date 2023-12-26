@@ -1,11 +1,11 @@
 <ActionGraph Name="PlayerAction" DefaultAction="AC_Idle" DefaultFramePerSecond="12">
 
-    <GlobalVariable Name="gv_normalJumpPower" Value="1.5"/>
-    <GlobalVariable Name="gv_movementSpeed" Value="12"/>
-    <GlobalVariable Name="gv_movementMaxVelocity" Value="1"/>
-    <GlobalVariable Name="gv_movementDefaultFriction" Value="1"/>
-
-    <GlobalVariable Name="gv_jumpDuration" Value="0.2"/>
+    <GlobalVariable Name="gv_normalJumpPower" Value="2.7"/>
+    <GlobalVariable Name="gv_movementSpeed" Value="13"/>
+    <GlobalVariable Name="gv_movementMaxVelocity" Value="1.6"/>
+    <GlobalVariable Name="gv_movementDefaultFriction" Value="3"/>
+    
+    <GlobalVariable Name="gv_jumpDuration" Value="0.1"/>
 
 <!-- BranchSet -->
     <BranchSet Name="AttackGround">
@@ -23,7 +23,7 @@
     <AC_Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Idle" XFlip="true">
-            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
         </Animation>
 
         <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
@@ -142,7 +142,7 @@
 
     <AC_FallToGroundMove MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/LandToRun/" XFlip="True">
-            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
         <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>

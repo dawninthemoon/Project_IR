@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestStage
   m_EditorClassIdentifier: 
   _stageName: TestStage
-  _tilemapConfigPath: {fileID: 11400000, guid: c2f5845e15ac77a4a987bd7abc857093, type: 2}
+  _tilemapConfigPath: {fileID: 11400000, guid: 4fbc311bd64bd7445ba0ef72de5c0bca, type: 2}
   _backgroundPrefabPath: {fileID: 0}
   _isMiniStage: 0
   _stagePointData:
@@ -35,9 +35,10 @@ MonoBehaviour:
       _startAction: AC_Idle
       _flip: 0
       _hideWhenDeactive: 0
+      _keepAlive: 0
       _searchIdentifier: 0
       _activeType: 0
-      _localPosition: {x: -0.59, y: -0.09, z: 0}
+      _localPosition: {x: -0.74, y: 0.27, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1

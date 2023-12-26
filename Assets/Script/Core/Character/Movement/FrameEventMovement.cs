@@ -15,7 +15,7 @@ public class FrameEventMovement : MovementBase
         Count,
     };
 
-    private readonly float _gravity = -3.0f;
+    private readonly float _gravity = -9.0f;
 
     private float[] _movementValues = new float[(int)FrameEventMovementValueType.Count];
     private Vector3 _currentVelocity = Vector3.zero;
