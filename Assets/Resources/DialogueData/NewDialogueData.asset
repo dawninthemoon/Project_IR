@@ -19,13 +19,13 @@ MonoBehaviour:
     - ChongChan
     - False
     - 
-    - 
     - Idle
     - Left
     - 0
     - True
     - 0.5
     - True
+    - 0.5
     - 0.5
     _executeWithNextCommand: 1
   - _type: 1
@@ -51,14 +51,17 @@ MonoBehaviour:
     - ChongChan
     - False
     - 
-    - 
     - Cry
     - Left
     - 0
     - False
-    - 0.5
+    - False
+    - False
     - False
     - 0.5
+    _executeWithNextCommand: 0
+  - _type: 4
+    _parameters: []
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:
@@ -74,13 +77,13 @@ MonoBehaviour:
     - WitchChan
     - False
     - 
-    - 
     - Idle
     - Left
     - 1
     - True
     - 0.5
     - True
+    - 0.5
     - 0.5
     _executeWithNextCommand: 0
   - _type: 1
@@ -101,11 +104,13 @@ MonoBehaviour:
     - Left
     - 0.5
     _executeWithNextCommand: 0
+  - _type: 4
+    _parameters: []
+    _executeWithNextCommand: 0
   - _type: 2
     _parameters:
     - PiranChan
     - False
-    - 
     - 
     - Idle
     - Right
@@ -114,6 +119,10 @@ MonoBehaviour:
     - 0.5
     - True
     - 0.5
+    - 0.5
+    _executeWithNextCommand: 0
+  - _type: 4
+    _parameters: []
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:

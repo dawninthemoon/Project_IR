@@ -32,7 +32,8 @@ public enum DialogueCommandType {
     None,
     Dialogue,
     ShowSCG,
-    RemoveSCG
+    RemoveSCG,
+    WaitInput,
 }
 
 public class DialogueCommand {
@@ -79,10 +80,7 @@ public class DialogueCommand {
             if (!bool.Parse(parameters[4]))
             {
                 string id = string.IsNullOrEmpty(parameters[5]) ? parameters[1] : parameters[4];
-                if (sharedData.ActiveSCGDictionary.TryGetValue(id, out Image scgImage))
-                {
-                    EmphasisSCG(id, sharedData);
-                }
+                EmphasisSCG(id, sharedData);
             }
 
             await DoText(parameters[3], 0.05f, sharedData);
@@ -166,7 +164,7 @@ public class DialogueCommand {
         }
     }
 
-    [DialogueAttribute(DialogueCommandType.ShowSCG, Color = "#03cafc", ParameterCount = 11)]
+    [DialogueAttribute(DialogueCommandType.ShowSCG, Color = "#03cafc", ParameterCount = 10)]
     public class Command_ShowSCG : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
@@ -182,7 +180,7 @@ public class DialogueCommand {
                 scgDictionary.Add(id, scgImage);
             }
 
-            SCGPivot pivot = ExEnum.Parse<SCGPivot>(parameters[5]);
+            SCGPivot pivot = ExEnum.Parse<SCGPivot>(parameters[4]);
             float scaleX = (pivot == SCGPivot.Left) ? -1f : 1f;
 
             string scgPath = null;
@@ -192,13 +190,13 @@ public class DialogueCommand {
             }
             else
             {
-                scgPath = sharedVariables.CharacterData.FindSCGPath(parameters[0], parameters[4]);
+                scgPath = sharedVariables.CharacterData.FindSCGPath(parameters[0], parameters[3]);
             }
 
             scgImage.rectTransform.sizeDelta = new Vector2(1095f, 1742f);
             scgImage.rectTransform.localScale = new Vector3(scaleX, 1f, 1f);
 
-            int positionIndex = ExParser.ParseIntOrDefault(parameters[6]);
+            int positionIndex = int.Parse(parameters[5]);
             Vector3 position = GetPositionByIndex(pivot, positionIndex);
             scgImage.rectTransform.localPosition = position;
             
@@ -207,16 +205,16 @@ public class DialogueCommand {
 
 
             float waitTime = 0f;
-            if (bool.Parse(parameters[7]))
+            if (bool.Parse(parameters[6]))
             {
-                float duration = float.Parse(parameters[8]);
+                float duration = float.Parse(parameters[7]);
                 waitTime = Mathf.Max(waitTime, duration);
                 DoFade(scgImage, duration, timeScale).Forget();
             }
 
-            if (bool.Parse(parameters[9]))
+            if (bool.Parse(parameters[8]))
             {
-                float duration = float.Parse(parameters[10]);
+                float duration = float.Parse(parameters[9]);
                 waitTime = Mathf.Max(waitTime, duration);
                 DoMove(scgImage.rectTransform, pivot, positionIndex, duration, timeScale).Forget();
             }
@@ -290,51 +288,46 @@ public class DialogueCommand {
             else 
             {
                 GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("캐릭터 ID", GUILayout.Width(100f));
-                    parameters[3] = EditorGUILayout.TextField(parameters[3]);
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField("종류", GUILayout.Width(100f));
-                    parameters[4] = EditorGUILayout.TextField(parameters[4]);
+                    parameters[3] = EditorGUILayout.TextField(parameters[3]);
                 GUILayout.EndHorizontal();
             }
             
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("SCG 기준 위치", GUILayout.Width(100f));
-                SCGPivot selectedPivot = ExParser.ParseEnumOrDefault<SCGPivot>(parameters[5]);
-                parameters[5] = EditorGUILayout.EnumPopup(selectedPivot).ToString();
+                SCGPivot selectedPivot = ExParser.ParseEnumOrDefault<SCGPivot>(parameters[4]);
+                parameters[4] = EditorGUILayout.EnumPopup(selectedPivot).ToString();
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("위치", GUILayout.Width(100f));
-                parameters[6] = EditorGUILayout.IntSlider(ExParser.ParseIntOrDefault(parameters[6]), 0, 3).ToString();
+                parameters[5] = EditorGUILayout.IntSlider(ExParser.ParseIntOrDefault(parameters[5]), 0, 3).ToString();
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("페이드 인", GUILayout.Width(100f));
-                parameters[7] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[7])).ToString();
+                parameters[6] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[6])).ToString();
             GUILayout.EndHorizontal();
 
-            if (ExParser.ParseBoolOrDefault(parameters[7]))
+            if (ExParser.ParseBoolOrDefault(parameters[6]))
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
                     EditorGUILayout.LabelField("시간", GUILayout.Width(100f));
-                    parameters[8] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[8])).ToString();
+                    parameters[7] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[7])).ToString();
                 GUILayout.EndHorizontal();
             }
 
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("움직이며 등장", GUILayout.Width(100f));
-                parameters[9] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[9])).ToString();
+                parameters[8] = EditorGUILayout.Toggle(ExParser.ParseBoolOrDefault(parameters[8])).ToString();
             GUILayout.EndHorizontal();
-            if (ExParser.ParseBoolOrDefault(parameters[9]))
+            if (ExParser.ParseBoolOrDefault(parameters[8]))
             {
                 GUILayout.BeginHorizontal();
                     GUILayout.Space(20f);
                     EditorGUILayout.LabelField("시간", GUILayout.Width(100f));
-                    parameters[10] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[10])).ToString();
+                    parameters[9] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[9])).ToString();
                 GUILayout.EndHorizontal();
             }
 
@@ -456,6 +449,19 @@ public class DialogueCommand {
                     parameters[5] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[5])).ToString();
                 GUILayout.EndHorizontal();
             }
+        }
+    }
+
+    [DialogueAttribute(DialogueCommandType.WaitInput)]
+    public class Command_WaitInput : IDialogueCommand {
+        public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
+        {
+            await UniTask.WaitUntil(() => sharedData.InputData.CanGoToNext);
+        }
+
+        public void Draw(string[] parameters) 
+        {
+
         }
     }
 }
