@@ -67,7 +67,7 @@ public class DialogueEditor : EditorWindow
                 bool createNew = true;
                 if (_selectedDialogueData != null)
                 {
-                    createNew = EditorUtility.DisplayDialog("alert", "이미 편집중인 데이터가 존재합니다. 새로 생성 하시겠습니까?","네","아니오");
+                    createNew = EditorUtility.DisplayDialog("alert", "이미 편집중인 데이터가 존재합니다. 새로 생성하시겠습니까?","네","아니오");
                 }
                 if (createNew)
                 {

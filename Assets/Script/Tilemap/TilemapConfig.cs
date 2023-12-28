@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
+[CreateAssetMenu(fileName = "Tilemap_NewTilemap", menuName = "ScriptableObjects/TilemapConfig")]
 public class TilemapConfig : ScriptableObject {
     [System.Serializable]
     public struct TilemapInfo {

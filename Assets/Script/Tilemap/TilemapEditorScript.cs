@@ -11,6 +11,9 @@ namespace TilemapEditor {
     [ExecuteInEditMode]
     public class TilemapEditorScript : MonoBehaviour
     {
+        private static readonly string WallTilemapKey = "Wall";
+        private static readonly string BackgroundTilemapKey = "Background";
+
         public TilemapConfig Config
         {
             get;
@@ -24,13 +27,13 @@ namespace TilemapEditor {
 
         public void ClearAllBackgrounds() 
         {
-            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = transform.Find(BackgroundTilemapKey).GetComponent<Tilemap>();
             backgroundTilemap.ClearAllTiles();
         }
 
         public void ClearAllWalls() 
         {
-            Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
+            Tilemap collisionTilemap = transform.Find(WallTilemapKey).GetComponent<Tilemap>();
             collisionTilemap.ClearAllTiles();
         }
 
@@ -42,8 +45,8 @@ namespace TilemapEditor {
 
         public TilemapConfig LoadTilemapConfig(string tilemapName) 
         {
-            Tilemap wallTilemap = transform.Find("Wall").GetComponent<Tilemap>();
-            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
+            Tilemap wallTilemap = transform.Find(WallTilemapKey).GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = transform.Find(BackgroundTilemapKey).GetComponent<Tilemap>();
 
             if (Config == null)
             {
@@ -79,8 +82,8 @@ namespace TilemapEditor {
 
             Config = tilemapConfig;
 
-            Tilemap collisionTilemap = transform.Find("Wall").GetComponent<Tilemap>();
-            Tilemap backgroundTilemap = transform.Find("Background").GetComponent<Tilemap>();
+            Tilemap collisionTilemap = transform.Find(WallTilemapKey).GetComponent<Tilemap>();
+            Tilemap backgroundTilemap = transform.Find(BackgroundTilemapKey).GetComponent<Tilemap>();
 
             collisionTilemap.SetTiles(tilemapConfig._wall);
             backgroundTilemap.SetTiles(tilemapConfig._background);

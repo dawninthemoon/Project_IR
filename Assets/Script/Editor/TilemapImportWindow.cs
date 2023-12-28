@@ -53,7 +53,7 @@ public class TilemapImportWindow : EditorWindow
         bool roomClicked = false;
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, (GUIStyle)"hostview");
         {
-            _nowRoomIndex = 0;
+            _curTilemapIndex = 0;
             GUILayout.BeginVertical(sceneBoxStyle);
             {
                 GUILayout.Label("Saved Tilemaps", (GUIStyle)"OL Title");
@@ -74,7 +74,7 @@ public class TilemapImportWindow : EditorWindow
 
         if (Event.current.type == EventType.MouseDown && !roomClicked)
         {
-            _selectedRoomIndex = -1;
+            _selectedTilemapIndex = -1;
         }
 
         GUI.color = defColor;
@@ -84,51 +84,50 @@ public class TilemapImportWindow : EditorWindow
     private void DrawTilemapButton(TilemapConfig tilemap, Color defColor, out bool nowClicked) {
         nowClicked = false;
 
-        bool isNowSelectedRoom = (_nowRoomIndex == _selectedRoomIndex);
+        bool isNowSelectedRoom = (_curTilemapIndex == _selectedTilemapIndex);
 
-        GUIContent roomText = new GUIContent(tilemap.name);
-        Rect roomTextRect = GUILayoutUtility.GetRect(roomText, sceneTextStyle);
+        GUIContent tilemapText = new GUIContent(tilemap.name);
+        Rect tilemapTextRect = GUILayoutUtility.GetRect(tilemapText, sceneTextStyle);
 
         if (isNowSelectedRoom) {
             if (focusedWindow == this)
                 GUI.color = EditorGUIUtility.isProSkin ? proSelectBackground : stdSelectBackground ;
             else
                 GUI.color = EditorGUIUtility.isProSkin ? proLostFocusSelectBackground : stdLostFocusSelectBackground;
-            GUI.DrawTexture(roomTextRect, EditorGUIUtility.whiteTexture);
+            GUI.DrawTexture(tilemapTextRect, EditorGUIUtility.whiteTexture);
         }
 
         GUI.color = (EditorGUIUtility.isProSkin ? proTextColor : (isNowSelectedRoom ? stdSelectTextColor : stdTextColor));
         GUIStyle nowSceneTextStyle = isNowSelectedRoom ? sceneSelectedTextStyle : sceneTextStyle;
         nowSceneTextStyle.fontStyle = FontStyle.Bold;
 
-        GUI.Label(roomTextRect, roomText, nowSceneTextStyle);
+        GUI.Label(tilemapTextRect, tilemapText, nowSceneTextStyle);
 
         #region when click
         Event e = Event.current;
         
-        if (roomTextRect.Contains(e.mousePosition))
+        if (tilemapTextRect.Contains(e.mousePosition))
         {
 
             if (e.type == EventType.MouseDown)
             {
                 nowClicked = true;
-                _selectedRoomIndex = _nowRoomIndex;
+                _selectedTilemapIndex = _curTilemapIndex;
             }
             else if (e.type == EventType.MouseUp)
             {
                 if (e.button == 0)
                 {
-                    if (_lastClickedScene == _nowRoomIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) {
+                    if (_lastClickedTilemap == _curTilemapIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) {
                         TilemapEditorScript editor = GameObject.Find("TilemapEditor").GetComponent<TilemapEditorScript>();
                         if (EditorUtility.DisplayDialog("Are you sure?", "Importing this tilemap will overlap the current one without saving it.", "Okay", "Cancel"))
                         {
                             editor.Import(tilemap);
-                            TilemapInspectorEditor.CurrentTilemapName = tilemap._tilemapName;
                         }	
                     }
                     else
                     {
-                        _lastClickedScene = _nowRoomIndex;
+                        _lastClickedTilemap = _curTilemapIndex;
                         _lastClickTime = Time.realtimeSinceStartup;
                     }
                 }
@@ -136,16 +135,16 @@ public class TilemapImportWindow : EditorWindow
         }
         #endregion
 
-        _nowRoomIndex++;
+        _curTilemapIndex++;
         GUI.color = defColor;
     }
 
 
-    private int _lastClickedScene = -1;
+    private int _lastClickedTilemap = -1;
     private float _lastClickTime = 0;
     private const float DoubleClickDelay = 1f;
-    private int _nowRoomIndex = -1;
-    private int _selectedRoomIndex;
+    private int _curTilemapIndex = -1;
+    private int _selectedTilemapIndex;
 
     #region GUI Styles
     bool isGuiStyleInitedWhenProSkin = false;
@@ -193,7 +192,6 @@ public class TilemapImportWindow : EditorWindow
             InitEyeIcon();
         }
 
-        //Make Top Menu Style
         if (topMenuStyle == null || isGuiStyleInitedWhenProSkin != EditorGUIUtility.isProSkin)
         {
             topMenuStyle = new GUIStyle((GUIStyle)"Toolbar");
@@ -201,7 +199,6 @@ public class TilemapImportWindow : EditorWindow
             topMenuStyle.fixedHeight = 20;
         }
 
-        //Make View Option Popup style
         if (viewOptionPopupStyle == null || isGuiStyleInitedWhenProSkin != EditorGUIUtility.isProSkin)
         {
             viewOptionPopupStyle = new GUIStyle((GUIStyle)"TE Toolbar");
