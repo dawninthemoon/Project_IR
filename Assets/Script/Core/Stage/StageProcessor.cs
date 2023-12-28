@@ -228,8 +228,11 @@ public class StageProcessor : Singleton<StageProcessor>
 
         if (_stageData._tilemapConfigPath != null) 
         {
-            GameObject tilemapParentPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
-            _stageTilemapParent = GameObject.Instantiate(tilemapParentPrefab);
+            if (_stageTilemapParent == null)
+            {
+                GameObject tilemapParentPrefab = ResourceContainerEx.Instance().GetPrefab("Prefab/TilemapSettings");
+                _stageTilemapParent = GameObject.Instantiate(tilemapParentPrefab);
+            }
 
             Tilemap wallTilemap = _stageTilemapParent.transform.Find("Wall").GetComponent<Tilemap>();
             Tilemap backgroundTilemap = _stageTilemapParent.transform.Find("Background").GetComponent<Tilemap>();

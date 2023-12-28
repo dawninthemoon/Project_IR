@@ -9,6 +9,7 @@ using TilemapEditor;
 
 public class TilemapImportWindow : EditorWindow
 {
+    private TilemapEditorScript _editor;
     private string _searchString;
     public static void OpenWindow()
     {
@@ -16,20 +17,24 @@ public class TilemapImportWindow : EditorWindow
         Texture icon = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Sprites/Gear.png");
         GUIContent titleContent = new GUIContent("Tilemaps", icon);
         window.titleContent = titleContent;
+
         window.Show();
     }
 
-    private void OnDisable() {
+    private void OnDisable() 
+    {
         GC.Collect();
     }
 
     private void OnEnable()
     {
+        _editor = GameObject.FindObjectOfType<TilemapEditorScript>();
         isGuiStyleInitedWhenProSkin = !EditorGUIUtility.isProSkin;
         InitEyeIcon();
     }
 
-    private void OnGUI() {
+    private void OnGUI() 
+    {
         InitColors();
         InitStyles();
 
@@ -81,7 +86,8 @@ public class TilemapImportWindow : EditorWindow
         Repaint();
     }
 
-    private void DrawTilemapButton(TilemapConfig tilemap, Color defColor, out bool nowClicked) {
+    private void DrawTilemapButton(TilemapConfig tilemap, Color defColor, out bool nowClicked) 
+    {
         nowClicked = false;
 
         bool isNowSelectedRoom = (_curTilemapIndex == _selectedTilemapIndex);
@@ -118,11 +124,11 @@ public class TilemapImportWindow : EditorWindow
             {
                 if (e.button == 0)
                 {
-                    if (_lastClickedTilemap == _curTilemapIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) {
-                        TilemapEditorScript editor = GameObject.Find("TilemapEditor").GetComponent<TilemapEditorScript>();
+                    if (_lastClickedTilemap == _curTilemapIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) 
+                    {
                         if (EditorUtility.DisplayDialog("Warning", "저장하지 않은 데이터가 사라질 수 있습니다. 새로 생성하시겠습니까?", "예", "아니오"))
                         {
-                            editor.Import(tilemap);
+                            _editor.Import(tilemap);
                         }	
                     }
                     else
