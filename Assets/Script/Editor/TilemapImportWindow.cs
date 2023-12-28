@@ -120,7 +120,7 @@ public class TilemapImportWindow : EditorWindow
                 {
                     if (_lastClickedTilemap == _curTilemapIndex && Time.realtimeSinceStartup - _lastClickTime <= DoubleClickDelay) {
                         TilemapEditorScript editor = GameObject.Find("TilemapEditor").GetComponent<TilemapEditorScript>();
-                        if (EditorUtility.DisplayDialog("Are you sure?", "Importing this tilemap will overlap the current one without saving it.", "Okay", "Cancel"))
+                        if (EditorUtility.DisplayDialog("Warning", "저장하지 않은 데이터가 사라질 수 있습니다. 새로 생성하시겠습니까?", "예", "아니오"))
                         {
                             editor.Import(tilemap);
                         }	
