@@ -38,7 +38,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue(string dialogueKey)
     {
-        DialogueData dialogueData = ResourceContainerEx.Instance().GetScriptableObject("DialogueData/" + dialogueKey) as DialogueData;
+        DialogueData dialogueData = ResourceContainerEx.Instance().GetScriptableObject(DialogueDataPathBase + dialogueKey) as DialogueData;
         if (dialogueData)
         {
             StartDialogue(dialogueData).Forget();
