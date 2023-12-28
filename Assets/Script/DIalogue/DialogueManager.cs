@@ -12,6 +12,8 @@ public class DialogueManager : Singleton<DialogueManager>
         get;
         private set;
     }
+    private static readonly string DialogueDataPathBase = "DialogueData/";
+    private static readonly string DialogueCharacterDataPath = "DialogueData/CharacterData/DialogueCharacterData";
 
     public DialogueManager()
     {
@@ -30,14 +32,17 @@ public class DialogueManager : Singleton<DialogueManager>
 
         SharedVariables sharedVariables = new SharedVariables();
         sharedVariables.CharacterData 
-            = ResourceContainerEx.Instance().GetScriptableObject("DialogueData/CharacterData/DialogueCharacterData") as DialogueCharacterData;
+            = ResourceContainerEx.Instance().GetScriptableObject(DialogueCharacterDataPath) as DialogueCharacterData;
         _executer = new DialogueExecuter(_sharedData, sharedVariables);
     }
 
     public void StartDialogue(string dialogueKey)
     {
         DialogueData dialogueData = ResourceContainerEx.Instance().GetScriptableObject("DialogueData/" + dialogueKey) as DialogueData;
-        StartDialogue(dialogueData).Forget();
+        if (dialogueData)
+        {
+            StartDialogue(dialogueData).Forget();
+        }
     }
 
     private async UniTaskVoid StartDialogue(DialogueData dialogueData)

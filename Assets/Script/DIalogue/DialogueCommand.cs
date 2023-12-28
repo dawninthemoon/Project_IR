@@ -11,7 +11,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 #endif
 
-public interface IDialogueCommand {
+public interface IDialogueCommand 
+{
     UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables);
     void Draw(string[] parameters);
 }
