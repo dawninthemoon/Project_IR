@@ -43,37 +43,14 @@ public class SharedDialogueData
         }
     }
 
-    public class SharedUIData
-    {
-        public Canvas DialogueCanvas
-        {
-            get;
-            set;
-        }
-        public TMP_Text DialogueNameText
-        {
-            get;
-            set;
-        }
-        public TMP_Text DialogueText
-        {
-            get;
-            set;
-        }
-        public DialogueLogger Logger
-        {
-            get;
-            set;
-        }
-    }
-
+    
     public Dictionary<string, Image> ActiveSCGDictionary
     {
         get;
         private set;
     } = new Dictionary<string, Image>();
 
-    public SharedUIData UIData 
+    public DialogueUIData UIData 
     {
         get;
         private set;
@@ -84,7 +61,7 @@ public class SharedDialogueData
         set;
     }
 
-    public SharedDialogueData(SharedUIData uiData)
+    public SharedDialogueData(DialogueUIData uiData)
     {
         UIData = uiData;
         InputData = new SharedInputData();

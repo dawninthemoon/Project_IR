@@ -75,7 +75,7 @@ public class DialogueCommand {
                 name = parameters[2];
             }
 
-            sharedData.UIData.DialogueNameText.text = name;
+            sharedData.UIData.SpeakerName.text = name;
             
             if (!bool.Parse(parameters[4]))
             {

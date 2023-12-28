@@ -41,4 +41,9 @@ public class DialogueLogger
         _logWindowScrollRect.verticalNormalizedPosition = 1f;
         _logWindowScrollRect.gameObject.SetActive(!_logWindowScrollRect.gameObject.activeSelf);
     }
+
+    public void SetActive(bool activeSelf)
+    {
+        _logWindowScrollRect.gameObject.SetActive(activeSelf);
+    }
 }
