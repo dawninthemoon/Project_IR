@@ -199,8 +199,9 @@ public class CameraControlEx : Singleton<CameraControlEx>
 
     private bool _enableShake = false;
     private float _shakeScale = 0f;
-    private float _shakeTime = 0f;
     private float _shakeTimer = 0f;
+    private float _shakeStartTime = 0f;
+    private float _shakePlayTime = 0f;
     private float _shakeSpeed = 0f;
 
     private Vector3 _cameraPosition = Vector3.zero;
@@ -243,10 +244,10 @@ public class CameraControlEx : Singleton<CameraControlEx>
         if(_enableShake)
         {
             _shakeTimer += deltaTime;
-            if(_shakeTimer >= _shakeTime)
-                _shakeTimer = _shakeTime;
+            if(_shakeTimer >= _shakeStartTime + _shakePlayTime)
+                _shakeTimer = _shakeStartTime + _shakePlayTime;
             
-            float factor = _shakeTimer * (1f / _shakeTime);
+            float factor = (_shakeTimer - _shakeStartTime) * (1f / _shakePlayTime);
             float shakeScale = Mathf.Lerp(_shakeScale, 0f, factor);
             if(factor >= 1f)
                 _enableShake = false;
@@ -260,9 +261,10 @@ public class CameraControlEx : Singleton<CameraControlEx>
     public void setShake(float scale, float speed, float time)
     {
         _shakeScale = scale;
-        _shakeTime = time;
+        _shakePlayTime = time;
+        _shakeStartTime = _shakeTimer;
         _shakeSpeed = speed;
-        _shakeTimer = 0f;
+        // _shakeTimer = 0f;
 
         _enableShake = true;
 

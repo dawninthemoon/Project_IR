@@ -162,6 +162,7 @@
             <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
             <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
                 <OnHit>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
                     <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
                     <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
                 </OnHit>
@@ -181,6 +182,7 @@
             <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true" Attach="true"/>
             <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
                 <OnHit>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
                     <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
                     <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
                 </OnHit>
