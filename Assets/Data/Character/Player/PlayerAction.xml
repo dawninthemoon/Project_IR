@@ -145,7 +145,7 @@
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
-        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpingLoop"/>
         <UseBranchSet Name="AttackGround"/>
 
         <Branch Condition="End && MoveInput" Execute="AC_Move"/>
@@ -263,8 +263,6 @@
         <AnimationHeader MasterPath="Sprites/Player/"/>
         <Animation Preset="Die" XFlip="true">
         </Animation>
-
-        <Branch Condition="End == true" Execute="Dead"/>
     </Dead>
 <!-- State -->
 </ActionGraph>

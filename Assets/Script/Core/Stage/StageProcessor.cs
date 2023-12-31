@@ -124,7 +124,7 @@ public class StageProcessor : Singleton<StageProcessor>
                     characterEntity.updatePosition((stagePointData._stagePoint + _offsetPosition) + characterSpawnData._localPosition);
 
                     SequencerGraphProcessor.SpawnedCharacterEntityInfo keepEntityInfo = new SequencerGraphProcessor.SpawnedCharacterEntityInfo();
-                    keepEntityInfo._keepAlive = characterSpawnData._keepAlive;
+                    characterEntity.setKeepAliveEntity(characterSpawnData._keepAlive);
                     keepEntityInfo._uniqueKey = characterSpawnData._uniqueKey;
                     keepEntityInfo._characterEntity = characterEntity;
 
@@ -171,7 +171,7 @@ public class StageProcessor : Singleton<StageProcessor>
 
                 createdCharacter.setActiveSelf(activeSelf,characterSpawnData._hideWhenDeactive);
                 SequencerGraphProcessor.SpawnedCharacterEntityInfo entityInfo = new SequencerGraphProcessor.SpawnedCharacterEntityInfo();
-                entityInfo._keepAlive = characterSpawnData._keepAlive;
+                createdCharacter.setKeepAliveEntity(characterSpawnData._keepAlive);
                 entityInfo._uniqueKey = characterSpawnData._uniqueKey;
                 entityInfo._characterEntity = createdCharacter;
 
@@ -289,16 +289,12 @@ public class StageProcessor : Singleton<StageProcessor>
         {
             for(int i = 0; i < item.Count;)
             {
-                if(forceStop == false && item[i]._keepAlive)
+                if(forceStop == false && item[i]._characterEntity.isKeepAliveEntity())
                 {
                     _keepAliveMap.Add(item[i]._uniqueKey,item[i]._characterEntity);
                     ++i;
                     continue;
                 }
-
-                item[i]._characterEntity.deactive();
-                item[i]._characterEntity.DeregisterRequest();
-
                 item.RemoveAt(i);
             }
         }
@@ -314,8 +310,10 @@ public class StageProcessor : Singleton<StageProcessor>
             _miniStageProcessor.Clear();
 
             Message msg = MessagePool.GetMessage();
-            msg.Set(MessageTitles.game_stageEnd,MessageReceiver._boradcastNumber,null,null);
+            BoolData data = MessageDataPooling.GetMessageData<BoolData>();
+            data.value = forceStop;
 
+            msg.Set(MessageTitles.game_stageEnd,MessageReceiver._boradcastNumber,data,null);
             MasterManager.instance.HandleBroadcastMessage(msg);
         }
     }

@@ -20,7 +20,6 @@ public class SequencerGraphProcessor
 
     public struct SpawnedCharacterEntityInfo
     {
-        public bool                 _keepAlive;
         public string               _uniqueKey;
         public CharacterEntityBase  _characterEntity;
     }

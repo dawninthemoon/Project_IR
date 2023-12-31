@@ -114,9 +114,21 @@ public class SceneCharacterManager : ManagerBase
             createCharacterFromPool(desc._characterInfoData, desc._spawnCharacterOptionDesc);
         });
 
-        // AddAction(MessageTitles.game_stageEnd, (msg)=>{
-        //     deregisterAll();
-        // });
+        AddAction(MessageTitles.game_stageEnd, (msg)=>{
+            bool forceEnd = ((BoolData)msg.data).value;
+
+            foreach(var receiver in _receivers.Values)
+            {
+                if(receiver == null || !receiver.gameObject.activeInHierarchy || !receiver.enabled)
+                    continue;
+
+                if(forceEnd == false && (receiver as GameEntityBase).isKeepAliveEntity())
+                    continue;
+
+                receiver.deactive();
+                receiver.DeregisterRequest();
+            }
+        });
     }
 
     public override void initialize()
