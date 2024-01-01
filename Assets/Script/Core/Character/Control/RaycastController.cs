@@ -3,17 +3,13 @@ using System.Collections;
 
 public class RaycastController {
 	protected float _skinWidth = 0.005f;
-	[SerializeField] private float _dstBetweenRays = 0.01f;
-	[HideInInspector]
-	public int _horizontalRayCount;
-	[HideInInspector]
-	public int _verticalRayCount;
+	[SerializeField] private float _dstBetweenRays = 0.03f;
+	protected int _horizontalRayCount;
+	protected int _verticalRayCount;
 
-	[HideInInspector]
-	public float _horizontalRaySpacing;
-	[HideInInspector]
-	public float _verticalRaySpacing;
-	public RaycastOrigins raycastOrigins;
+	protected float _horizontalRaySpacing;
+	protected float _verticalRaySpacing;
+	protected RaycastOrigins raycastOrigins;
     private Vector2 _targetRadius;
 
 	public virtual void Initialize(Vector2 targetRadius) {
@@ -32,14 +28,14 @@ public class RaycastController {
 	}
 
 	public void CalculateRaySpacing() {
-		float boundsWidth = _targetRadius.x + (-_skinWidth * 2f);
-		float boundsHeight = _targetRadius.y + (-_skinWidth * 2f);
+		float boundsWidth = _targetRadius.x * 2f + (-_skinWidth * 2f);
+		float boundsHeight = _targetRadius.y * 2f + (-_skinWidth * 2f);
 		
-		_horizontalRayCount = Mathf.RoundToInt(boundsWidth / _dstBetweenRays);
-		_verticalRayCount = Mathf.RoundToInt(boundsHeight / _dstBetweenRays);
+		_horizontalRayCount = Mathf.RoundToInt(boundsHeight / _dstBetweenRays);
+		_verticalRayCount = Mathf.RoundToInt(boundsWidth / _dstBetweenRays);
 		
-		_horizontalRaySpacing = _targetRadius.y / (_horizontalRayCount - 1);
-		_verticalRaySpacing = _targetRadius.x / (_verticalRayCount - 1);
+		_horizontalRaySpacing = _targetRadius.y * 2f / (_horizontalRayCount - 1);
+		_verticalRaySpacing = _targetRadius.x * 2f / (_verticalRayCount - 1);
 	}
 	
 	public struct RaycastOrigins {
