@@ -39,6 +39,76 @@ MonoBehaviour:
       _searchIdentifier: 0
       _activeType: 0
       _localPosition: {x: -0.94, y: -0.63, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: -0.43, y: -0.63, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 0.11, y: -0.62, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 0.62, y: -0.61, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 1.12, y: -0.62, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 1.59, y: -0.62, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: -1.28, y: -0.61, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: -1.78, y: -0.63, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1
