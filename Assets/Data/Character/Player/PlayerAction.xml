@@ -5,7 +5,7 @@
     <GlobalVariable Name="gv_movementMaxVelocity" Value="1.6"/>
     <GlobalVariable Name="gv_movementDefaultFriction" Value="3"/>
     
-    <GlobalVariable Name="gv_jumpDuration" Value="0.1"/>
+    <GlobalVariable Name="gv_jumpDuration" Value="0.2"/>
 
 <!-- BranchSet -->
     <BranchSet Name="AttackGround">
