@@ -21,6 +21,8 @@ public class MasterManager : MessageHub<ManagerBase>
     private float                   _timeScaleBlendTimer = 0f;
     private float                   _timeScaleBlendFactor = 0f;
 
+    public StageProcessor           _stageProcessor = null;
+
     protected override void Awake()
     {
         base.Awake();
@@ -81,7 +83,8 @@ public class MasterManager : MessageHub<ManagerBase>
         DanmakuManager.Instance().initialize();
         UIRepeater.Instance().clear();
 
-        StageProcessor.Instance().setTargetCameraControl(CameraControlEx.Instance());
+        _stageProcessor = new StageProcessor();
+        _stageProcessor.setTargetCameraControl(CameraControlEx.Instance());
     }
     public void Start()
     {
@@ -167,14 +170,14 @@ public class MasterManager : MessageHub<ManagerBase>
         TalkBalloonManager.Instance().updateTalkBalloonManager(deltaTime);
         CameraControlEx.Instance().progress(deltaTime);
 
-        StageProcessor.Instance().processStage(deltaTime);
+        _stageProcessor.processStage(deltaTime);
         
         FMODAudioManager.Instance().updateAudio();
         CameraControlEx.Instance().SyncPosition();
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            StageProcessor.Instance().stopStage(true);
+            _stageProcessor.stopStage(true);
             ScreenDirector._instance._screenFader.clear();
             LetterBox._instance.clear();
         }

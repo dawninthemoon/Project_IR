@@ -272,7 +272,10 @@ public class SequencerGraphProcessor
     public GameEntityBase getUniqueEntity(string uniqueKey)
     {
         if(_uniqueEntityDictionary.ContainsKey(uniqueKey) == false)
+        {
+            DebugUtil.assert(false,"존재하지 않는 유니크 엔티티 입니다. 오타는 아닌가요? [Group: {0}]",uniqueKey);
             return null;
+        }
 
         return _uniqueEntityDictionary[uniqueKey];
     }
@@ -434,7 +437,7 @@ public class SequencerGraphProcessor
         if(targetEntity != null)
             addUniqueEntity("Target",targetEntity);
         if(includePlayer)
-            addUniqueEntity("Player",StageProcessor.Instance().getPlayerEntity());
+            addUniqueEntity("Player",MasterManager.instance._stageProcessor.getPlayerEntity());
 
         for(int index = _currentIndex; index < _currentSequencer._sequencerGraphPhase[0]._sequencerGraphEventCount; ++index)
         {
@@ -474,7 +477,7 @@ public class SequencerGraphProcessor
         if(targetEntity != null)
             addUniqueEntity("Target",targetEntity);
         if(includePlayer)
-            addUniqueEntity("Player",StageProcessor.Instance().getPlayerEntity());
+            addUniqueEntity("Player",MasterManager.instance._stageProcessor.getPlayerEntity());
 
         for(int index = _currentIndex; index < _currentSequencer._sequencerGraphPhase[0]._sequencerGraphEventCount; ++index)
         {

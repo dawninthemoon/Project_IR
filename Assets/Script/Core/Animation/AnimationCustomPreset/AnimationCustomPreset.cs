@@ -83,6 +83,8 @@ public class AnimationCustomPresetEditor : Editor
             {
                 controll._animationCustomPresetData._duration[index] = perFrame;
             }
+
+            EditorUtility.SetDirty(controll);
         }
 
         EditorGUILayout.EndHorizontal();

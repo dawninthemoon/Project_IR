@@ -50,7 +50,7 @@ public class CharacterInfoViewer : EditorWindow
         Dictionary<string,CharacterInfoData> characterInfo = ResourceContainerEx.Instance().getCharacterInfo(kCharacterInfoPath);
 
         _scrollPosition = GUILayout.BeginScrollView(_scrollPosition,"box");
-        bool gamePlaying = Application.isPlaying && SceneCharacterManager._managerInstance != null && StageProcessor.Instance() != null && StageProcessor.Instance().getPlayerEntity() != null;
+        bool gamePlaying = Application.isPlaying && SceneCharacterManager._managerInstance != null && MasterManager.instance._stageProcessor != null && MasterManager.instance._stageProcessor.getPlayerEntity() != null;
         foreach(var item in characterInfo)
         {
             if(_searchString != "" && (searchStringCompare(item.Key) == false && searchStringCompare(item.Value._displayName) == false))
@@ -72,7 +72,7 @@ public class CharacterInfoViewer : EditorWindow
                 SceneCharacterManager sceneCharacterManager = SceneCharacterManager._managerInstance as SceneCharacterManager;
                 SpawnCharacterOptionDesc spawnDesc = new SpawnCharacterOptionDesc();
                 spawnDesc._direction = Vector3.right;
-                spawnDesc._position = StageProcessor.Instance().getPlayerEntity().transform.position + Vector3.right * 0.5f;
+                spawnDesc._position = MasterManager.instance._stageProcessor.getPlayerEntity().transform.position + Vector3.right * 0.5f;
                 spawnDesc._rotation = Quaternion.identity;
                 spawnDesc._searchIdentifier = SearchIdentifier.Enemy;
                 
@@ -84,7 +84,7 @@ public class CharacterInfoViewer : EditorWindow
                 SceneCharacterManager sceneCharacterManager = SceneCharacterManager._managerInstance as SceneCharacterManager;
                 SpawnCharacterOptionDesc spawnDesc = new SpawnCharacterOptionDesc();
                 spawnDesc._direction = Vector3.right;
-                spawnDesc._position = StageProcessor.Instance().getPlayerEntity().transform.position + CameraControlEx.Instance().getRandomPositionInCamera();
+                spawnDesc._position = MasterManager.instance._stageProcessor.getPlayerEntity().transform.position + CameraControlEx.Instance().getRandomPositionInCamera();
                 spawnDesc._rotation = Quaternion.identity;
                 spawnDesc._searchIdentifier = SearchIdentifier.Enemy;
                 

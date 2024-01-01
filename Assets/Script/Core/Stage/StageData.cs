@@ -59,6 +59,10 @@ public class MiniStageListItem
     public float                    _overrideTriggerWidth = 0f;
     public float                    _overrideTriggerHeight = 0f;
     public Vector3                  _overrideTriggerOffset = Vector3.zero;
+
+    public bool                     _isPortal = false;
+    public string                   _targetStageName = "";
+    public string                   _targetMarkerName = "";
 }
 
 [System.Serializable]

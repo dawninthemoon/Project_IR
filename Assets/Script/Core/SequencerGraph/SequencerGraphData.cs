@@ -125,7 +125,7 @@ public class SequencerGraphEvent_CameraTrack : SequencerGraphEventBase
 
     public override bool Execute(SequencerGraphProcessor processor,float deltaTime)
     {
-        StageProcessor.Instance().startCameraTrack(_trackName);
+        MasterManager.instance._stageProcessor.startCameraTrack(_trackName);
         return true;
     }
 
@@ -359,7 +359,7 @@ public class SequencerGraphEvent_NextStage : SequencerGraphEventBase
 
     public override bool Execute(SequencerGraphProcessor processor,float deltaTime)
     {
-        StageProcessor.Instance().requestStartStage(_stageDataPath);
+        MasterManager.instance._stageProcessor.requestStartStage(_stageDataPath, "");
         return true;
     }
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eebfbc6ece9cebc4cbd3e126679ce50a, type: 3}
-  m_Name: TestStage
+  m_Name: TestStage2
   m_EditorClassIdentifier: 
-  _stageName: TestStage
-  _tilemapConfigPath: {fileID: 11400000, guid: 9870dd06bf17a924e9ae249ba87cfc86, type: 2}
+  _stageName: TestStage2
+  _tilemapConfigPath: {fileID: 11400000, guid: 9b727d7256b28da4bbcf76f0f6a23930, type: 2}
   _backgroundPrefabPath: {fileID: 0}
   _isMiniStage: 0
   _stagePointData:
@@ -33,26 +33,28 @@ MonoBehaviour:
       _uniqueKey: Player
       _uniqueGroupKey: 
       _startAction: AC_Idle
-      _flip: 0
+      _flip: 1
       _hideWhenDeactive: 0
       _keepAlive: 1
       _searchIdentifier: 0
       _activeType: 0
-      _localPosition: {x: -0.74, y: -0.31, z: 0}
+      _localPosition: {x: -0.94, y: -0.63, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1
     _triggerHeight: 1
     _triggerOffset: {x: 0, y: 0, z: 0}
   _miniStageData:
-  - _localStagePosition: {x: 2.784, y: 0.205, z: 0}
+  - _localStagePosition: {x: 2.721, y: 0.009, z: 0}
     _data: {fileID: 11400000, guid: 02d46419051f411469ec03c313402430, type: 2}
     _overrideTargetSearchIdentifier: 0
     _overrideTriggerWidth: 1
     _overrideTriggerHeight: 2
     _overrideTriggerOffset: {x: 0, y: 0, z: 0}
     _isPortal: 1
-    _targetStageName: StageData/TestStage2
-    _targetMarkerName: Entry0
-  _markerData: []
+    _targetStageName: StageData/TestStage
+    _targetMarkerName: 
+  _markerData:
+  - _name: Entry0
+    _position: {x: -2.018, y: -0.794, z: 0}
   _trackData: []

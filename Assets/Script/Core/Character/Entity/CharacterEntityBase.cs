@@ -39,8 +39,8 @@ public class CharacterEntityBase : GameEntityBase
         targetSearchQuick();
 
         _stagePointIndex = 0;
-        StageProcessor.Instance().updatePointIndex(transform.position, ref _stagePointIndex);
-        _isInCameraBound = StageProcessor.Instance().isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
+        MasterManager.instance._stageProcessor.updatePointIndex(transform.position, ref _stagePointIndex);
+        _isInCameraBound = MasterManager.instance._stageProcessor.isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
 
         _targetSearchTime = 1f;
     }
@@ -100,13 +100,13 @@ public class CharacterEntityBase : GameEntityBase
         if(isActiveSelf() == false)
             return;
 
-        StageProcessor.Instance().updatePointIndex(transform.position, ref _stagePointIndex);
+        MasterManager.instance._stageProcessor.updatePointIndex(transform.position, ref _stagePointIndex);
         if(_isInCameraBound == false)
-            _isInCameraBound = StageProcessor.Instance().isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
+            _isInCameraBound = MasterManager.instance._stageProcessor.isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
         
         if(_isInCameraBound)
         {
-            bool inCameraBound = StageProcessor.Instance().isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
+            bool inCameraBound = MasterManager.instance._stageProcessor.isInCameraBound(_stagePointIndex, transform.position, out Vector3 resultPosition);
             if(inCameraBound == false)
                 transform.position = resultPosition;
         }

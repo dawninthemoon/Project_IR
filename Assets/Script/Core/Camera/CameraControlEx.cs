@@ -371,11 +371,7 @@ public class CameraControlEx : Singleton<CameraControlEx>
         if(_currentCameraMode == null)
             return;
 
-        if(_currentTarget is GameEntityBase)
-            _currentCameraMode.setCurrentTargetEntity(_cameraTargetEntity);
-        else
-            _currentCameraMode.setCurrentTargetEntity(null);
-
+        _currentCameraMode.setCurrentTargetEntity(_cameraTargetEntity);
         _currentCameraMode.progress(deltaTime,_currentTarget == null ? _cameraTargetPosition : _cameraPosition);
     }
 

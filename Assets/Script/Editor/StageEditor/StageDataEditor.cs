@@ -1242,27 +1242,56 @@ public class StageDataEditor : EditorWindow
         MiniStageListItem miniStageListItem = _editStageData._miniStageData[_miniStageSelectedIndex];
         MiniStageDataEditObject miniStageDataEditObject = _editingMiniStageDataList[_miniStageSelectedIndex];
 
-        GUILayout.BeginVertical("box");
-        GUILayout.Label("Trigger");
-        bool isChanged = false;
-        SearchIdentifier searchIdentifier = (SearchIdentifier)EditorGUILayout.EnumPopup("Search Identifier", miniStageListItem._overrideTargetSearchIdentifier);
-        float triggerWidth = EditorGUILayout.FloatField("Width", miniStageListItem._overrideTriggerWidth);
-        float triggerHeight = EditorGUILayout.FloatField("Height", miniStageListItem._overrideTriggerHeight);
-        Vector3 triggerOffset = EditorGUILayout.Vector3Field("Offset", miniStageListItem._overrideTriggerOffset);
-
-        isChanged |= searchIdentifier != miniStageListItem._overrideTargetSearchIdentifier;
-        isChanged |= triggerWidth != miniStageListItem._overrideTriggerWidth;
-        isChanged |= triggerHeight != miniStageListItem._overrideTriggerHeight;
-        isChanged |= triggerOffset != miniStageListItem._overrideTriggerOffset;
-        GUILayout.EndVertical();
-
-        if(isChanged)
         {
-            miniStageListItem._overrideTargetSearchIdentifier = searchIdentifier;
-            miniStageListItem._overrideTriggerWidth = triggerWidth;
-            miniStageListItem._overrideTriggerHeight = triggerHeight;
-            miniStageListItem._overrideTriggerOffset = triggerOffset;
-            SceneView.RepaintAll();
+            GUILayout.BeginVertical("box");
+            GUILayout.Label("Trigger");
+            bool isChanged = false;
+            SearchIdentifier searchIdentifier = (SearchIdentifier)EditorGUILayout.EnumPopup("Search Identifier", miniStageListItem._overrideTargetSearchIdentifier);
+            float triggerWidth = EditorGUILayout.FloatField("Width", miniStageListItem._overrideTriggerWidth);
+            float triggerHeight = EditorGUILayout.FloatField("Height", miniStageListItem._overrideTriggerHeight);
+            Vector3 triggerOffset = EditorGUILayout.Vector3Field("Offset", miniStageListItem._overrideTriggerOffset);
+
+            isChanged |= searchIdentifier != miniStageListItem._overrideTargetSearchIdentifier;
+            isChanged |= triggerWidth != miniStageListItem._overrideTriggerWidth;
+            isChanged |= triggerHeight != miniStageListItem._overrideTriggerHeight;
+            isChanged |= triggerOffset != miniStageListItem._overrideTriggerOffset;
+            GUILayout.EndVertical();
+
+            if(isChanged)
+            {
+                miniStageListItem._overrideTargetSearchIdentifier = searchIdentifier;
+                miniStageListItem._overrideTriggerWidth = triggerWidth;
+                miniStageListItem._overrideTriggerHeight = triggerHeight;
+                miniStageListItem._overrideTriggerOffset = triggerOffset;
+                SceneView.RepaintAll();
+            }
+        }
+        
+
+
+        {
+            GUILayout.BeginVertical("box");
+            GUILayout.Label("Portal");
+            bool isChanged = false;
+            bool isPortal = EditorGUILayout.Toggle("IsPortal", miniStageListItem._isPortal);
+
+            GUI.enabled = isPortal;
+            string targetStageName = EditorGUILayout.TextField("Stage",miniStageListItem._targetStageName);
+            string targetMarkerName = EditorGUILayout.TextField("Marker",miniStageListItem._targetMarkerName);
+            GUI.enabled = true;            
+
+            isChanged |= isPortal != miniStageListItem._isPortal;
+            isChanged |= targetStageName != miniStageListItem._targetStageName;
+            isChanged |= targetMarkerName != miniStageListItem._targetMarkerName;
+            GUILayout.EndVertical();
+
+            if(isChanged)
+            {
+                miniStageListItem._isPortal = isPortal;
+                miniStageListItem._targetStageName = targetStageName;
+                miniStageListItem._targetMarkerName = targetMarkerName;
+                SceneView.RepaintAll();
+            }
         }
     }
 
@@ -1636,17 +1665,20 @@ public class StageDataEditor : EditorWindow
         _editStageData._miniStageData.Add(listItem);
 
         var characterInfo = ResourceContainerEx.Instance().getCharacterInfo("Assets\\Data\\StaticData\\CharacterInfo.xml");
-        for(int index = 0; index < miniStageData._stagePointData[0]._characterSpawnData.Length; ++index)
+        if(miniStageData._stagePointData[0]._characterSpawnData != null)
         {
-            var spawnData = miniStageData._stagePointData[0]._characterSpawnData[index];
-            SpriteRenderer characterEditItem = getCharacterItem();
-            characterEditItem.sprite = getActionSpriteFromCharacter(characterInfo[spawnData._characterKey],spawnData._startAction);
-            characterEditItem.sortingLayerName = "Character";
-            characterEditItem.sortingOrder = 10;
-            characterEditItem.transform.position = editObject._gizmoItem.transform.position + spawnData._localPosition;
-            characterEditItem.flipX = spawnData._flip;
-    
-            editObject._characterObjectList.Add(characterEditItem);
+            for(int index = 0; index < miniStageData._stagePointData[0]._characterSpawnData.Length; ++index)
+            {
+                var spawnData = miniStageData._stagePointData[0]._characterSpawnData[index];
+                SpriteRenderer characterEditItem = getCharacterItem();
+                characterEditItem.sprite = getActionSpriteFromCharacter(characterInfo[spawnData._characterKey],spawnData._startAction);
+                characterEditItem.sortingLayerName = "Character";
+                characterEditItem.sortingOrder = 10;
+                characterEditItem.transform.position = editObject._gizmoItem.transform.position + spawnData._localPosition;
+                characterEditItem.flipX = spawnData._flip;
+
+                editObject._characterObjectList.Add(characterEditItem);
+            }
         }
 
         _miniStageScroll.y = float.MaxValue;
@@ -2761,7 +2793,7 @@ public class StageDataEditor : EditorWindow
     {
         float mainCamSize = zoomSize;
         float camHeight = (mainCamSize) * 2f;
-		float camWidth = camHeight * ((float)800f / (float)600f);
+		float camWidth = camHeight * ((float)480f / (float)270f);
 
         camHeight += radius * 2f;
         camWidth += radius * 2f;
