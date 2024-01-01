@@ -133,7 +133,7 @@
             <FrameEvent Type="FrameTag" StartTime="0.2" EndTime="999" Tag="CanMove"/>
         </Animation>
 
-        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpStart"/>
+        <Branch Key="getKey_Jump" Condition="OnGround" Execute="AC_JumpingLoop"/>
         <UseBranchSet Name="AttackGround"/>
 
         <Branch Condition="getFrameTag_CanMove && MoveInput" Execute="AC_Move"/>
@@ -199,39 +199,34 @@
 
 <!-- GunState -->
 
-    <AC_GunState_ReadyStart MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+    <AC_GunState_ReadyStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
-        <Animation Path="GunRdyStart" XFlip="true">
+        <Animation Preset="GunRdyStart" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
             <FrameEvent Type="FrameTag" StartFrame="5" EndFrame="999" Tag="AttackCancel"/>
         </Animation>
 
-        <Branch Condition="getFrameTag_AttackCancel && getKey_Attack" Execute="AC_GunState_Fire"/>
-        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
+        <Branch Condition="getFrameTag_AttackCancel && getKey_GunMode" Execute="AC_GunState_Fire"/>
+        <Branch Condition="End" Execute="AC_GunState_Fire"/>
     </AC_GunState_ReadyStart>
 
-    <AC_GunState_ReadyLoop MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+    <AC_GunState_ToIdle MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
-        <Animation Path="GunRdyLoop" XFlip="true">
+        <Animation Preset="GunRdyToIdle" XFlip="true">
+            <FrameEvent Type="FrameTag" StartTime="0" EndTime="0.2" Tag="AttackCancel"/>
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
-        <Branch Condition="getKey_Attack" Execute="AC_GunState_Fire"/>
-        <Branch Condition="getKey_GunMode" Execute="AC_GunState_ToIdle"/>
-        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
-    </AC_GunState_ReadyLoop>
-
-    <AC_GunState_ToIdle MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
-        <AnimationHeader MasterPath="Sprites/Player/"/>
-        <Animation Path="GunRdyToIdle" XFlip="true">
-        </Animation>
-
+        <Branch Condition="getFrameTag_AttackCancel && getKey_GunMode" Execute="AC_GunState_Fire"/>
         <Branch Condition="End == true" Execute="AC_Idle"/>
     </AC_GunState_ToIdle>
 
-    <AC_GunState_Fire MovementType="Empty" DirectionType="MoveInputHorizontal" FlipType="Direction">
+    <AC_GunState_Fire MovementType="FrameEvent" DirectionType="MoveInputHorizontal" DirectionUpdateOnce="true" FlipType="Direction">
         <AnimationHeader MasterPath="Sprites/Player/"/>
-        <Animation Path="FIring" XFlip="true">
+        <Animation Preset="FIring" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
             <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/GunFire" UseFlip="true"/>
-            <FrameEvent Type="FrameTag" StartFrame="3" EndFrame="999" Tag="AttackCancel"/>
+            <FrameEvent Type="FrameTag" StartTime="0.2" EndTime="999" Tag="AttackCancel"/>
 
             <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
             <FrameEvent Type="Attack" StartTime="0" AttackPreset="GunAttack" AttackCount="1">
@@ -242,9 +237,8 @@
             </FrameEvent>
         </Animation>
 
-        <Branch Condition="getFrameTag_AttackCancel && getKey_Attack" Execute="AC_GunState_Fire"/>
-        <Branch Condition="getFrameTag_AttackCancel && getKey_GunMode" Execute="AC_GunState_ToIdle"/>
-        <Branch Condition="End" Execute="AC_GunState_ReadyLoop"/>
+        <Branch Condition="getFrameTag_AttackCancel && getKey_GunMode" Execute="AC_GunState_Fire"/>
+        <Branch Condition="End" Execute="AC_GunState_ToIdle"/>
     </AC_GunState_Fire>
 
 

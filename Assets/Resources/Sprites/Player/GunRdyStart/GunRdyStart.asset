@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animationCustomPresetData:
     _duration:
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
+    - 0.014285714
+    - 0.014285714
+    - 0.014285714
+    - 0.014285714
+    - 0.014285714
+    - 0.014285714
     _effectFrameEvent: []
     _playCount: 1
   _translationPresetName: 
