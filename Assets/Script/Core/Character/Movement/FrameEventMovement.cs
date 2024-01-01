@@ -74,7 +74,7 @@ public class FrameEventMovement : MovementBase
 
         movementOfFrame = _controller.Progress(_targetEntity.transform.position, moveDelta, Vector2.zero, false);
         bool onGround = _controller.collisions.below;
-        if(onGround)
+        if(onGround || onGround == false && _controller.collisions.above && _gravityAccumulate > 0f)
             _gravityAccumulate = 0f;
 
         _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, onGround);
