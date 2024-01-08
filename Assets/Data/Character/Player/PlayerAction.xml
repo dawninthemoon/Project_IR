@@ -157,7 +157,7 @@
 <!-- Attack -->
 
     <AC_Attack_Ground MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
-        <Animation Preset="Sprites/Player/AttackGround/" XFlip="True">
+        <Animation Preset="Sprites/Player/AttackGroundA/" XFlip="True">
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
             <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
             <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
