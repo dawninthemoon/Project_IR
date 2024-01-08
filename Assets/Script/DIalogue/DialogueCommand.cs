@@ -121,9 +121,9 @@ public class DialogueCommand {
                 }
             }
         }
-
         public void Draw(string[] parameters) 
         {
+        #if UNITY_EDITOR
             Color currentColor = GUI.color;
 
             GUILayout.BeginHorizontal();
@@ -163,9 +163,9 @@ public class DialogueCommand {
                 GUILayout.EndHorizontal();
             }
             GUI.color = currentColor;
+        #endif
         }
     }
-
     [DialogueAttribute(DialogueCommandType.ShowSCG, Color = "#03cafc", ParameterCount = 10)]
     public class Command_ShowSCG : IDialogueCommand {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
@@ -264,9 +264,9 @@ public class DialogueCommand {
             float xPos =  startPos + (1920f / 4f * (positionIndex + 1)) * sign;
             return new Vector3(xPos, 0f, 0f);
         }
-
         public void Draw(string[] parameters) 
         {
+        #if UNITY_EDITOR
             Color currentColor = GUI.color;
 
             GUILayout.BeginHorizontal();
@@ -334,8 +334,10 @@ public class DialogueCommand {
             }
 
             GUI.color = currentColor;
+        #endif
         }
     }
+
 
     [DialogueAttribute(DialogueCommandType.RemoveSCG, ParameterCount = 6)]
     public class Command_RemoveSCG : IDialogueCommand {
@@ -410,9 +412,9 @@ public class DialogueCommand {
             float xPos =  startPos + (1920f / 4f * (positionIndex + 1));
             return new Vector3(xPos, 0f, 0f);
         }
-
         public void Draw(string[] parameters) 
         {
+        #if UNITY_EDITOR
             GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("ID", GUILayout.Width(100f));
                 parameters[0] = EditorGUILayout.TextField(parameters[0]);
@@ -451,16 +453,17 @@ public class DialogueCommand {
                     parameters[5] = EditorGUILayout.FloatField(ExParser.ParseFloatOrDefault(parameters[5])).ToString();
                 GUILayout.EndHorizontal();
             }
+        #endif
         }
     }
 
     [DialogueAttribute(DialogueCommandType.WaitInput)]
-    public class Command_WaitInput : IDialogueCommand {
+    public class Command_WaitInput : IDialogueCommand 
+    {
         public async UniTask Execute(string[] parameters, SharedDialogueData sharedData, SharedVariables sharedVariables) 
         {
             await UniTask.WaitUntil(() => sharedData.InputData.CanGoToNext);
         }
-
         public void Draw(string[] parameters) 
         {
 

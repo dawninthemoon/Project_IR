@@ -57,7 +57,9 @@ namespace TilemapEditor {
             var background = LoadTileInfo(backgroundTilemap);
             Config.Initialize(tilemapName, wall, background);
 
+        #if UNITY_EDITOR
             EditorUtility.SetDirty(Config);
+        #endif
 
             return Config;
         }

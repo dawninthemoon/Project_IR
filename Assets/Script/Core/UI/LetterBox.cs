@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using Microsoft.Unity.VisualStudio.Editor;
+#endif
 
 public class LetterBox : MonoBehaviour
 {
