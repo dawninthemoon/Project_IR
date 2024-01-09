@@ -63,15 +63,6 @@ MonoBehaviour:
   - _type: 4
     _parameters: []
     _executeWithNextCommand: 0
-  - _type: 1
-    _parameters:
-    - False
-    - WitchChan
-    - 
-    - Here comes a new challenger!
-    - False
-    - 
-    _executeWithNextCommand: 0
   - _type: 2
     _parameters:
     - WitchChan
@@ -85,6 +76,15 @@ MonoBehaviour:
     - True
     - 0.5
     - 0.5
+    _executeWithNextCommand: 1
+  - _type: 1
+    _parameters:
+    - False
+    - WitchChan
+    - 
+    - Here comes a new challenger!
+    - False
+    - 
     _executeWithNextCommand: 0
   - _type: 1
     _parameters:

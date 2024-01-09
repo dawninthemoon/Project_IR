@@ -36,13 +36,14 @@ public class DialogueManager : Singleton<DialogueManager>
         _executer = new DialogueExecuter(_sharedData, sharedVariables);
     }
 
-    public void StartDialogue(string dialogueKey)
+    public bool StartDialogue(string dialogueKey)
     {
         DialogueData dialogueData = ResourceContainerEx.Instance().GetScriptableObject(DialogueDataPathBase + dialogueKey) as DialogueData;
         if (dialogueData)
         {
             StartDialogue(dialogueData).Forget();
         }
+        return dialogueData != null;
     }
 
     private async UniTaskVoid StartDialogue(DialogueData dialogueData)

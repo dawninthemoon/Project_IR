@@ -38,6 +38,7 @@ public enum SequencerGraphEventType
     LetterBoxShow,
     LetterBoxHide,
     TalkBalloon,
+    Dialogue,
     CameraTrack,
     TaskFence,
 
@@ -144,6 +145,43 @@ public class SequencerGraphEvent_CameraTrack : SequencerGraphEventBase
 
         if(_trackName == "")
             DebugUtil.assert(false,"Track Name이 존재하지 않습니다. 이거 필수임");
+    }
+}
+
+public class SequencerGraphEvent_Dialogue : SequencerGraphEventBase
+{
+    public override SequencerGraphEventType getSequencerGraphEventType() => SequencerGraphEventType.Dialogue;
+
+    private string _key = "";
+
+    public override void Initialize(SequencerGraphProcessor processor)
+    {
+    }
+
+    public override bool Execute(SequencerGraphProcessor processor,float deltaTime)
+    {
+        bool dialogueKeyExists = DialogueManager.Instance().StartDialogue(_key);
+        if (!dialogueKeyExists)
+        {
+            DebugUtil.assert(false, "존재하지 않는 Dialogue Key 입니다. 데이터를 확인 해 주세요. [Key: {0}]", _key);
+            return true;
+        }
+
+        return true;
+    }
+
+    public override void loadXml(XmlNode node)
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        
+        for (int i = 0; i < attributes.Count; ++i)
+        {
+            if(attributes[i].Name.Equals("DialogueKey"))
+                _key = attributes[i].Value;
+        }
+
+        if(string.IsNullOrEmpty(_key))
+            DebugUtil.assert(false, "Dialogue Key가 존재하지 않습니다. 이거 필수임");
     }
 }
 
