@@ -1,5 +1,5 @@
 HintType,Symbol,TextList
-InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_,OnGround,IsFalling"
+InQuote,Condition=,"ActionTest,ActionDash,End,AngleBetweenStick,AngleDirection,IsXFlip,IsYFlip,CurrentFrame,AttackSuccess,AttackGuarded,AttackParried,AttackGuardBreak,DefenceSuccess,ParrySuccess,Hit,EvadeSuccess,GuardBroken,CurrentFrame,TargetExists,TargetDistance,ArrivedTarget,CurrentPackageEnd,getStat_,getKey_,getFrameTag_,getTargetFrameTag_,getWeight_,true,false,PackageExecutedTime,GraphExecutedTime,AttackGuardBreakFail,GuardBreakFail,IsCatcher,IsCatchTarget,AttackCatchTarget,Catched,LifeTime,ActionExecutedTime,customValue_,Dead,CanInput,aiGraphCoolTime_,OnGround,IsFalling,TargetDistanceHorizontal,TargetDistanceVertical"
 InScope,,"Package=~~,CoolTime=~~"
 LineStart,<Include,Path=~~
 ShortCut,__Include,<Include Path=~~/>

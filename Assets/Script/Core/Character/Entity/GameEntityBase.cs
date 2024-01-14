@@ -346,6 +346,8 @@ public class GameEntityBase : SequencerObjectBase
             _aiGraph.updateConditionData();
             
             _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistance, getDistance(_currentTarget));
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistanceHorizontal, getDistanceHorizontal(_currentTarget));
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistanceVertical, getDistanceVertical(_currentTarget));
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_TargetExists, _currentTarget != null);
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_ArrivedTarget, _aiGraph.isAIArrivedTarget());
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_CurrentPackageEnd, _aiGraph.isCurrentPackageEnd());
@@ -370,6 +372,8 @@ public class GameEntityBase : SequencerObjectBase
         else
         {
             _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistance, 0f);
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistanceHorizontal, 0f);
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistanceVertical, 0f);
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_TargetExists, false);
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_ArrivedTarget, false);
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_CurrentPackageEnd, false);

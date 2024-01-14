@@ -1,12 +1,96 @@
-<ActionGraph Name="MiniHogAcion" DefaultAction="Idle" DefaultFramePerSecond="12">
+<ActionGraph Name="MiniHogAcion" DefaultAction="AC_Idle" DefaultFramePerSecond="12">
 
-    <Idle MovementType="FrameEvent" DirectionType="AIHorizontal">
+    <GlobalVariable Name="gv_normalJumpPower" Value="2.7"/>
+    <GlobalVariable Name="gv_movementSpeed" Value="13"/>
+    <GlobalVariable Name="gv_movementMaxVelocity" Value="1.0"/>
+    <GlobalVariable Name="gv_movementDefaultFriction" Value="3"/>
+    
+    <GlobalVariable Name="gv_jumpDuration" Value="0.2"/>
+    
+    <AC_Idle MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction" DirectionUpdateOnce="true">
         <AnimationHeader MasterPath="Sprites/Enemy/Hog/"/>
         <Animation Preset="Idle" XFlip="true" Duration="1">
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
         </Animation>
 
-        <Branch Condition="End == true" Execute="Idle"/>
-    </Idle>
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+    </AC_Idle>
+
+    <AC_Move MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/Hog/"/>
+        <Animation Preset="Move" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_Move"/>
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_Move>
+
+    <AC_MoveEnd MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/Enemy/Hog/"/>
+        <Animation Preset="MoveEnd" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="AC_Idle"/>
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_MoveEnd>
+
+    <AC_JumpStart MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/Hog/JumpStart/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Jump" StartTime="0" JumpPower="gv_normalJumpPower"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_JumpLoop"/>
+    </AC_JumpStart>
+
+    <AC_JumpLoop MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/Hog/JumpLoop/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_JumpLoop"/>
+
+        <Branch Condition="OnGround" Execute="AC_Idle"/>
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+    </AC_JumpLoop>
+
+    <AC_FallStart MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/Hog/FallStart/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_FallLoop"/>
+        <Branch Condition="OnGround" Execute="AC_Idle"/>
+    </AC_FallStart>
+
+    <AC_FallLoop MovementType="FrameEvent" DirectionType="AIHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/Hog/FallLoop/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+        <Branch Condition="End" Execute="AC_FallLoop"/>
+        <Branch Condition="OnGround" Execute="AC_Idle"/>
+    </AC_FallLoop>
+
+    <AC_Attack MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Enemy/Hog/Attack/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
+            <FrameEvent Type="Attack" StartFrame="5" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+                <OnHit>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
+
+                    <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/SlashImpactLine" UseFlip="true" ToTarget="true" Angle="Random_-45^45"/>
+                </OnHit>
+            </FrameEvent>
+        </Animation>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Attack>
 
     <Dead MovementType="FrameEvent" DirectionType="AIHorizontal">
         <AnimationHeader MasterPath="Sprites/Enemy/Hog/"/>

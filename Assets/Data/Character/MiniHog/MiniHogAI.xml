@@ -1,8 +1,8 @@
 <AIGraph Name="MiniHogAI" DefaultState="Entry">
-    <Include Path="Assets/Data/AILibrary/Package/EmptyPackage.xml"/>
     <Include Path="Assets/Data/AILibrary/Package/CommonDeadPackage.xml"/>
+    <Include Path="Assets/Data/AILibrary/CommonChasePackage.xml"/>
     
-    <Entry Package="EmptyPackage">
+    <Entry Package="CommonChasePackage">
         <Branch Condition="Dead" Execute="Dead"/>
     </Entry>
 

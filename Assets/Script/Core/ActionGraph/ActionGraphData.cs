@@ -237,6 +237,8 @@ public enum ConditionNodeUpdateType
     Entity_LifeTime,
 
     AI_TargetDistance,
+    AI_TargetDistanceHorizontal,
+    AI_TargetDistanceVertical,
     AI_TargetExists,
     AI_ArrivedTarget,
     AI_CurrentPackageEnd,
@@ -335,6 +337,8 @@ public static class ConditionNodeInfoPreset
 
         {"TargetExists",new ConditionNodeInfo(ConditionNodeUpdateType.AI_TargetExists, ConditionNodeType.Bool)},
         {"TargetDistance",new ConditionNodeInfo(ConditionNodeUpdateType.AI_TargetDistance, ConditionNodeType.Float)},
+        {"TargetDistanceHorizontal",new ConditionNodeInfo(ConditionNodeUpdateType.AI_TargetDistanceHorizontal, ConditionNodeType.Float)},
+        {"TargetDistanceVertical",new ConditionNodeInfo(ConditionNodeUpdateType.AI_TargetDistanceVertical, ConditionNodeType.Float)},
         {"ArrivedTarget",new ConditionNodeInfo(ConditionNodeUpdateType.AI_ArrivedTarget, ConditionNodeType.Bool)},
         {"CurrentPackageEnd",new ConditionNodeInfo(ConditionNodeUpdateType.AI_CurrentPackageEnd, ConditionNodeType.Bool)},
         {"PackageExecutedTime",new ConditionNodeInfo(ConditionNodeUpdateType.AI_PackageStateExecutedTime, ConditionNodeType.Float)},

@@ -252,6 +252,29 @@ public abstract class ObjectBase : MessageReceiver, IProgress
         
         return Vector3.Distance(transform.position,obj.transform.position);
     }
+
+    public float getDistanceHorizontal(ObjectBase obj)
+    {
+        if(obj == null)
+            return -1f;
+        
+        Vector3 position1 = transform.position;
+        Vector3 position2 = obj.transform.position;
+
+        position1.y = 0f;
+        position2.y = 0f;
+
+        return Vector3.Distance(position1, position2);
+    }
+
+    public float getDistanceVertical(ObjectBase obj)
+    {
+        if(obj == null)
+            return -1f;
+
+        return obj.transform.position.y - transform.position.y;
+    }
+
     public float getDistanceSq(ObjectBase obj) {return (transform.position - obj.transform.position).sqrMagnitude;}
 
     public Material getCurrentMaterial()
