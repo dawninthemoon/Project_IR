@@ -89,13 +89,15 @@ public static class FrameEventLoader
             outFrameEvent = new ActionFrameEvent_EffectPreset();
         else if(type == "Jump")
             outFrameEvent = new ActionFrameEvent_Jump();
+        else if(type == "SetCustomValue")
+            outFrameEvent = new ActionFrameEvent_SetCustomValue();
         else
         {
             DebugUtil.assert(false, "invalid frameEvent type: {0}",type);
             return null;
         }
 
-        DebugUtil.assert((int)FrameEventType.Count == 38, "check here");
+        DebugUtil.assert((int)FrameEventType.Count == 39, "check here");
 
 
         if(outFrameEvent == null)

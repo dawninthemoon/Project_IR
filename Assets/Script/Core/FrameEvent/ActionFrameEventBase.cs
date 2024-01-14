@@ -43,6 +43,7 @@ public enum FrameEventType
     FrameEvent_Torque,
     FrameEvent_EffectPreset,
     FrameEvent_Jump,
+    FrameEvent_SetCustomValue,
 
     Count,
 }
@@ -188,6 +189,41 @@ public class ActionFrameEvent_CallAIEvent : ActionFrameEventBase
             else if(attrName == "SearchIdentifier")
             {
                 _searchIdentifier = (SearchIdentifier)System.Enum.Parse(typeof(SearchIdentifier), attrValue);
+            }
+        }
+    }
+}
+
+public class ActionFrameEvent_SetCustomValue : ActionFrameEventBase
+{
+    private string _customValueName = "";
+    private float _value;
+
+    public override FrameEventType getFrameEventType(){return FrameEventType.FrameEvent_SetCustomValue;}
+    public override bool onExecute(ObjectBase executeEntity, ObjectBase targetEntity = null)
+    {
+        if(executeEntity is GameEntityBase == false)
+            return true;
+
+        (executeEntity as GameEntityBase).setCustomValue(_customValueName,_value);
+        return true;
+    }
+
+    public override void loadFromXML(XmlNode node) 
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        for(int i = 0; i < attributes.Count; ++i)
+        {
+            string attrName = attributes[i].Name;
+            string attrValue = attributes[i].Value;
+
+            if(attrName == "Name")
+            {
+                _customValueName = attrValue;
+            }
+            else if(attrName == "Value")
+            {
+                _value = XMLScriptConverter.valueToFloatExtend(attrValue);
             }
         }
     }

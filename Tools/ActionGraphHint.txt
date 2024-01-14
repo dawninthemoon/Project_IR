@@ -116,8 +116,8 @@ InQuote,NotifyAttackSuccess=,"True,False"
 ShortCut,__FrameEvent_Jump,"<FrameEvent Type=""Jump"" StartTime=""0"" JumpPower=""0""/>"
 FrameEvent,Jump,JumpPower=~~
 InQuote,ActiveCollision=,"true,false"
-,,
-,,
+FrameEvent,SetCustomValue,"Name=~~,Value=~~"
+ShortCut,__FrameEvent_SetCustomValue,<FrameEvent Type=~SetCustomValue~ Name=~~ Value=~~/>
 ,,
 ,,
 ,,

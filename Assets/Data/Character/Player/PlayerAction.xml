@@ -9,7 +9,8 @@
 
 <!-- BranchSet -->
     <BranchSet Name="AttackGround">
-        <Branch Key="getKey_Attack" Condition="OnGround" Execute="AC_Attack_Ground"/>
+        <Branch Key="getKey_Attack" Condition="OnGround && (customValue_AttackBranch == 1.0)" Execute="AC_Attack_Ground_B"/>
+        <Branch Key="getKey_Attack" Condition="OnGround" Execute="AC_Attack_Ground_A"/>
         <Branch Key="getKey_GunMode" Condition="OnGround" Execute="AC_GunState_ReadyStart"/>
     </BranchSet>
 
@@ -156,7 +157,7 @@
 
 <!-- Attack -->
 
-    <AC_Attack_Ground MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+    <AC_Attack_Ground_A MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackGroundA/" XFlip="True">
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
             <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
@@ -170,13 +171,41 @@
                 </OnHit>
             </FrameEvent>
 
-            <FrameEvent Type="FrameTag" StartFrame="2.0" EndFrame="999" Tag="CanAttack"/>
+            <FrameEvent Type="SetCustomValue" Name="AttackBranch" Value="1"/>
+            <FrameEvent Type="FrameTag" StartTime="0.2" EndTime="999" Tag="CanAttack"/>
         </Animation>
+
+        <Branch Key="getKey_Attack" Condition="OnGround && getFrameTag_CanAttack" Execute="AC_Attack_Ground_B"/>
 
         <Branch Condition="IsFalling" Execute="AC_FallStart"/>
         <Branch Condition="End && MoveInput" Execute="AC_Move"/>
         <Branch Condition="End" Execute="AC_Idle"/>
-    </AC_Attack_Ground>
+    </AC_Attack_Ground_A>
+
+    <AC_Attack_Ground_B MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Preset="Sprites/Player/AttackGroundB/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
+            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
+            <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+                <OnHit>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
+                    <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
+                    <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.05" Speed="3.5" Time="0.3"/>
+
+                    <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/SlashImpactLine" UseFlip="true" ToTarget="true" Angle="Random_-45^45"/>
+                </OnHit>
+            </FrameEvent>
+
+            <FrameEvent Type="SetCustomValue" Name="AttackBranch" Value="0"/>
+            <FrameEvent Type="FrameTag" StartTime="0.2" EndTime="999" Tag="CanAttack"/>
+        </Animation>
+
+        <Branch Key="getKey_Attack" Condition="OnGround && getFrameTag_CanAttack" Execute="AC_Attack_Ground_A"/>
+
+        <Branch Condition="IsFalling" Execute="AC_FallStart"/>
+        <Branch Condition="End && MoveInput" Execute="AC_Move"/>
+        <Branch Condition="End" Execute="AC_Idle"/>
+    </AC_Attack_Ground_B>
 
     <AC_Attack_Air MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackMidair/" XFlip="True">
