@@ -1,0 +1,26 @@
+<ActionGraph Name="LahmelAction" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <Idle MovementType="FrameEvent" DirectionType="AI" FlipType="Direction">
+        <AnimationHeader MasterPath="Sprites/NPC/Lahmel/"/>
+        <Animation Preset="Idle" XFlip="true">
+            <FrameEvent Type="Movement" StartTime="0" Friction="20" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Idle"/>
+    </Idle>
+
+    <Dead MovementType="Empty" DirectionType="Keep">
+        <AnimationHeader MasterPath="Sprites/NPC/Lahmel/"/>
+        <Animation Preset="Idle" XFlip="true">
+
+            <FrameEvent Type="Effect" StartTime="0" Path="Resources/Sprites/NPC/Lahmel/Idle" FramePerSecond="0.2" CastShadow="True">
+                <Physics UseGravity="True" Velocity="Random_-2.5^2.5 Random_1.5^3.5" Friction="1" Torque="Random_-30^30" AngularFriction="10.0"/>
+            </FrameEvent>
+            <FrameEvent Type="KillEntity" StartTime="0"/>
+
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Dead"/>
+    </Dead>
+
+</ActionGraph>

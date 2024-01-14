@@ -13,6 +13,18 @@
         SearchIdentifier="Player"
     />
 
+    <Lahmel
+        DisplayName="라멜"
+        ActionGraph="Assets/Data/Character/Lahmel/LahmelAction.xml"
+        AIGraph="Assets/Data/AILibrary/Graph/EmptyAIGraph.xml"
+        StatusInfoName="CommonPlayerStatus"
+
+        CollisionWidth="0.065"
+        CollisionHeight="0.17"
+        
+        SearchIdentifier="Player"
+    />
+
     <MiniHog
         DisplayName="미니 멧돼지"
         ActionGraph="Assets/Data/Character/MiniHog/MiniHogAcion.xml"
