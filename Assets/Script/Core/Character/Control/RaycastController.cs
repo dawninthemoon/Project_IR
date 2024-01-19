@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RaycastController {
 	protected float _skinWidth = 0.005f;
-	[SerializeField] private float _dstBetweenRays = 0.03f;
+	[SerializeField] private float _dstBetweenRays = 0.06f;
 	protected int _horizontalRayCount;
 	protected int _verticalRayCount;
 
