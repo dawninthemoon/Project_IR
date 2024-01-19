@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 
 public class GroundController : RaycastController {
+	private static readonly string ThroughPlatformTag = "ThroughPlatform";
 	private float maxSlopeAngle = 80f;
 
 	public CollisionInfo collisions;
@@ -61,7 +63,7 @@ public class GroundController : RaycastController {
 
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength);
 			Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.green);
-			if (hit.collider != null) {
+			if (hit.collider != null && !hit.collider.CompareTag(ThroughPlatformTag)) {
 				if (hit.distance < Mathf.Epsilon) continue;
 
 				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -105,19 +107,20 @@ public class GroundController : RaycastController {
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength);
 			Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.green);
 			if (hit.collider != null) {
-				/*if (hit.collider.tag != null && hit.collider.CompareTag("Through")) {
-					if (directionY == 1 || hit.distance == 0) {
+				if (hit.collider.tag != null && hit.collider.CompareTag(ThroughPlatformTag)) 
+				{
+					if (directionY > 0f || Mathf.Abs(hit.distance) < Mathf.Epsilon) {
 						continue;
 					}
 					if (collisions.fallingThroughPlatform) {
 						continue;
 					}
-					if (playerInput.y == -1) {
+					if (playerInput.y < 0f) {
 						collisions.fallingThroughPlatform = true;
-						Invoke("ResetFallingThroughPlatform", 0.5f);
+						ResetFallingThroughPlatform(0.5f).Forget();
 						continue;
 					}
-				}*/
+				}
 
 				moveAmount.y = (hit.distance - _skinWidth) * directionY;
 				rayLength = hit.distance;
@@ -209,7 +212,9 @@ public class GroundController : RaycastController {
 		}
 	}
 
-	void ResetFallingThroughPlatform() {
+	async UniTaskVoid ResetFallingThroughPlatform(float duration) {
+		await UniTask.Delay(System.TimeSpan.FromSeconds(duration));
+
 		collisions.fallingThroughPlatform = false;
 	}
 

@@ -252,9 +252,11 @@ public class StageProcessor
 
             Tilemap wallTilemap = _stageTilemapParent.transform.Find("Wall").GetComponent<Tilemap>();
             Tilemap backgroundTilemap = _stageTilemapParent.transform.Find("Background").GetComponent<Tilemap>();
-            
+            Tilemap throughPlatformTilemap = _stageTilemapParent.transform.Find("ThroughPlatform").GetComponent<Tilemap>();
+
             wallTilemap.SetTiles(_stageData._tilemapConfigPath._wall);
             backgroundTilemap.SetTiles(_stageData._tilemapConfigPath._background);
+            throughPlatformTilemap.SetTiles(_stageData._tilemapConfigPath._throughPlatform);
 
             _stageTilemapParent.transform.position = startPosition;
         }

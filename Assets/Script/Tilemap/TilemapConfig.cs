@@ -18,10 +18,12 @@ public class TilemapConfig : ScriptableObject {
     public string       _tilemapName;
     public TilemapInfo  _wall;
     public TilemapInfo  _background;
+    public TilemapInfo  _throughPlatform;
     
-    public void Initialize(string tilemapName, TilemapInfo wall, TilemapInfo background) {
+    public void Initialize(string tilemapName, TilemapInfo wall, TilemapInfo background, TilemapInfo through) {
         _tilemapName = tilemapName;
         _wall = wall;
         _background = background;
+        _throughPlatform = through;
     }
 }

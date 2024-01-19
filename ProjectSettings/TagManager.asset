@@ -10,6 +10,7 @@ TagManager:
   - ScreenResultMesh
   - EditorItem
   - GizmoHelper
+  - ThroughPlatform
   layers:
   - Default
   - TransparentFX

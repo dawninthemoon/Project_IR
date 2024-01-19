@@ -72,7 +72,10 @@ public class FrameEventMovement : MovementBase
         _gravityAccumulate += _gravity * deltaTime;
         moveDelta.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
 
-        movementOfFrame = _controller.Progress(_targetEntity.transform.position, moveDelta, Vector2.zero, false);
+        // 추후 수정 필요
+        Vector2 inputY = Input.GetKey(KeyCode.DownArrow) ? Vector2.down : Vector2.zero;
+
+        movementOfFrame = _controller.Progress(_targetEntity.transform.position, moveDelta, inputY, false);
         bool onGround = _controller.collisions.below;
         if(onGround || onGround == false && _controller.collisions.above && _gravityAccumulate > 0f)
             _gravityAccumulate = 0f;

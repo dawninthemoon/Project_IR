@@ -2454,9 +2454,11 @@ public class StageDataEditor : EditorWindow
             TilemapConfig tilemapConfig = _editStageData._tilemapConfigPath;
             Tilemap wallTilemap = _tilemapSettingPrefabObject.transform.Find("Wall").GetComponent<Tilemap>();
             Tilemap backgroundTilemap = _tilemapSettingPrefabObject.transform.Find("Background").GetComponent<Tilemap>();
-            
+            Tilemap throughPlatformTilemap = _tilemapSettingPrefabObject.transform.Find("ThroughPlatform").GetComponent<Tilemap>();
+
             wallTilemap.SetTiles(tilemapConfig._wall);
             backgroundTilemap.SetTiles(tilemapConfig._background);
+            throughPlatformTilemap.SetTiles(tilemapConfig._throughPlatform);
         }
 
         if(_backgroundPrefabObject != null)

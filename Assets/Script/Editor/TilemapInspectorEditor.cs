@@ -55,6 +55,13 @@ namespace TilemapEditor {
             EditorGUILayout.Space(5f);
 
             GUI.backgroundColor = defaultColor;
+
+            if (GUILayout.Button("Clear All")) {
+                if (EditorUtility.DisplayDialog("Warning", "모든 타일을 지우시겠습니까?", "예", "아니오")) {
+                    _context.ClearAll();
+                }
+            }
+
             if (GUILayout.Button("Clear Backgrounds")) {
                 if (EditorUtility.DisplayDialog("Warning", "모든 배경 타일을 지우시겠습니까?", "예", "아니오")) {
                     _context.ClearAllBackgrounds();
@@ -64,6 +71,12 @@ namespace TilemapEditor {
             if (GUILayout.Button("Clear Walls")) {
                 if (EditorUtility.DisplayDialog("Warning", "모든 충돌 타일을 지우시겠습니까?", "예", "아니오")) {
                     _context.ClearAllWalls();
+                }
+            }
+
+            if (GUILayout.Button("Clear Through Platforms")) {
+                if (EditorUtility.DisplayDialog("Warning", "모든 통과 가능한 플랫폼 타일을 지우시겠습니까?", "예", "아니오")) {
+                    _context.ClearAllThroughPlatforms();
                 }
             }
 

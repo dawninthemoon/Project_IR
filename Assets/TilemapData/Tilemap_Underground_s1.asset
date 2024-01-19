@@ -619,3 +619,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0765ce23c98a95f4f8f0a2cd656b4394, type: 2}
     - {fileID: 11400000, guid: 0765ce23c98a95f4f8f0a2cd656b4394, type: 2}
     - {fileID: 11400000, guid: 1f7cc8badfe234242bbcc1887069e72c, type: 2}
+  _throughPlatform:
+    _positions:
+    - {x: -10, y: -3, z: 0}
+    - {x: -9, y: -3, z: 0}
+    - {x: -8, y: -3, z: 0}
+    _tileBases:
+    - {fileID: 11400000, guid: 119d2dd904f5bb741959ffae8d528274, type: 2}
+    - {fileID: 11400000, guid: 1ec09c1a2d639e741971f73d5aa556b8, type: 2}
+    - {fileID: 11400000, guid: 4c1e95dd157f8f644bd2eee00904fe15, type: 2}

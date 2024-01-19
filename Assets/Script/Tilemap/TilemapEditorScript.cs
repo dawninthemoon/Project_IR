@@ -12,6 +12,7 @@ namespace TilemapEditor {
     public class TilemapEditorScript : MonoBehaviour
     {
         private static readonly string WallTilemapKey = "Wall";
+        private static readonly string ThroughPlatformTilemapKey = "ThroughPlatform";
         private static readonly string BackgroundTilemapKey = "Background";
 
         public TilemapConfig Config
@@ -37,16 +38,24 @@ namespace TilemapEditor {
             collisionTilemap.ClearAllTiles();
         }
 
+        public void ClearAllThroughPlatforms()
+        {
+            Tilemap throughPlatformTilemap = transform.Find(ThroughPlatformTilemapKey).GetComponent<Tilemap>();
+            throughPlatformTilemap.ClearAllTiles();
+        }
+
         public void ClearAll()
         {
             ClearAllBackgrounds();
             ClearAllWalls();
+            ClearAllThroughPlatforms();
         }
 
         public TilemapConfig LoadTilemapConfig(string tilemapName) 
         {
             Tilemap wallTilemap = transform.Find(WallTilemapKey).GetComponent<Tilemap>();
             Tilemap backgroundTilemap = transform.Find(BackgroundTilemapKey).GetComponent<Tilemap>();
+            Tilemap throughPlatformTilemap = transform.Find(ThroughPlatformTilemapKey).GetComponent<Tilemap>();
 
             if (Config == null)
             {
@@ -55,7 +64,8 @@ namespace TilemapEditor {
 
             var wall = LoadTileInfo(wallTilemap);
             var background = LoadTileInfo(backgroundTilemap);
-            Config.Initialize(tilemapName, wall, background);
+            var through = LoadTileInfo(throughPlatformTilemap);
+            Config.Initialize(tilemapName, wall, background, through);
 
         #if UNITY_EDITOR
             EditorUtility.SetDirty(Config);
@@ -86,9 +96,11 @@ namespace TilemapEditor {
 
             Tilemap collisionTilemap = transform.Find(WallTilemapKey).GetComponent<Tilemap>();
             Tilemap backgroundTilemap = transform.Find(BackgroundTilemapKey).GetComponent<Tilemap>();
+            Tilemap throughPlatformTilemap = transform.Find(ThroughPlatformTilemapKey).GetComponent<Tilemap>();
 
             collisionTilemap.SetTiles(tilemapConfig._wall);
             backgroundTilemap.SetTiles(tilemapConfig._background);
+            throughPlatformTilemap.SetTiles(tilemapConfig._throughPlatform);
         }
     }
 }
