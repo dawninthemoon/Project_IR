@@ -40,8 +40,6 @@ public class GroundController : RaycastController {
 			VerticalCollisions(ref moveAmount);
 		}
 
-		//transform.Translate(moveAmount);
-
 		if (standingOnPlatform) {
 			collisions.below = true;
 		}

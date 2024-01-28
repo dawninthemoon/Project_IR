@@ -38,7 +38,77 @@ MonoBehaviour:
       _keepAlive: 1
       _searchIdentifier: 0
       _activeType: 0
-      _localPosition: {x: -0.74, y: -0.31, z: 0}
+      _localPosition: {x: -2.2, y: -0.46, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 0.61, y: -0.46, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 2.28, y: -0.45, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 4.87, y: -0.47, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 7.92, y: -0.03, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 10.83, y: 0.52, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 13.1, y: 1, z: 0}
+    - _characterKey: MiniHog
+      _uniqueKey: 
+      _uniqueGroupKey: 
+      _startAction: 
+      _flip: 1
+      _hideWhenDeactive: 0
+      _keepAlive: 0
+      _searchIdentifier: 1
+      _activeType: 0
+      _localPosition: {x: 12.59, y: 0.99, z: 0}
     _useTriggerBound: 0
     _targetSearchIdentifier: 1
     _triggerWidth: 1
@@ -50,7 +120,7 @@ MonoBehaviour:
     _overrideTargetSearchIdentifier: 0
     _overrideTriggerWidth: 1
     _overrideTriggerHeight: 2
-    _overrideTriggerOffset: {x: 0, y: 0, z: 0}
+    _overrideTriggerOffset: {x: 11.17, y: 1.6, z: 0}
     _isPortal: 1
     _targetStageName: StageData/TestStage2
     _targetMarkerName: Entry0
