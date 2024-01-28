@@ -143,6 +143,8 @@
         <Branch Condition="getKey_Jump == false" Execute="AC_FeatherFallToFall"/>
         <Branch Condition="End" Execute="AC_FeatherFallLoop"/>
 
+        <UseBranchSet Name="AttackAir"/>
+
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
     </AC_FeatherFallStart>
@@ -156,6 +158,8 @@
         <Branch Condition="getKey_Jump == false" Execute="AC_FeatherFallToFall"/>
         <Branch Condition="End" Execute="AC_FeatherFallLoop"/>
 
+        <UseBranchSet Name="AttackAir"/>
+
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
     </AC_FeatherFallLoop>
@@ -165,6 +169,7 @@
             <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
         </Animation>
 
+        <UseBranchSet Name="AttackAir"/>
 
         <Branch Condition="End" Execute="AC_FallLoop"/>
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
