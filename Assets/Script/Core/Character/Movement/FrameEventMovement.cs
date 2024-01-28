@@ -21,6 +21,7 @@ public class FrameEventMovement : MovementBase
     private Vector3 _currentVelocity = Vector3.zero;
     private GroundController _controller;
     private float _gravityAccumulate = 0f;
+    private bool _jumpSet = false;
 
     public override MovementType getMovementType(){return MovementType.FrameEvent;}
 
@@ -40,6 +41,8 @@ public class FrameEventMovement : MovementBase
 
         _currentVelocity = Vector3.zero;
         _gravityAccumulate = 0f;
+
+        _jumpSet = false;
     }
 
     public override void updateFirst(GameEntityBase targetEntity)
@@ -69,7 +72,11 @@ public class FrameEventMovement : MovementBase
         _currentDirection = _currentVelocity.normalized;
         Vector3 moveDelta = _currentVelocity * deltaTime;
 
-        _gravityAccumulate += _gravity * deltaTime;
+        if(_jumpSet == false)
+            _gravityAccumulate += (_gravity) * deltaTime;
+        else
+            _jumpSet = false;
+
         moveDelta.y = (_currentVelocity + (Vector3.up * _gravityAccumulate)).y * deltaTime;
 
         // 추후 수정 필요
@@ -109,5 +116,6 @@ public class FrameEventMovement : MovementBase
     public void StartJump(float jumpPower) 
     {
         _gravityAccumulate = jumpPower;
+        _jumpSet = true;
     }
 }

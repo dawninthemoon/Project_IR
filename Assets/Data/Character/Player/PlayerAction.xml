@@ -4,7 +4,8 @@
     <GlobalVariable Name="gv_movementSpeed" Value="13"/>
     <GlobalVariable Name="gv_movementMaxVelocity" Value="1.6"/>
     <GlobalVariable Name="gv_movementDefaultFriction" Value="3"/>
-    
+
+    <GlobalVariable Name="gv_featherFallGravity" Value="-0.35"/>
     <GlobalVariable Name="gv_jumpDuration" Value="0.2"/>
 
 <!-- BranchSet -->
@@ -112,6 +113,8 @@
 
         <UseBranchSet Name="AttackAir"/>
 
+        <Branch Condition="getKey_Jump" Execute="AC_FeatherFallStart"/>
+
         <Branch Condition="End" Execute="AC_FallLoop"/>
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
@@ -124,10 +127,51 @@
 
         <UseBranchSet Name="AttackAir"/>
 
+        <Branch Condition="getKey_Jump" Execute="AC_FeatherFallStart"/>
+
         <Branch Condition="End" Execute="AC_FallLoop"/>
         <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
         <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
     </AC_FallLoop>
+
+    <AC_FeatherFallStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/FeatherFallStart/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Jump" StartTime="0" EndTime="999" JumpPower="gv_featherFallGravity"/>
+        </Animation>
+
+        <Branch Condition="getKey_Jump == false" Execute="AC_FeatherFallToFall"/>
+        <Branch Condition="End" Execute="AC_FeatherFallLoop"/>
+
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+    </AC_FeatherFallStart>
+
+    <AC_FeatherFallLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/FeatherFallLoop/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+            <FrameEvent Type="Jump" StartTime="0" EndTime="999" JumpPower="gv_featherFallGravity"/>
+        </Animation>
+
+        <Branch Condition="getKey_Jump == false" Execute="AC_FeatherFallToFall"/>
+        <Branch Condition="End" Execute="AC_FeatherFallLoop"/>
+
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+    </AC_FeatherFallLoop>
+
+    <AC_FeatherFallToFall MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Preset="Sprites/Player/FeatherFallEnd/" XFlip="True">
+            <FrameEvent Type="Movement" StartTime="0" Friction="gv_movementDefaultFriction" MaxVelocity="gv_movementMaxVelocity" Speed="gv_movementSpeed"/>
+        </Animation>
+
+
+        <Branch Condition="End" Execute="AC_FallLoop"/>
+        <Branch Condition="MoveInput && OnGround" Execute="AC_FallToGroundMove"/>
+        <Branch Condition="OnGround" Execute="AC_FallToGroundIdle"/>
+        
+        <Branch Condition="getKey_Jump" Execute="AC_FeatherFallLoop"/>
+    </AC_FeatherFallToFall>
 
     <AC_FallToGroundIdle MovementType="Empty" DirectionType="Keep" FlipType="Keep">
         <Animation Preset="Sprites/Player/Land/" XFlip="True">
@@ -160,8 +204,8 @@
     <AC_Attack_Ground_A MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackGroundA/" XFlip="True">
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
-            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
-            <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+            <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/SlashA" UseFlip="true"/>
+            <FrameEvent Type="Attack" StartFrame="0" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
                 <OnHit>
                     <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
                     <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>
@@ -185,8 +229,8 @@
     <AC_Attack_Ground_B MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
         <Animation Preset="Sprites/Player/AttackGroundB/" XFlip="True">
             <FrameEvent Type="Movement" StartTime="0" Friction="12" Velocity="0" MaxVelocity="gv_movementMaxVelocity" Speed="12"/>
-            <FrameEvent Type="Effect" StartFrame="1" Preset="Sprites/VFX/Slash" UseFlip="true"/>
-            <FrameEvent Type="Attack" StartFrame="1" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
+            <FrameEvent Type="Effect" StartFrame="0" Preset="Sprites/VFX/SlashB" UseFlip="true"/>
+            <FrameEvent Type="Attack" StartFrame="0" AttackPreset="PlayerAttackTest" Offset="0.2 0.05">
                 <OnHit>
                     <FrameEvent Type="ShakeEffect" StartTime="0" Scale="0.025" Speed="3.5" Time="0.3"/>
                     <FrameEvent Type="ApplyBuffTarget" StartTime="0" ApplyBuff="CommonAttack"/>

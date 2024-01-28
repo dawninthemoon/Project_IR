@@ -113,7 +113,7 @@ InQuote,MultiSelectUpdateOnce=,"True,False"
 FrameEvent,EffectPreset,Key=~~
 ShortCut,__FrameEvent_EffectPreset,<FrameEvent Type=~EffectPreset~ StartTime=~0~ Key=~~/>
 InQuote,NotifyAttackSuccess=,"True,False"
-ShortCut,__FrameEvent_Jump,"<FrameEvent Type=""Jump"" StartTime=""0"" JumpPower=""0""/>"
+ShortCut,__FrameEvent_Jump,<FrameEvent Type=~Jump~ StartTime=~0~ JumpPower=~0~/>
 FrameEvent,Jump,JumpPower=~~
 InQuote,ActiveCollision=,"true,false"
 FrameEvent,SetCustomValue,"Name=~~,Value=~~"
